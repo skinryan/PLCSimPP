@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PLCSimPP.Layout.ViewModels.DeviceLayoutViewModel">
+    <Position X="9.25" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAOAAAAAAAAAEAAAIIACAAAQAAAAAAAgAAQAAA=</HashCode>
+      <FileName>ViewModels\DeviceLayoutViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PLCSimPP.Layout.Views.DeviceLayout" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\DeviceLayout.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PLCSimPP.Layout.ViewModels.LayoutMenuViewModel">
+    <Position X="4.5" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAg=</HashCode>
+      <FileName>ViewModels\LayoutMenuViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PLCSimPP.Layout.Views.LayoutMenu">
+    <Position X="2.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\LayoutMenu.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
