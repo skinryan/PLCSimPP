@@ -1,0 +1,106 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:comm="clr-namespace:PLCSimPP.Comm;assembly=PLCSimPP.Comm"
+                    xmlns:local="clr-namespace:PLCSimPP.PresentationControls"
+                    xmlns:sc="clr-namespace:PLCSimPP.PresentationControls.Controls"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!--<cvt:IndexConverter x:Key="IndexConverter" />-->
+    <ObjectDataProvider x:Key="AnaTypeEnum"
+                        MethodName="GetValues"
+                        ObjectType="{x:Type sys:Enum}">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type Type="comm:DcAnalyzerType" />
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider x:Key="AnaTypeEnum2"
+                        MethodName="GetValues"
+                        ObjectType="{x:Type sys:Enum}">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type Type="comm:DxCAnalyzerType" />
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <Style x:Key="ListItemStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <StackPanel Margin="5,3" Orientation="Horizontal">
+                        <TextBlock Width="25"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Num, StringFormat=#{0}}" />
+                        <ComboBox ItemsSource="{Binding Source={StaticResource AnaTypeEnum}}" SelectedItem="{Binding Path=DcType}" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ListItemStyle2" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <StackPanel Margin="5,3" Orientation="Horizontal">
+                        <TextBlock Width="25"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Num, StringFormat=#{0}}" />
+                        <ComboBox ItemsSource="{Binding Source={StaticResource AnaTypeEnum2}}" SelectedItem="{Binding Path=DxCType}" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type sc:AnalyzerConfigControl}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type sc:AnalyzerConfigControl}">
+                    <Grid HorizontalAlignment="Left">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                            <TextBlock Width="100"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       Text="Analyzer count"
+                                       TextAlignment="Left" />
+                            <ComboBox x:Name="Part_ComboBox"
+                                      Width="150"
+                                      Height="25"
+                                      Margin="10,0"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Center" />
+                        </StackPanel>
+                        <ListBox x:Name="Part_ListBox"
+                                 Grid.Row="1"
+                                 Margin="5,2"
+                                 HorizontalAlignment="Left"
+                                 AlternationCount="{Binding Path=AnalyzerItems.Count}"
+                                 BorderThickness="0"
+                                 ItemContainerStyle="{StaticResource ListItemStyle}"
+                                 ItemsSource="{TemplateBinding AnalyzerItems}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="8" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+
+                        </ListBox>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDcSim" Value="false">
+                            <Setter TargetName="Part_ListBox" Property="ItemContainerStyle" Value="{StaticResource ListItemStyle2}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

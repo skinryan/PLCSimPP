@@ -9,6 +9,8 @@ namespace PLCSimPP.Comm.Interfaces
 {
     public interface IPipeLine
     {
+        int OnlineSampleCount { get; }
+
         /// <summary>
         /// Connect to Line controller flag
         /// </summary>
@@ -17,7 +19,7 @@ namespace PLCSimPP.Comm.Interfaces
         /// <summary>
         /// Unit collection
         /// </summary>
-        ObservableCollection<UnitBase> UnitCollection { get; set; }
+        ObservableCollection<IUnit> UnitCollection { get; set; }
 
         /// <summary>
         /// Analyzer simulator 
@@ -33,19 +35,19 @@ namespace PLCSimPP.Comm.Interfaces
         /// Load sample on line
         /// </summary>
         /// <param name="sample">sample tube</param>
-        void LoadSample(Sample sample);
+        void LoadSample(List<ISample> samples);
 
         /// <summary>
         /// Reset all pipeline unit status
         /// </summary>
         /// <returns></returns>
-        bool Init();
+        void Init();
 
         /// <summary>
         /// Connect LC
         /// </summary>
         /// <returns></returns>
-        bool Connect();
+        void Connect();
 
         /// <summary>
         /// Disconnect LC
@@ -55,9 +57,9 @@ namespace PLCSimPP.Comm.Interfaces
         /// <summary>
         /// Rack exchange 
         /// </summary>
-        /// <param name="address">address</param>
+        /// <param name="unit">unit</param>
         /// <param name="shelf">floor</param>
         /// <param name="rack">rack</param>
-        void RackExchange(string address, string shelf, string rack);
+        void RackExchange(IUnit unit, string shelf, string rack);
     }
 }

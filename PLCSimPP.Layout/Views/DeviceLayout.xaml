@@ -1,175 +1,222 @@
 <UserControl x:Class="PLCSimPP.Layout.Views.DeviceLayout"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:buttonControl="clr-namespace:PLCSimPP.Layout.Controls"
+             xmlns:cvt="clr-namespace:PLCSimPP.Layout.Converter"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:prism="http://prismlibrary.com/"
              d:DesignHeight="450"
-             d:DesignWidth="800"
+             d:DesignWidth="1000"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <ItemsPanelTemplate x:Key="HorizontalPanel">
-            <StackPanel Orientation="Vertical" />
-        </ItemsPanelTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-        <Style x:Key="SubItem" TargetType="{x:Type ListBoxItem}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border Margin="0,0,0,3">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.RowSpan="2"
-                                            Grid.Column="0"
-                                            MinHeight="40"
-                                            VerticalAlignment="Top"
-                                            Orientation="Horizontal">
-                                    <Border Background="SkyBlue"
-                                            BorderBrush="Black"
-                                            BorderThickness="1,1,0,1"
-                                            CornerRadius="4,0,0,4">
-                                        <StackPanel>
-                                            <TextBlock MinWidth="120"
-                                                       Margin="3,2"
-                                                       VerticalAlignment="Center"
-                                                       Text="{Binding DisplayName}"
-                                                       TextWrapping="Wrap" />
-                                            <TextBlock Margin="3,2"
-                                                       VerticalAlignment="Center"
-                                                       Text="{Binding Address}"
-                                                       TextWrapping="Wrap" />
-                                        </StackPanel>
-                                    </Border>
-                                    <Border Background="Aqua"
-                                            BorderBrush="Black"
-                                            BorderThickness="0,1,1,1"
-                                            CornerRadius="0,4,4,0">
-                                        <TextBlock Width="30"
-                                                   Padding="15,0"
-                                                   VerticalAlignment="Center"
-                                                   Text="{Binding PendingCount}"
-                                                   TextAlignment="Right"
-                                                   TextWrapping="Wrap" />
-                                    </Border>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
+            <Geometry x:Key="geometry_exchange">M213.546667 384.853333l136.533333-136.533333L401.493333 299.946667 316.586667 384.853333H896v85.333334H128l85.333333-85.333334h0.213334z m597.12 298.666667l-136.234667 136.192L622.933333 768.426667l84.821334-84.906667H128v-85.333333h768l-85.333333 85.333333z</Geometry>
+            <cvt:RackToStrConverter x:Key="RackToStrConverter" />
+            <cvt:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
+            <cvt:TypeToVisibilityConverter x:Key="TypeToVisibilityConverter" />
+            <cvt:RackExchangeParamConverter x:Key="RackExchangeParamConverter" />
 
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+            <ItemsPanelTemplate x:Key="HorizontalPanel">
+                <StackPanel Orientation="Vertical" />
+            </ItemsPanelTemplate>
 
-        </Style>
 
-        <Style x:Key="LayoutStyle" TargetType="{x:Type ListBoxItem}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <StackPanel Orientation="Horizontal">
-                            <GroupBox>
-                                <GroupBox.Header>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Port : " />
-                                        <TextBlock Text="{Binding Port}" />
-                                    </StackPanel>
-                                </GroupBox.Header>
-                                <Border>
-                                    <Grid>
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-
-                                        <StackPanel Grid.RowSpan="2"
-                                                    Grid.Column="0"
-                                                    MinHeight="40"
-                                                    Margin="0,3"
-                                                    VerticalAlignment="Top"
-                                                    Orientation="Horizontal">
-                                            <Border Background="SkyBlue"
-                                                    BorderBrush="Black"
-                                                    BorderThickness="1,1,0,1"
-                                                    CornerRadius="4,0,0,4">
-                                                <StackPanel>
-                                                    <TextBlock MinWidth="120"
-                                                               Margin="3,2"
-                                                               VerticalAlignment="Center"
-                                                               Text="{Binding DisplayName}"
-                                                               TextWrapping="Wrap" />
-                                                    <TextBlock Margin="3,2"
-                                                               VerticalAlignment="Center"
-                                                               Text="{Binding Address}"
-                                                               TextWrapping="Wrap" />
-                                                </StackPanel>
-                                            </Border>
-                                            <Border Background="Aqua"
-                                                    BorderBrush="Black"
-                                                    BorderThickness="0,1,1,1"
-                                                    CornerRadius="0,4,4,0">
-                                                <TextBlock Width="30"
-                                                           Padding="15,0"
+            <Style x:Key="SubItem" TargetType="{x:Type ListBoxItem}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <Border Margin="0,0,0,3">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.RowSpan="2"
+                                                Grid.Column="0"
+                                                MinHeight="40"
+                                                VerticalAlignment="Top"
+                                                Orientation="Horizontal">
+                                        <Border Background="SkyBlue"
+                                                BorderBrush="Black"
+                                                BorderThickness="1,1,0,1"
+                                                CornerRadius="4,0,0,4">
+                                            <StackPanel>
+                                                <TextBlock MinWidth="120"
+                                                           Margin="3,2"
                                                            VerticalAlignment="Center"
-                                                           Text="{Binding PendingCount}"
-                                                           TextAlignment="Right"
+                                                           Text="{Binding DisplayName}"
                                                            TextWrapping="Wrap" />
-                                            </Border>
-                                        </StackPanel>
-                                        <ListBox Grid.Column="1"
-                                                 Grid.ColumnSpan="2"
-                                                 Margin="3"
-                                                 Padding="0"
-                                                 BorderThickness="0"
-                                                 ItemContainerStyle="{StaticResource SubItem}"
-                                                 ItemsPanel="{StaticResource HorizontalPanel}"
-                                                 ItemsSource="{Binding Children}" />
-                                    </Grid>
-                                </Border>
-                            </GroupBox>
+                                                <TextBlock Margin="3,2"
+                                                           VerticalAlignment="Center"
+                                                           Text="{Binding Address}"
+                                                           TextWrapping="Wrap" />
 
-                        </StackPanel>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="TextStyle" TargetType="{x:Type TextBlock}">
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Right" />
-        </Style>
-        <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
-            <Setter Property="Margin" Value="3" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-        </Style>
-        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Width" Value="80" />
-            <Setter Property="Height" Value="22" />
-        </Style>
+                                                <StackPanel Margin="0,0,0,0" Visibility="{Binding ., Mode=OneTime, Converter={StaticResource TypeToVisibilityConverter}}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Width="40" Text="Shelf:" />
+                                                        <TextBox x:Name="tb_shelf" Width="40" />
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Width="40" Text="Rack:" />
+                                                        <TextBox x:Name="tb_rack" Width="40" />
+                                                        <buttonControl:IconButton Command="{Binding DataContext.RackExchangeCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                                                                                  IconData="{StaticResource geometry_exchange}"
+                                                                                  IsShowText="False"
+                                                                                  ToolTip="Rack Exchange">
+                                                            <buttonControl:IconButton.CommandParameter>
+                                                                <MultiBinding Converter="{StaticResource RackExchangeParamConverter}">
+                                                                    <Binding ElementName="tb_shelf" Path="Text" />
+                                                                    <Binding ElementName="tb_rack" Path="Text" />
+                                                                    <Binding Path="Content" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                                </MultiBinding>
+                                                            </buttonControl:IconButton.CommandParameter>
+                                                        </buttonControl:IconButton>
+                                                    </StackPanel>
+                                                </StackPanel>
+
+                                            </StackPanel>
+                                        </Border>
+                                        <Border Background="Aqua"
+                                                BorderBrush="Black"
+                                                BorderThickness="0,1,1,1"
+                                                CornerRadius="0,4,4,0">
+                                            <TextBlock Width="30"
+                                                       Padding="15,0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{Binding PendingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                       TextAlignment="Right"
+                                                       TextWrapping="Wrap" />
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+            </Style>
+
+            <Style x:Key="LayoutStyle" TargetType="{x:Type ListBoxItem}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <StackPanel Orientation="Horizontal">
+                                <GroupBox>
+                                    <GroupBox.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Port : " />
+                                            <TextBlock Text="{Binding Port}" />
+                                        </StackPanel>
+                                    </GroupBox.Header>
+                                    <Border>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+
+                                            <StackPanel MinHeight="40"
+                                                        Margin="0,3"
+                                                        VerticalAlignment="Top"
+                                                        Orientation="Horizontal">
+                                                <Border Background="SkyBlue"
+                                                        BorderBrush="Black"
+                                                        BorderThickness="1,1,0,1"
+                                                        CornerRadius="4,0,0,4">
+                                                    <StackPanel>
+                                                        <TextBlock MinWidth="120"
+                                                                   Margin="3,2"
+                                                                   VerticalAlignment="Center"
+                                                                   Text="{Binding DisplayName}"
+                                                                   TextWrapping="Wrap" />
+                                                        <TextBlock Margin="3,2"
+                                                                   VerticalAlignment="Center"
+                                                                   Text="{Binding Address}"
+                                                                   TextWrapping="Wrap" />
+                                                    </StackPanel>
+                                                </Border>
+                                                <Border Background="Aqua"
+                                                        BorderBrush="Black"
+                                                        BorderThickness="0,1,1,1"
+                                                        CornerRadius="0,4,4,0">
+                                                    <TextBlock Width="30"
+                                                               Padding="15,0"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding PendingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                               TextAlignment="Right"
+                                                               TextWrapping="Wrap" />
+                                                </Border>
+                                            </StackPanel>
+                                            <ListBox Grid.Row="1"
+                                                     Margin="3,3,3,3"
+                                                     Padding="0"
+                                                     BorderThickness="0"
+                                                     ItemContainerStyle="{StaticResource SubItem}"
+                                                     ItemsPanel="{StaticResource HorizontalPanel}"
+                                                     ItemsSource="{Binding Children}" />
+                                        </Grid>
+                                    </Border>
+                                </GroupBox>
+
+                            </StackPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="TextStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+            </Style>
+            <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+                <Setter Property="Margin" Value="3" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+            </Style>
+            <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="Width" Value="80" />
+                <Setter Property="Height" Value="22" />
+            </Style>
+        </ResourceDictionary>
+
+
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" MinWidth="300" />
+            <ColumnDefinition Width="auto" MinWidth="500" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <ListBox Grid.Column="0"
-                 Margin="2"
+                 Margin="2,2,2,2"
                  BorderThickness="0"
                  ItemContainerStyle="{StaticResource LayoutStyle}"
-                 ItemsSource="{Binding UnitCollection}" />
+                 ItemsSource="{Binding PipeLineService.UnitCollection}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
         <Border Grid.Column="1">
             <DockPanel LastChildFill="True">
                 <StackPanel x:Name="commandbar"
                             DockPanel.Dock="Top"
                             Orientation="Horizontal">
                     <Button Margin="5"
+                            Command="{Binding ConnectCmd}"
                             Content="Connect"
+                            IsEnabled="{Binding ConnectedButtonEnable}"
                             Style="{StaticResource ButtonStyle}" />
-
                     <Button Margin="5"
+                            Command="{Binding DisConnectCmd}"
                             Content="Disconnect"
+                            IsEnabled="{Binding ConnectedButtonEnable, Converter={StaticResource BooleanReverseToVisibilityConverter}}"
                             Style="{StaticResource ButtonStyle}" />
                 </StackPanel>
                 <GroupBox VerticalAlignment="Stretch" Header="Samples">
@@ -187,16 +234,16 @@
                                 <RowDefinition />
                                 <RowDefinition />
                                 <RowDefinition />
-                                <RowDefinition />
-
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0"
                                        Style="{StaticResource TextStyle}"
                                        Text="Characters:" />
                             <TextBox Grid.Row="0"
                                      Grid.Column="1"
+                                     CharacterCasing="Upper"
+                                     InputMethod.IsInputMethodEnabled="False"
                                      Style="{StaticResource TextBoxStyle}"
-                                     Text="{Binding Current.Characters, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                     Text="{Binding SampleRangeInfo.Characters, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
                             <TextBlock Grid.Row="0"
                                        Grid.Column="2"
@@ -205,65 +252,68 @@
                             <TextBox Grid.Row="0"
                                      Grid.Column="3"
                                      Style="{StaticResource TextBoxStyle}"
-                                     Text="{Binding Current.Append}"
-                                     TextAlignment="Right" />
+                                     Text="{Binding SampleRangeInfo.Append}"
+                                     TextAlignment="Right"
+                                     TextChanged="TextBox_TextChanged" />
 
                             <TextBlock Grid.Row="1"
                                        Style="{StaticResource TextStyle}"
                                        Text="Start Number:" />
                             <TextBox Grid.Row="1"
                                      Grid.Column="1"
+                                     GotFocus="TextBox_GotFocus"
+                                     PreviewMouseDown="TextBox_PreviewMouseDown"
                                      Style="{StaticResource TextBoxStyle}"
-                                     Text="{Binding Current.StartNum}"
-                                     TextAlignment="Right" />
+                                     Text="{Binding SampleRangeInfo.StartNum}"
+                                     TextAlignment="Right"
+                                     TextChanged="TextBox_TextChanged" />
 
                             <TextBlock Grid.Row="1"
                                        Grid.Column="2"
                                        Style="{StaticResource TextStyle}"
-                                       Text="Quantity:" />
-                            <TextBox Grid.Row="1"
+                                       Text="Stop Number:" />
+                            <TextBox x:Name="tb_endNum"
+                                     Grid.Row="1"
                                      Grid.Column="3"
+                                     GotFocus="TextBox_GotFocus"
+                                     IsEnabled="{Binding SampleRangeInfo.EndNumEnable}"
+                                     PreviewMouseDown="TextBox_PreviewMouseDown"
                                      Style="{StaticResource TextBoxStyle}"
-                                     Text="{Binding Current.Quantity}"
-                                     TextAlignment="Right" />
+                                     Text="{Binding SampleRangeInfo.StopNum}"
+                                     TextAlignment="Right"
+                                     TextChanged="TextBox_TextChanged" />
 
                             <TextBlock Grid.Row="2"
-                                       VerticalAlignment="Center"
+                                       Grid.Column="0"
                                        Style="{StaticResource TextStyle}"
-                                       Text="Tube Width:" />
-
-                            <TextBox Grid.Row="2"
+                                       Text="Quantity:" />
+                            <TextBox x:Name="tb_quantity"
+                                     Grid.Row="2"
                                      Grid.Column="1"
+                                     GotFocus="TextBox_GotFocus"
+                                     IsEnabled="{Binding SampleRangeInfo.QuantityEnable}"
+                                     PreviewMouseDown="TextBox_PreviewMouseDown"
                                      Style="{StaticResource TextBoxStyle}"
-                                     Text="{Binding Current.TubeDiameter}"
-                                     TextAlignment="Right" />
+                                     Text="{Binding SampleRangeInfo.Quantity}"
+                                     TextAlignment="Right"
+                                     TextChanged="TextBox_TextChanged" />
                             <!--<TextBlock HorizontalAlignment="Left" Text="mm" />-->
+                            <!--<TextBlock HorizontalAlignment="Left" Text="mm" />-->
+
 
                             <TextBlock Grid.Row="2"
                                        Grid.Column="2"
                                        Style="{StaticResource TextStyle}"
-                                       Text="Tube Height:" />
-
-                            <TextBox Grid.Row="2"
-                                     Grid.Column="3"
-                                     Style="{StaticResource TextBoxStyle}"
-                                     Text="{Binding Current.TubeHeight}"
-                                     TextAlignment="Right" />
-                            <!--<TextBlock HorizontalAlignment="Left" Text="mm" />-->
-
-
-                            <TextBlock Grid.Row="3"
-                                       Style="{StaticResource TextStyle}"
                                        Text="RackType:" />
-                            <ComboBox Grid.Row="3"
-                                      Grid.Column="1"
+                            <ComboBox Grid.Row="2"
+                                      Grid.Column="3"
                                       Margin="3"
                                       HorizontalAlignment="Stretch"
                                       VerticalAlignment="Center"
                                       DisplayMemberPath="Name"
                                       ItemsSource="{Binding RackTypeList}"
-                                      SelectedValue="{Binding Current.Rack}"
-                                      SelectedValuePath="RackType" />
+                                      SelectedValue="{Binding SampleRangeInfo.RackType}"
+                                      SelectedValuePath="Value" />
 
                             <!--<TextBlock Grid.Row="3"
                                        Grid.Column="2"
@@ -278,20 +328,45 @@
                             <!--
                             </StackPanel>-->
 
-                            <StackPanel Grid.Row="5"
-                                        Grid.ColumnSpan="4"
-                                        Orientation="Horizontal">
+                            <DockPanel Grid.Row="5"
+                                       Grid.ColumnSpan="4"
+                                       LastChildFill="False">
                                 <Button Margin="5,2"
                                         HorizontalAlignment="Left"
                                         Command="{Binding AddRangeCmd}"
                                         Content="Add"
+                                        DockPanel.Dock="Left"
                                         Style="{StaticResource ButtonStyle}" />
                                 <Button Margin="5,2"
                                         HorizontalAlignment="Left"
-                                        Command="{Binding AddRangeCmd}"
+                                        Command="{Binding LoadSampleCmd}"
                                         Content="Load"
+                                        DockPanel.Dock="Left"
+                                        IsEnabled="{Binding ConnectedButtonEnable, Converter={StaticResource BooleanReverseToVisibilityConverter}}"
                                         Style="{StaticResource ButtonStyle}" />
-                            </StackPanel>
+                                <Button Width="auto"
+                                        Margin="5,2"
+                                        Padding="5,0"
+                                        Command="{Binding SaveSampleSetCmd}"
+                                        Content="Save Sample Set"
+                                        DockPanel.Dock="Right"
+                                        Style="{StaticResource ButtonStyle}" />
+                                <Button Width="auto"
+                                        Margin="5,2"
+                                        Padding="5,0"
+                                        Command="{Binding LoadSampleSetCmd}"
+                                        Content="Load Sample Set"
+                                        DockPanel.Dock="Right"
+                                        Style="{StaticResource ButtonStyle}" />
+
+                                <!--<Button Width="auto"
+                                        Margin="5,2"
+                                        Padding="5,0"
+                                        HorizontalAlignment="Left"
+                                        Command="{Binding TestCommand}"
+                                        Content="22222"
+                                        Style="{StaticResource ButtonStyle}" />-->
+                            </DockPanel>
 
                         </Grid>
                         <DataGrid Margin="2"
@@ -300,15 +375,15 @@
                                   CanUserAddRows="False"
                                   EnableColumnVirtualization="True"
                                   IsReadOnly="True"
-                                  ItemsSource="{Binding SampleList}"
+                                  ItemsSource="{Binding SampleCollection}"
                                   RowHeaderWidth="0"
                                   VirtualizingPanel.IsVirtualizing="True">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding IsLoaded}" Header="IsLoaded" />
-                                <DataGridTextColumn Binding="{Binding SampleId}" Header="Sample ID" />
+                                <DataGridTextColumn Binding="{Binding IsLoaded}" Header="Is Loaded" />
+                                <DataGridTextColumn Binding="{Binding SampleID}" Header="Sample ID" />
                                 <!--<DataGridTextColumn Binding="{Binding Diameter}" Header="Tube Diameter" />
                         <DataGridTextColumn Binding="{Binding Height}" Header="Tube Height" />-->
-                                <DataGridTextColumn Header="Inlet Rack Type" />
+                                <DataGridTextColumn Binding="{Binding Type, Converter={StaticResource RackToStrConverter}}" Header="Rack Type" />
                             </DataGrid.Columns>
                             <DataGrid.ContextMenu>
                                 <ContextMenu>

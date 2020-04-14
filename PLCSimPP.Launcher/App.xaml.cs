@@ -16,11 +16,24 @@ namespace PLCSimPP.Launcher
     /// </summary>
     public partial class App : PrismApplication
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            this.DispatcherUnhandledException += App_DispatcherUnhandledException;
+        }
+
+        private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show(e.Exception.Message+"\n"+e.Exception.StackTrace);
+
+            e.Handled = true;
+        }
 
         protected override Window CreateShell()
         {
-            
-            return Container.Resolve<MainWindow>();
+
+            return Container.Resolve<PLCSimPP.Launcher.Views.MainWindow>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

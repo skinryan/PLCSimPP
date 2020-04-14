@@ -4,21 +4,84 @@ using System.Text;
 
 namespace PLCSimPP.Comm.Models
 {
-    public class MsgLog
+    public class MsgLog : Prism.Mvvm.BindableBase
     {
-        public long ID { get; set; }
+        private long mId;
+        public long ID
+        {
+            get { return mId; }
+            set { SetProperty(ref mId, value); }
+        }
 
-        public DateTime Time { get; set; }
+        private DateTime mTime;
 
-        public string Direction { get; set; }
+        /// <summary>
+        /// log time
+        /// </summary>
+        public DateTime Time
+        {
+            get { return mTime; }
+            set { SetProperty(ref mTime, value); }
+        }
 
-        public string Address { get; set; }
+        private string mDirection;
 
-        public string Command { get; set; }
+        /// <summary>
+        /// To receive or send
+        /// </summary>
+        public string Direction
+        {
+            get { return mDirection; }
+            set { SetProperty(ref mDirection, value); }
+        }
 
-        public string Details { get; set; }
+        private string mAddress;
 
-        public string Token { get; set; }
+        /// <summary>
+        /// unit address
+        /// </summary>
+        public string Address
+        {
+            get { return mAddress; }
+            set { SetProperty(ref mAddress, value); }
+        }
+
+        private string mDetails;
+
+        /// <summary>
+        /// Details
+        /// </summary>
+        public string Details
+        {
+            get { return mDetails; }
+            set { SetProperty(ref mDetails, value); }
+        }
+
+
+        private string mCommand;
+
+        /// <summary>
+        /// command
+        /// </summary>
+        public string Command
+        {
+            get { return mCommand; }
+            set { SetProperty(ref mCommand, value); }
+        }
+
+
+
+        private string mToken;
+
+        /// <summary>
+        /// Identifies whether or not in the same communication
+        /// </summary>
+        public string Token
+        {
+            get { return mToken; }
+            set { SetProperty(ref mToken, value); }
+        }
+
 
     }
 }

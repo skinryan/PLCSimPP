@@ -1,19 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <StartupObject>PLCSimPP.Launcher.Startup</StartupObject>
+    <OutputType>WinExe</OutputType>
+	  <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
+	  <UseWPF>true</UseWPF>
+    <StartupObject>PLCSimPP.Launcher.App</StartupObject>
     <ApplicationIcon />
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Copyright>©2020 Beckman Coulter, Inc. All rights reserved.</Copyright>
+    <Version>1.0.1</Version>
+    <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="App.config" />
-    <None Remove="appsetting.json" />
+    
     <None Remove="appsettings.json" />
     <None Remove="log4net.config" />
-    <None Remove="nlog.config" />
+    <None Remove="nlog.config" />    
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +39,11 @@
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="XamlImages\" />
+    <Folder Include="Styles\" />
   </ItemGroup>
 
 </Project>

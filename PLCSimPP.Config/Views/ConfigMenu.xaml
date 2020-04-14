@@ -8,10 +8,11 @@
           d:DesignHeight="450"
           d:DesignWidth="800"
           prism:ViewModelLocator.AutoWireViewModel="True"
-          Header="Config"
+          Command="{Binding NavigateCommand}"
+          CommandParameter="Configuration"
+          Header="Settings"
           mc:Ignorable="d">
-    <MenuItem Command="{Binding NavigateCommand}"
-              CommandParameter="Configuration"
-              Header="Config View" />
-    <MenuItem Header="Load Site File" />
+    <!--<MenuItem
+              Header="Config View" />-->
+
 </MenuItem>

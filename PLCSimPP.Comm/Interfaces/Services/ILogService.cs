@@ -20,10 +20,10 @@ namespace PLCSimPP.Comm.Interfaces.Services
 
         void LogSendMsg(MsgLog message);
 
-        void LogSendMsg(string address, string command, string details, string token);
+        void LogSendMsg(string address, string command, string details, string token = "");
 
         void LogRecvMsg(MsgLog message);
 
-        void LogRecvMsg(string address, string command, string details, string token);
+        void LogRecvMsg(string address, string command, string details, string token = "");
     }
 }

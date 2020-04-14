@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
+using PLCSimPP.Comm.Interfaces;
+using PLCSimPP.Comm.Models;
 using PLCSimPP.Communication.Interface;
 using PLCSimPP.Communication.Models;
 
@@ -24,7 +26,7 @@ namespace PLCSimPP.Communication.Support
             base.ConnectTo(client);
         }
 
-        public void SendToClient(CmdMsg msg)
+        public void SendToClient(IMessage msg)
         {
             base.Send(msg);
         }

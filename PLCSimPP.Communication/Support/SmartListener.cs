@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using PLCSimPP.Comm.Interfaces;
+using PLCSimPP.Comm.Models;
 using PLCSimPP.Communication.EventArguments;
 using PLCSimPP.Communication.Interface;
 using PLCSimPP.Communication.Models;
@@ -175,7 +177,7 @@ namespace PLCSimPP.Communication.Support
             }
         }
 
-        public void OnDataReceived(CmdMsg msgStr)
+        public void OnDataReceived(Comm.Interfaces.IMessage msgStr)
         {
             // Raise event.
             var evArgs = new TransportLayerDataReceivedEventArgs(msgStr);
@@ -187,7 +189,7 @@ namespace PLCSimPP.Communication.Support
 
         #region "Send"
 
-        public void Send(CmdMsg msg)
+        public void Send(IMessage msg)
         {
             if (m_IServer != null)
             {

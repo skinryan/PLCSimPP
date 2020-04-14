@@ -10,6 +10,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PLCSimPP.Config.ViewModels;
+using Prism.Unity;
+using Unity;
 
 namespace PLCSimPP.Config.Views
 {
@@ -18,6 +21,12 @@ namespace PLCSimPP.Config.Views
     /// </summary>
     public partial class Configuration : UserControl
     {
+        [Dependency]
+        public ConfigruationViewModel ViewModel
+        {
+            get { return DataContext as ConfigruationViewModel; }
+            set { DataContext = value; }
+        }
         public Configuration()
         {
             InitializeComponent();

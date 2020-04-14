@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using PLCSimPP.Comm.Constants;
+using PLCSimPP.Comm.Interfaces;
 using PLCSimPP.Comm.Interfaces.Services;
 using PLCSimPP.Communication;
 using PLCSimPP.Communication.EventArguments;
@@ -13,9 +14,11 @@ namespace PLCSimPP.Service.Services
     {
         private TcpIpServerConnection mTcpReceiver;
         private TcpIpServerConnection mTcpSender;
-        private ILogService logger;
+        private ILogService mlogger;
 
-        public event EventHandler OnMsgReceived;
+        public delegate void TransportLayerDataReceivedEventHandler(object sender, TransportLayerDataReceivedEventArgs e);
+
+        public event TransportLayerDataReceivedEventHandler OnMsgReceived;
 
         public int SernderPort { get; private set; }
 
@@ -27,7 +30,7 @@ namespace PLCSimPP.Service.Services
 
         public PortConnection(int portNumber, ILogService logger)
         {
-            logger = logger;
+            mlogger = logger;
 
             MasterPortNumber = portNumber;
             if (portNumber == 1)
@@ -59,28 +62,38 @@ namespace PLCSimPP.Service.Services
             mTcpReceiver.TransportLayerStateChangedEvent += TcpReceiver_OnStateChangedEvent;
 
             // tcp/ip servier started
+        }
+
+        public void OpenConnect()
+        {
             mTcpSender.Open(string.Format("Master Port {0} Sender", MasterPortNumber), IpAddress, SernderPort);
             mTcpReceiver.Open(string.Format("Master Port {0} Receiver", MasterPortNumber), IpAddress, ReceiverPort);
+
+
+        }
+
+        public void CloseConnect()
+        {
+            mTcpSender.Close();
+            mTcpReceiver.Close();
         }
 
         private void TcpSender_OnStateChangedEvent(object sender, TransportLayerStateChangedEventArgs e)
         {
-            logger.LogSys(string.Format("{0}:{1} {2}", IpAddress, SernderPort, e.State));
+            mlogger.LogSys(string.Format("{0}:{1} {2}", IpAddress, SernderPort, e.State));
         }
 
         private void TcpReceiver_OnStateChangedEvent(object sender, TransportLayerStateChangedEventArgs e)
         {
-            logger.LogSys(string.Format("{0}:{1} {2}", IpAddress, ReceiverPort, e.State));
+             mlogger.LogSys(string.Format("{0}:{1} {2}", IpAddress, ReceiverPort, e.State));
         }
 
         private void TcpReceiver_OnDataReceivedEvent(object sender, TransportLayerDataReceivedEventArgs e)
         {
-            //todo: distribute message to unit
-
-
+            OnMsgReceived(sender, e);
         }
 
-        public void SendMsg(CmdMsg msg)
+        public void SendMsg(IMessage msg)
         {
             mTcpSender.Write(msg);
         }

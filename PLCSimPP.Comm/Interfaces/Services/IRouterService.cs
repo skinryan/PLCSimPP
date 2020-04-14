@@ -9,8 +9,9 @@ namespace PLCSimPP.Comm.Interfaces.Services
     public interface IRouterService
     {
         //ObservableCollection<UnitBase> GetLayout();
+        public void SetSiteMap(ObservableCollection<IUnit> unitColleciton);
 
-
-        public void MoveSampleToTargetUnit();
+        //public void MoveSampleToTargetUnit(IUnit current, IUnit target);
+        public IUnit FindNextDestination(IUnit current);
     }
 }

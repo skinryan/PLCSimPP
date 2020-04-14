@@ -68,7 +68,7 @@ namespace PLCSimPP.Launcher
 
             PrismApp.Run();
         }
-        
+
         private static void PrismApp_Activated(object sender, EventArgs e)
         {
             if (!hookFlag)
@@ -87,7 +87,7 @@ namespace PLCSimPP.Launcher
         private static void Print(string message)
         {
             System.Console.WriteLine(message);
-            
+
         }
     }
 }

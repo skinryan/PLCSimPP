@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using PLCSimPP.Comm.Models;
 
 namespace PLCSimPP.Comm.Interfaces
 {
     public interface IRecvMsgBeheavior
     {
-        /// <summary>
-        /// Pause processing message flag
-        /// </summary>
-        bool IsPaused { get; set; }
-               
+
+
         /// <summary>
         /// Start the receive message task
         /// </summary>
@@ -21,10 +19,12 @@ namespace PLCSimPP.Comm.Interfaces
         /// </summary>
         void StopRecvTask();
 
+        //void PushReceivedMsg(IMessage msg);
+
         /// <summary>
         /// Set the unitcollection of pipeline
         /// </summary>
         /// <param name="unitCollection">unit collection</param>
-        void SetUnitCollection(IEnumerable<UnitBase> unitCollection);
+        void SetUnitCollection(ObservableCollection<IUnit> unitCollection);
     }
 }

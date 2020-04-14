@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
+using PLCSimPP.Comm.Interfaces;
+using PLCSimPP.Comm.Models;
 using PLCSimPP.Communication.EventArguments;
 using PLCSimPP.Communication.Interface;
 using PLCSimPP.Communication.Models;
@@ -233,16 +235,16 @@ namespace PLCSimPP.Communication
 
         #region "Read/Write"
 
-        public void Write(CmdMsg transmitStr)
+        public void Write(IMessage msg)
         {
             //this.OnDebugData(TransmitType.Send, transmitStr);
 
-            mSmartListener.Send(transmitStr);
+            mSmartListener.Send(msg);
         }
 
         private void DataReceivedHandler(object sender, TransportLayerDataReceivedEventArgs e)
         {
-            OnDataReceived(e.ReceivedString);
+            OnDataReceived(e.ReceivedMsg);
         }
 
         private void StateChangedHandler(object sender, TransportLayerStateChangedEventArgs e)
@@ -250,9 +252,9 @@ namespace PLCSimPP.Communication
             OnUpdateState(e.State, e.Comment);
         }
 
-        public void OnDataReceived(CmdMsg msgStr)
+        public void OnDataReceived(Comm.Interfaces.IMessage msgStr)
         {
-           // this.OnDebugData(TransmitType.Receive, msgStr);
+            // this.OnDebugData(TransmitType.Receive, msgStr);
 
             // Raise event.
             var evArgs = new TransportLayerDataReceivedEventArgs(msgStr);
@@ -285,7 +287,7 @@ namespace PLCSimPP.Communication
         //    }
 
         //    string str = string.Format(CultureInfo.CurrentCulture, "{0}: {1}", StringFunctions.CurrentTime, HostHelper.CString(data));
-                        
+
         //    var evArgs = new TransportLayerDebugDataEventArgs(debugType, str);
         //    if (mTransportLayerDebugData != null)
         //        mTransportLayerDebugData(this, evArgs);

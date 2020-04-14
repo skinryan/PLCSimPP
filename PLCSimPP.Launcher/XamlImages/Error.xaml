@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<DrawingBrush x:Key="PicError" Stretch="Uniform">
+		<!--<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 12.0878,12.9507L 28.1691,28.6987"/>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 15.6707,15.1171L 24.5863,26.5323"/>
+					<GeometryDrawing Brush="#FFFF0000" Geometry="F1 M 14.7542,13.5756L 25.5028,28.0738"/>
+					<GeometryDrawing Brush="#FFFF0000" Geometry="F1 M 20.1285,6.94432C 27.7944,6.94432 34.0089,13.1588 34.0089,20.8247C 34.0089,28.4907 27.7944,34.7051 20.1285,34.7051C 12.4625,34.7051 6.24808,28.4907 6.24808,20.8247C 6.24808,13.1588 12.4625,6.94432 20.1285,6.94432 Z "/>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 14.1546,14.6726L 26.6365,26.8958"/>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 16.9356,16.3541L 23.8556,25.2143"/>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 16.2242,15.1577L 24.5669,26.4107"/>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 28.0608,13.1297L 28.0608,13.1297C 28.7801,13.85 28.7792,15.017 28.0589,15.7363L 15.337,28.4406C 14.6167,29.1599 13.4497,29.1591 12.7304,28.4387L 12.7304,28.4387C 12.011,27.7184 12.0119,26.5514 12.7322,25.8321L 25.4541,13.1279C 26.1744,12.4086 27.3415,12.4094 28.0608,13.1297 Z "/>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 12.7303,13.1297L 12.7303,13.1297C 12.011,13.85 12.0119,15.017 12.7322,15.7363L 25.4541,28.4406C 26.1744,29.1599 27.3415,29.1591 28.0608,28.4387L 28.0608,28.4387C 28.7801,27.7184 28.7792,26.5514 28.0589,25.8321L 15.337,13.1279C 14.6167,12.4086 13.4496,12.4094 12.7303,13.1297 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>-->
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <DrawingGroup.Children>
+                    <GeometryDrawing Brush="#FFFF0000" Geometry="F1 M 0,0L 10,0L 10,10"/>
+                </DrawingGroup.Children>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+</ResourceDictionary>

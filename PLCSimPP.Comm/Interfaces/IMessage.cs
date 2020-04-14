@@ -5,7 +5,7 @@
         /// <summary>
         /// Message target address
         /// </summary>
-        string Address { get; set; }
+        string UnitAddr { get; set; }
 
         /// <summary>
         /// Message command
@@ -15,7 +15,12 @@
         /// <summary>
         /// Message content
         /// </summary>
-        string Content { get; set; }
+        string Param { get; set; }
+
+        /// <summary>
+        /// The device belongs to the port
+        /// </summary>
+        int Port { get; set; }
 
         /// <summary>
         /// Build messagelog

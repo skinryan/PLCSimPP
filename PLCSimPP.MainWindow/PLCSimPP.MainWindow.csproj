@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UseWPF>true</UseWPF>
+	  <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
+	  <UseWPF>true</UseWPF>
     <AssemblyName>PLCSimPP.MainWindow</AssemblyName>
     <RootNamespace>PLCSimPP.MainWindow</RootNamespace>
   </PropertyGroup>
@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PLCSimPP.Comm\PLCSimPP.Comm.csproj" />
+    <ProjectReference Include="..\PLCSimPP.Service\PLCSimPP.Service.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

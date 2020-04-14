@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using PLCSimPP.Comm.Constant;
+using PLCSimPP.Comm.Events;
 using PLCSimPP.Comm.Interfaces.Services;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 
@@ -13,14 +15,14 @@ namespace PLCSimPP.Layout.ViewModels
     public class LayoutMenuViewModel : BindableBase
     {
         private readonly ILogService mLogServ;
-        private readonly IRegionManager mRegionManager;
+        private readonly IEventAggregator mEventAggr;
 
         public ICommand NavigateCommand { get; set; }
 
 
-        public LayoutMenuViewModel(IRegionManager region, ILogService logServ)
+        public LayoutMenuViewModel(IEventAggregator eventAggr, ILogService logServ)
         {
-            mRegionManager = region;
+            mEventAggr = eventAggr;
             mLogServ = logServ;
             NavigateCommand = new DelegateCommand<string>(Navigate);
         }
@@ -28,7 +30,7 @@ namespace PLCSimPP.Layout.ViewModels
         private void Navigate(string viewName)
         {
 
-            mRegionManager.RequestNavigate(RegionName.LAYOUTREGION, viewName);
+            mEventAggr.GetEvent<NavigateEvent>().Publish(viewName);
 
         }
     }

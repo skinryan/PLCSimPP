@@ -9,6 +9,7 @@ namespace PLCSimPP.Comm.Interfaces
 {
     public interface IUnit
     {
+        bool IsMaster { get; set; }
         /// <summary>
         /// Port
         /// </summary>
@@ -47,7 +48,7 @@ namespace PLCSimPP.Comm.Interfaces
         /// <summary>
         /// Parent unit (null if there are no parent)
         /// </summary>
-        IUnit Parent { get; }
+        IUnit Parent { get; set; }
 
         /// <summary>
         /// the sample in processing
@@ -60,25 +61,25 @@ namespace PLCSimPP.Comm.Interfaces
         /// <param name="sample"></param>
         void EnqueueSample(ISample sample);
 
-        /// <summary>
-        /// Try to get the first sample of the queue
-        /// </summary>
-        /// <param name="sample">first pending sample</param>
-        /// <returns>Returns true if the sample is pending and false if not</returns>
-        bool TryDequeueSample(out ISample sample);
+        ///// <summary>
+        ///// Try to get the first sample of the queue
+        ///// </summary>
+        ///// <param name="sample">first pending sample</param>
+        ///// <returns>Returns true if the sample is pending and false if not</returns>
+        //bool TryDequeueSample(out ISample sample);
 
         /// <summary>
         /// Clear all samples in the queue
         /// </summary>
         void ResetQueue();
 
-        /// <summary>
-        /// Move sample to next destination
-        /// </summary>
-        /// <param name="order">Sorting order</param>
-        /// <param name="bcrNo">Barcode reader number</param>
-        /// <param name="direction">Flow direction</param>
-        void MoveSample(SortingOrder order, string bcrNo, Direction direction = Direction.Forward);
+        ///// <summary>
+        ///// Move sample to next destination
+        ///// </summary>
+        ///// <param name="order">Sorting order</param>
+        ///// <param name="bcrNo">Barcode reader number</param>
+        ///// <param name="direction">Flow direction</param>
+        //void MoveSample(SortingOrder order, string bcrNo, Direction direction = Direction.Forward);
 
         /// <summary>
         /// Processing when a message is received
@@ -87,6 +88,10 @@ namespace PLCSimPP.Comm.Interfaces
         /// <param name="content">command content</param>
         void OnReceivedMsg(string cmd, string content);
 
+        /// <summary>
+        /// InitUnit
+        /// </summary>
+        void InitUnit();
 
     }
 }

@@ -19,19 +19,21 @@ namespace PLCSimPP.Test.HelperTest
         [TestMethod]
         public void SerializerInterfaceTest()
         {
-            
-            IUnit tmp = new Aliquoter(1, "0000222222", "TestDevice");
+            //1, "0000222222", "TestDevice"
+            IUnit tmp = new Aliquoter()
+            {
+                Address = "0000222222",
+                Port = 1,
+                DisplayName = "TestDevice"
+            };
             var UnitCollection = new ObservableCollection<IUnit>();
             UnitCollection.Add(tmp);
 
 
             var xmlstring = XmlConverter.SerializeIUnit(UnitCollection);
-
             var list = XmlConverter.DeserializeIUnit(xmlstring);
 
             //Aliquoter ali = list.ToList()[0];
-
-
         }
 
         [TestMethod]

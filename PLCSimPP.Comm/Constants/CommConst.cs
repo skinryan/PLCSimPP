@@ -21,6 +21,5 @@ namespace PLCSimPP.Comm.Constants
         public const int PORT3_RECEIVE = 1285;
         public const int PORT3_SEND = 1284;
 
-
     }
 }

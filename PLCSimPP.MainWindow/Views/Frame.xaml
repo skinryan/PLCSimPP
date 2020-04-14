@@ -19,11 +19,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Menu VerticalContentAlignment="Center"
               prism:RegionManager.RegionName="{x:Static comm:RegionName.MENUREGION}"
               ItemContainerStyle="{StaticResource MenuItemStyle}" />
         <!--<TextBlock FontSize="80" Text="{Binding Title}" />-->
         <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static comm:RegionName.LAYOUTREGION}" />
+        <StatusBar Grid.Row="2">
+            <TextBlock Text="{Binding BackWorkerStatus}" />
+        </StatusBar>
     </Grid>
 </UserControl>

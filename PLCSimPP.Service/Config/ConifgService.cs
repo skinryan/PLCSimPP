@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PLCSimPP.Comm.Configuration;
 using PLCSimPP.Comm.Interfaces;
 using PLCSimPP.Comm.Interfaces.Services;
@@ -12,66 +15,95 @@ namespace PLCSimPP.Service.Config
 {
     public class ConifgService : IConfigService
     {
-        private string mSitemapPath;
-        private int mSysCfgPath;
+        private readonly ILogService mLogger;
 
-        public ConifgService()
+        public ConifgService(ILogService logger)
         {
-            mSitemapPath = AppConfig.Configuration["Layout:Path"];
+            mLogger = logger;
         }
 
-        public IEnumerable<T> ReadFile<T>() where T : UnitBase
+        public IEnumerable<IUnit> ReadSiteMap()
         {
-            using (FileStream fs = new FileStream(mSitemapPath, FileMode.Open))
+            try
             {
-                using (StreamReader sr = new StreamReader(fs))
+                var mSitemapPath = AppConfig.Configuration["SiteMapPath"];
+                using (FileStream fs = new FileStream(mSitemapPath, FileMode.Open))
                 {
-                    string fileContent = sr.ReadToEnd();
+                    using (StreamReader sr = new StreamReader(fs))
+                    {
+                        string fileContent = sr.ReadToEnd();
 
-                    return XmlConverter.Deserialize<List<T>>(fileContent);
+                        return XmlConverter.DeserializeIUnit(fileContent);
+                    }
                 }
             }
-        }
-
-        public List<IUnit> ReadSiteMap()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveSiteMap()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Write<T>(List<T> unitCollection) where T : UnitBase
-        {
-            var path = mSitemapPath.Substring(0, mSitemapPath.LastIndexOf('/'));
-
-            if (!Directory.Exists(path))
+            catch (Exception ex)
             {
-                Directory.CreateDirectory(path);
+                mLogger.LogSys("Invoke ReadSiteMap() method error.", ex);
+                return new List<IUnit>();
+            }
+        }
+
+        public SystemInfo ReadSysConfig()
+        {
+            try
+            {
+                var path = AppDomain.CurrentDomain.BaseDirectory + "\\appsettings.json";
+                string josnString = File.ReadAllText(path, Encoding.Default);
+                SystemInfo sys = JsonConvert.DeserializeObject<SystemInfo>(josnString);
+
+                return sys;
+            }
+            catch (Exception)
+            {
+                var result = new SystemInfo();
+                result.MsgSendInterval = 100;
+                result.SiteMapPath = "./Layout/Setting1.txt";
+                return result;
             }
 
-            using (FileStream fs = new FileStream(mSitemapPath, FileMode.OpenOrCreate))
+        }
+
+        public void SaveSysConfig(SystemInfo info)
+        {
+            //AppConfig.Configuration["System:ReceiveInterval"] = info.MsgReceiveInterval.ToString();
+            //AppConfig.Configuration["System:SiteMapPath"] = info.SiteMapPath;
+
+            var path = AppDomain.CurrentDomain.BaseDirectory + "\\appsettings.json";
+            string josnString = File.ReadAllText(path, Encoding.Default);
+
+            SystemInfo sys = JsonConvert.DeserializeObject<SystemInfo>(josnString);
+            sys.MsgSendInterval = info.MsgSendInterval;
+            sys.SiteMapPath = info.SiteMapPath;
+            sys.DcSimLocation = info.DcSimLocation;
+            sys.DcInstruments = info.DcInstruments;
+            sys.DxCSimLocation = info.DxCSimLocation;
+            sys.DxCInstruments = info.DxCInstruments;
+
+            var convertString = JsonConvert.SerializeObject(sys);
+            File.WriteAllText(path, convertString, Encoding.UTF8);
+        }
+
+        public void SaveSiteMap(string path, IEnumerable<IUnit> unitCollection)
+        {
+            //var mSitemapPath = AppConfig.Configuration["System:SiteMapPath"];
+            var dir = path.Substring(0, path.LastIndexOf('\\'));
+
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
             {
                 using (StreamWriter sr = new StreamWriter(fs))
                 {
-                    var content = XmlConverter.Serialize<List<T>>(unitCollection);
-                    sr.Write(sr);
+                    var content = XmlConverter.SerializeIUnit(unitCollection);
+                    sr.Write(content);
                 }
             }
         }
 
-        public void ReadSysConfig()
-        {
-            throw new System.NotImplementedException();
-        }
 
-        public void SaveSysConfig()
-        {
-            throw new System.NotImplementedException();
-        }
-
-       
     }
 }

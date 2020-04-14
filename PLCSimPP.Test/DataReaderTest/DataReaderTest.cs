@@ -18,7 +18,7 @@ namespace PLCSimPP.Test.DataReaderTest
 
             Assert.IsTrue(msg.Command == "0004");
             Assert.IsTrue(msg.Param == " ");
-            Assert.IsTrue(msg.Unit == "000000007F");
+            Assert.IsTrue(msg.UnitAddr == "000000007F");
         }
     }
 }

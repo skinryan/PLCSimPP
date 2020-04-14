@@ -7,6 +7,12 @@
         /// </summary>
         string SampleID { get; set; }
 
+        RackType Rack { get; set; }
 
+        bool IsLoaded { get; set; }
+
+        string DcToken { get; set; }
+
+        string DxCToken { get; set; }
     }
 }

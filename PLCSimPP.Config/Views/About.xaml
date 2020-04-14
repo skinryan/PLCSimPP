@@ -7,15 +7,23 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d">
-    <StackPanel VerticalAlignment="Center">
-        <TextBlock HorizontalAlignment="Center" FontSize="30">
-            <Run>PLC Simulator</Run>
-        </TextBlock>
-        <TextBlock Width="300"
-                   VerticalAlignment="Center"
+             mc:Ignorable="d">  
+    <Grid Margin="5" >
+        <Grid.RowDefinitions>        
+            <RowDefinition Height="150" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />            
+        </Grid.RowDefinitions>        
+       
+        <TextBlock Grid.Row="0"
+                   Grid.Column="1"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   FontWeight="Bold"><Run Text="{Binding Version}" /></TextBlock>
+        <TextBlock Grid.Row="2" Width="500"
+                   VerticalAlignment="Top"                 
                    TextWrapping="Wrap">
-            <Run>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</Run>
-        </TextBlock>
-    </StackPanel>
+            <Run Text="{Binding CopyRight}" /><Run Text=" This computer program is protected by international copyright law, and unauthorized copying, use, distribution, transfer or sale is a violation of those laws that may result in civil or criminal penalties. This computer program may also be subject to additional restrictions contained in a license granted by Beckman Coulter, Inc. to the authorized user of this computer program or to the authorized owner or other authorized user of the system onto which this computer program is installed. Any violation of the license provisions may result in additional civil penalties, including an injunction and damages. Please refer to the computer program or system agreement for the terms and conditions of that license." />
+        </TextBlock>                  
+    </Grid>
 </UserControl>

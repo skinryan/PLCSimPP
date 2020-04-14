@@ -2,21 +2,39 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Xml;
+using System.Xml.Schema;
 using System.Xml.Serialization;
+using CommonServiceLocator;
 using PLCSimPP.Comm.Interfaces;
+using PLCSimPP.Comm.Interfaces.Services;
+using PLCSimPP.Service.Devicies.StandardResponds;
+using PLCSimPP.Comm.Constants;
+using PLCSimPP.Comm;
 using Prism.Mvvm;
+using System.Collections.Concurrent;
+using System.Threading.Tasks;
+using System.Threading;
+using PLCSimPP.Comm.Models;
 
 namespace PLCSimPP.Service.Devicies
 {
-    [XmlInclude(typeof(Aliquoter))]
-    public abstract class UnitBase : BindableBase
+
+    public abstract class UnitBase : BindableBase, IUnit
     {
+        protected readonly ISendMsgBehavior mSendBehavior;
+        protected readonly ILogService mLogger;
+        protected readonly IRouterService mRouterService;
+        protected ConcurrentQueue<ISample> mPendingQueue;
+        protected Task mWaitArrivalTask;
+        protected int mArrivalInterval = 1000;
+
         private string mDisplayName;
 
         public string DisplayName
         {
             get { return mDisplayName; }
-            set { mDisplayName = value; }
+            set { SetProperty(ref mDisplayName, value); }
         }
 
         private int mPort;
@@ -27,13 +45,6 @@ namespace PLCSimPP.Service.Devicies
             set { SetProperty(ref mPort, value); }
         }
 
-        private int mPendingCount;
-        public int PendingCount
-        {
-            get { return mPendingCount; }
-            set { this.SetProperty(ref mPendingCount, value); }
-        }
-
         private string mAddress;
         public string Address
         {
@@ -41,65 +52,137 @@ namespace PLCSimPP.Service.Devicies
             set { this.SetProperty(ref mAddress, value); }
         }
 
-        private UnitType mUnitType;
-        public UnitType UnitType
-        {
-            get { return mUnitType; }
-            set { this.SetProperty(ref mUnitType, value); }
-        }
-
-        private ObservableCollection<UnitBase> mChildren;
-        public ObservableCollection<UnitBase> Children
+        private ObservableCollection<IUnit> mChildren;
+        public ObservableCollection<IUnit> Children
         {
             get { return mChildren; }
-            //set { this.SetProperty(ref _children, value); }
         }
 
-        private bool mHasChild;
+
+        public int PendingCount
+        {
+            get { return mPendingQueue.Count; }
+        }
+
         public bool HasChild
         {
-            get { return mHasChild; }
-            set { this.SetProperty(ref mHasChild, value); }
+            get { return Children.Count > 0; }
         }
 
-        private UnitBase mParent;
+        private IUnit mParent;
 
-        [XmlIgnore]
-        public UnitBase Parent
+        public IUnit Parent
         {
             get { return mParent; }
             set { this.SetProperty(ref mParent, value); }
         }
 
-        private Sample mCurrentSample;
-        public Sample CurrentSample
+        protected ISample mCurrentSample;
+        public ISample CurrentSample
         {
             get { return mCurrentSample; }
             set { this.SetProperty(ref mCurrentSample, value); }
         }
 
+        private bool mIsMaster;
+        public bool IsMaster
+        {
+            get { return mIsMaster; }
+            set { this.SetProperty(ref mIsMaster, value); }
+        }
 
-        public abstract void EnqueueSample(Sample sample);
+        public virtual void EnqueueSample(ISample sample)
+        {
+            mPendingQueue.Enqueue(sample);
+            RaisePropertyChanged("PendingCount");
+        }
 
-        public abstract void MoveSample(SortingOrder order, string bcrNo, Direction direction = Direction.Forward);
+        protected virtual void MoveSample()
+        {
+            var dest = mRouterService.FindNextDestination(this);
 
-        public abstract void OnReceivedMsg(string cmd, string content);
+            dest.EnqueueSample(this.CurrentSample);
+            this.CurrentSample = null;
+        }
 
-        public abstract void ResetQueue();
+        public virtual void OnReceivedMsg(string cmd, string content)
+        {
+            try
+            {
+                //get common reply
+                IResponds handler = RespondsFactory.GetRespondsHandler(cmd);
+                var respMsgList = handler.GetRespondsMsg(this, content);
 
-        public abstract bool TryDequeueSample(out Sample sample);
+                foreach (var respMsg in respMsgList)
+                {
+                    mSendBehavior.PushMsg(respMsg);
+                }
+            }
+            catch (Exception ex)
+            {
+                mLogger.LogSys(ex.Message, ex);
+            }
+        }
+
+        public virtual void ResetQueue()
+        {
+            mPendingQueue = new ConcurrentQueue<ISample>();
+        }
+
+        protected virtual bool TryDequeueSample(out ISample sample)
+        {
+            return mPendingQueue.TryDequeue(out sample);
+        }
+
+        public virtual void InitUnit()
+        {
+            //mOwner = owner;
+            if (this.GetType() != typeof(Centrifuge))
+                mWaitArrivalTask = Task.Run(new Action(ProcessPendingQueue));
+
+            mWaitArrivalTask.Start();
+        }
+
+        private void ProcessPendingQueue()
+        {
+            try
+            {
+                while (true)
+                {
+                    if (CurrentSample == null)
+                    {
+                        if (this.TryDequeueSample(out mCurrentSample))
+                        {
+                            OnSampleArrived();
+                        }
+                    }
+
+                    Thread.Sleep(mArrivalInterval);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                mLogger.LogSys("ProcessPendingQueue() error", ex);
+            }
+        }
+
+        protected virtual void OnSampleArrived()
+        {
+            var msg = SendMsg.GetMsg_1011(this, ParamConst.BCR_1);
+            this.mSendBehavior.PushMsg(msg);
+        }
 
         public UnitBase()
         {
-            mChildren = new ObservableCollection<UnitBase>();
+            mChildren = new ObservableCollection<IUnit>();
+            mPendingQueue = new ConcurrentQueue<ISample>();
+
+            mLogger = ServiceLocator.Current.GetInstance<ILogService>();
+            mSendBehavior = ServiceLocator.Current.GetInstance<ISendMsgBehavior>();
+            mRouterService = ServiceLocator.Current.GetInstance<IRouterService>();
         }
 
-        public UnitBase(int port, string address, string display)
-        {
-            mPort = port;
-            mAddress = address;
-            mDisplayName = display;
-            mChildren = new ObservableCollection<UnitBase>();
-        }
+
+
     }
 }

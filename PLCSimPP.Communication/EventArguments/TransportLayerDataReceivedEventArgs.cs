@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using PLCSimPP.Comm.Interfaces;
 using PLCSimPP.Communication.Models;
 
 namespace PLCSimPP.Communication.EventArguments
@@ -15,9 +16,9 @@ namespace PLCSimPP.Communication.EventArguments
         /// <summary>
         /// Constructor
         /// </summary>
-        public TransportLayerDataReceivedEventArgs(CmdMsg receivedString)
+        public TransportLayerDataReceivedEventArgs(IMessage receivedString)
         {
-            ReceivedString = receivedString;
+            ReceivedMsg = receivedString;
         }
 
         #endregion
@@ -26,7 +27,7 @@ namespace PLCSimPP.Communication.EventArguments
         /// <summary>
         /// Gets or Sets the received string
         /// </summary>
-        public CmdMsg ReceivedString
+        public IMessage ReceivedMsg
         {
             get;
             private set;

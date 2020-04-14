@@ -8,10 +8,12 @@
           d:DesignHeight="450"
           d:DesignWidth="800"
           prism:ViewModelLocator.AutoWireViewModel="True"
-          Header="Simulator"
+          Command="{Binding NavigateCommand}"
+          CommandParameter="DeviceLayout"
+          Header="Layout"
           mc:Ignorable="d">
-    <MenuItem Command="{Binding NavigateCommand}"
+    <!--<MenuItem Command="{Binding NavigateCommand}"
               CommandParameter="DeviceLayout"
-              Header="Layout Viewer" />
+              Header="Layout Viewer" />-->
 
 </MenuItem>

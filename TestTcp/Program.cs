@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using PLCSimPP.Comm.Models;
 using PLCSimPP.Communication;
 using PLCSimPP.Communication.EventArguments;
 using PLCSimPP.Communication.Models;
@@ -15,63 +16,52 @@ namespace TestTcp
         static TcpIpServerConnection tcpSender;
         static void Main(string[] args)
         {
-            //SmartConnection sc = new SmartConnection();
 
-            //CmdMsg msg = new CmdMsg();
-            //msg.Command = "1021";
-            //msg.Unit = "0000000001";
-            //msg.Param = "B";
+            int _1 = 0x0000000001;
+            int _2 = 0x0000000002;
+            int _3 = 0x0000000004;
+            int _4 = 0x0000000008;
+            int _5 = 0x0000000010;
+            int _6 = 0x0000000020;
+            int _7 = 0x0000000040;
 
-            //sc.Send(msg);
 
-            //receiver port 1281
-            tcpReceiver = new TcpIpServerConnection();
-            tcpReceiver.TransportLayerDataReceivedEvent += TcpReceiver_TransportLayerDataReceivedEvent;
-            //tcpReceiver.TransportLayerStateChangedEvent += TcpReceiver_TransportLayerStateChangedEvent;
+            int _10 = 0x0000000080;
 
-            //sender port 1280 
-            tcpSender = new TcpIpServerConnection();
-            tcpSender.TransportLayerDataReceivedEvent += TcpReceiver_TransportLayerDataReceivedEvent;
-            tcpSender.TransportLayerStateChangedEvent += TcpSender_TransportLayerStateChangedEvent;
 
-            tcpSender.Open("Unit1 Sender", "128.0.15.2", 1280);
-            tcpReceiver.Open("Unit1 Receiver", "128.0.15.2", 1281);
+            //Console.WriteLine(_1|_2|_3|_4|_5|_6|_7);
+            Console.WriteLine(_7 | 127);
 
-            //CmdMsg msg = new CmdMsg();
 
-            //msg.Command = "1021";
-            //msg.Unit = "0000000001";
-            //msg.Param = "09119282";
 
-            //tcpSender.Write(msg);
-            //Thread t0 = new Thread(delegate ()
+            ////receiver port 1281
+            //tcpReceiver = new TcpIpServerConnection();
+            //tcpReceiver.TransportLayerDataReceivedEvent += TcpReceiver_TransportLayerDataReceivedEvent;
+            ////tcpReceiver.TransportLayerStateChangedEvent += TcpReceiver_TransportLayerStateChangedEvent;
+
+            ////sender port 1280 
+            //tcpSender = new TcpIpServerConnection();
+            //tcpSender.TransportLayerDataReceivedEvent += TcpReceiver_TransportLayerDataReceivedEvent;
+            //tcpSender.TransportLayerStateChangedEvent += TcpSender_TransportLayerStateChangedEvent;
+
+            //tcpSender.Open("Unit1 Sender", "128.0.15.2", 1280);
+            //tcpReceiver.Open("Unit1 Receiver", "128.0.15.2", 1281);
+
+
+
+            //Console.WriteLine("Server Started...!");
+
+
+            //while (true)
             //{
+            //    //Thread.Sleep(1000);
+            //    //if (tcpSender.State == ConnectionState.Open)
+            //    //{
+            //    //    Unit1_1001Rep();
+            //    //}
 
-            //    TcpServer myserver = new TcpServer("128.0.15.2", 1280);
-            //});
-            //t0.Start();
-
-            //Thread t1 = new Thread(delegate ()
-            //{
-
-            //    TcpServer myserver = new TcpServer("128.0.15.2", 1281);
-            //});
-            //t1.Start();
-
-
-            Console.WriteLine("Server Started...!");
-
-
-            while (true)
-            {
-                //Thread.Sleep(1000);
-                //if (tcpSender.State == ConnectionState.Open)
-                //{
-                //    Unit1_1001Rep();
-                //}
-
-                Console.ReadLine();
-            }
+            //    Console.ReadLine();
+            //}
         }
 
         private static void TcpSender_TransportLayerStateChangedEvent(object sender, TransportLayerStateChangedEventArgs e)
@@ -88,11 +78,11 @@ namespace TestTcp
 
         private static void TcpReceiver_TransportLayerDataReceivedEvent(object sender, TransportLayerDataReceivedEventArgs e)
         {
-            var ss = e.ReceivedString;
+            var ss = e.ReceivedMsg;
 
             //string hex = BitConverter.ToString(ss.RawData);
 
-            //Console.WriteLine(ss.Unit + "|" + ss.Command + "|" + ss.Param);
+            Console.WriteLine(ss.UnitAddr + "|" + ss.Command + "|" + ss.Param);
             if (ss.Command == "0004")
             {
                 Unit1_1001Rep();
@@ -114,13 +104,13 @@ namespace TestTcp
 
                 foreach (var item in addrArray)
                 {
-                    CmdMsg cmd = new CmdMsg()
+                    MsgCmd cmd = new MsgCmd()
                     {
                         Command = "1001",
                         Param = "A",
-                        Unit = item
+                        UnitAddr = item
                     };
-                    
+
                     tcpSender.Write(cmd);
                 }
 

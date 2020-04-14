@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CommonLib.CommandDispatching.Dispatcher.CommandDispatcherBase&lt;T&gt;" Collapsed="true">
+    <Position X="2" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AABAAUAQAAgBQCABBAAAAAAQAEAAAAAAoAAgABAAAAI=</HashCode>
+      <FileName>CommandDispatching\Dispatcher\CommandDispatcherBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CommonLib.CommandDispatching.Dispatcher.ComparableCommandDispatcher" Collapsed="true">
+    <Position X="3.25" Y="2" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CommandDispatching\Dispatcher\ComparableCommandDispatcher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CommonLib.CommandDispatching.Dispatcher.DelayCommandDispatcher" Collapsed="true">
+    <Position X="4.75" Y="3.75" Width="2" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>CommandDispatching\Dispatcher\DelayCommandDispatcher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CommonLib.CommandDispatching.Dispatcher.PriorityCommandDispatcher" Collapsed="true">
+    <Position X="2.25" Y="3.75" Width="2.25" />
+    <NestedTypes>
+      <Enum Name="CommonLib.CommandDispatching.Dispatcher.PriorityCommandDispatcher.Priority" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CommandDispatching\Dispatcher\PriorityCommandDispatcher.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CommandDispatching\Dispatcher\PriorityCommandDispatcher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CommonLib.CommandDispatching.Command.PriorityCommand" Collapsed="true">
+    <Position X="8" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CommandDispatching\Command\PriorityCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CommonLib.CommandDispatching.Dispatcher.PriorityWithDelayCommandDispatcher" Collapsed="true">
+    <Position X="3.25" Y="5.5" Width="2.75" />
+    <AssociationLine Name="mDelayCommandDispatcher" Type="CommonLib.CommandDispatching.Dispatcher.DelayCommandDispatcher" FixedToPoint="true">
+      <Path>
+        <Point X="5.688" Y="5.5" />
+        <Point X="5.688" Y="4.38" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="mPriorityCommandDispatcher" Type="CommonLib.CommandDispatching.Dispatcher.PriorityCommandDispatcher" FixedToPoint="true">
+      <Path>
+        <Point X="3.562" Y="5.5" />
+        <Point X="3.562" Y="4.38" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AABAAQAAACAAgCAAAAAAAgAAAAAAAAAAIAAgAAAAAAA=</HashCode>
+      <FileName>CommandDispatching\Dispatcher\PriorityWithDelayCommandDispatcher.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="mDelayCommandDispatcher" />
+      <Field Name="mPriorityCommandDispatcher" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CommonLib.CommandDispatching.Dispatcher.QueueCommandDispatcher" Collapsed="true">
+    <Position X="0.5" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CommandDispatching\Dispatcher\QueueCommandDispatcher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CommonLib.CommandDispatching.Command.ActionCommand" Collapsed="true">
+    <Position X="7" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CommandDispatching\Command\ActionCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CommonLib.CommandDispatching.Command.CommandBase" Collapsed="true">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAQEAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>CommandDispatching\Command\CommandBase.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Message" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CommonLib.CommandDispatching.Command.MessageBase" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CommandDispatching\Command\MessageBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CommonLib.CommandDispatching.Command.ComparableCommand" Collapsed="true">
+    <Position X="8.75" Y="2" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAABQAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>CommandDispatching\Command\ComparableCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="1.419" />
+  </Class>
+  <Class Name="CommonLib.CommandDispatching.Command.DelayCommand" Collapsed="true">
+    <Position X="10" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAQEAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CommandDispatching\Command\DelayCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

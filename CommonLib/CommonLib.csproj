@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B3B3DCF4-B502-403A-85CC-467A2B61CD95}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CommonLib</RootNamespace>
+    <AssemblyName>BCI.Cabernet.CommonLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Clone\DeepClone.cs" />
+    <Compile Include="CommandDispatching\Command\ActionCommand.cs" />
+    <Compile Include="CommandDispatching\Command\CommandBase.cs" />
+    <Compile Include="CommandDispatching\Command\DelayCommand.cs" />
+    <Compile Include="CommandDispatching\Dispatcher\CommandDispatcherBase.cs" />
+    <Compile Include="CommandDispatching\Command\ComparableCommand.cs" />
+    <Compile Include="CommandDispatching\Dispatcher\ComparableCommandDispatcher.cs" />
+    <Compile Include="CommandDispatching\Dispatcher\DelayCommandDispatcher.cs" />
+    <Compile Include="CommandDispatching\Command\MessageBase.cs" />
+    <Compile Include="CommandDispatching\Command\PriorityCommand.cs" />
+    <Compile Include="CommandDispatching\Dispatcher\PriorityCommandDispatcher.cs" />
+    <Compile Include="CommandDispatching\Dispatcher\PriorityWithDelayCommandDispatcher.cs" />
+    <Compile Include="CommandDispatching\Dispatcher\QueueCommandDispatcher.cs" />
+    <Compile Include="Dialog\IDisplayMessageDialog.cs" />
+    <Compile Include="Dialog\Implementation\DisplayMessaegDefaultDialog.cs" />
+    <Compile Include="Dialog\Implementation\PromptYesNgDefaultDialog.cs" />
+    <Compile Include="Dialog\Implementation\SaveFileDefaultDialog.cs" />
+    <Compile Include="Dialog\Implementation\SelectFileDefaultDialog.cs" />
+    <Compile Include="Dialog\IPromptYesNoDialog.cs" />
+    <Compile Include="Dialog\ISaveFileDialog.cs" />
+    <Compile Include="Dialog\ISelectFileDialog.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TcpSocket\FreePortFinder.cs" />
+    <Compile Include="TcpSocket\ICommMessage.cs" />
+    <Compile Include="TcpSocket\ITcpComm.cs" />
+    <Compile Include="TcpSocket\ITcpCommClient.cs" />
+    <Compile Include="TcpSocket\ITcpCommServer.cs" />
+    <Compile Include="TcpSocket\IToCommMessageConverterWithCallback.cs" />
+    <Compile Include="TcpSocket\MessageWithByteSize.cs" />
+    <Compile Include="TcpSocket\TcpComm.cs" />
+    <Compile Include="TcpSocket\TcpCommClient.cs" />
+    <Compile Include="TcpSocket\TcpCommServer.cs" />
+    <Compile Include="Xml\XmlFileSerializer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CommandDispatching\_Design\CommandDispatching.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TcpSocket\_ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

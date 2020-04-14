@@ -5,7 +5,9 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using CommonServiceLocator;
+using PLCSimPP.Comm.Interfaces;
 using PLCSimPP.Comm.Interfaces.Services;
+using PLCSimPP.Comm.Models;
 using PLCSimPP.Communication.EventArguments;
 using PLCSimPP.Communication.Models;
 using Prism.Ioc;
@@ -87,6 +89,7 @@ namespace PLCSimPP.Communication.Support
                 logger = ServiceLocator.Current.GetInstance<ILogService>();
             }
 
+            Console.WriteLine(msg + EncoderHelper.ToHexString(content));
             logger.LogRawData(msg, content);
         }
 
@@ -176,7 +179,7 @@ namespace PLCSimPP.Communication.Support
             LogBytesData(string.Format("{0} Received Data:", this.mClient.Client.LocalEndPoint), buffer);
             //Console.WriteLine("Received Data: {0}", EncoderHelper.ToHexString(buffer));
 
-            //TODO: check data valid
+            //check data valid
             var checkResult = DataHelper.CheckData(buffer);
             switch (checkResult.Result)
             {
@@ -191,7 +194,7 @@ namespace PLCSimPP.Communication.Support
                 case ResultType.Heartbeat:
                 case ResultType.RawData:
                 default:
-                    //TODO: replay E000
+                    //replay E000：correct
                     DoSend(new byte[2] { 0xE0, 0x00 });
                     break;
             }
@@ -244,7 +247,7 @@ namespace PLCSimPP.Communication.Support
 
         #region "Rx Msg Handler"
 
-        protected virtual void OnMessageReceived(CmdMsg data)
+        protected virtual void OnMessageReceived(Comm.Interfaces.IMessage data)
         {
             // Raise event on background thread
             var args = new SmartConnectionDataReceivedEventArgs(data);
@@ -265,7 +268,10 @@ namespace PLCSimPP.Communication.Support
             byte[] dataBytes = (byte[])data;
 
             //Console.WriteLine("Send Data: {0}", EncoderHelper.ToHexString(dataBytes));
-            LogBytesData(string.Format("{0} Send Data: ", this.mClient.Client.LocalEndPoint), dataBytes);
+            if (dataBytes.Length > 2)
+            {
+                LogBytesData(string.Format("{0} Send Data: ", this.mClient.Client.LocalEndPoint), dataBytes);
+            }
 
             using (var buffer = new MemoryStream())
             {
@@ -299,12 +305,12 @@ namespace PLCSimPP.Communication.Support
 
         }
 
-        public void Send(CmdMsg data)
+        public void Send(IMessage data)
         {
             Send(data, true);
         }
 
-        private void Send(CmdMsg data, bool synchronizeSend)
+        private void Send(IMessage data, bool synchronizeSend)
         {
             if (synchronizeSend)
             {

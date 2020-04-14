@@ -1,12 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
-
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net472' ">    
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+  </ItemGroup>
+  
+  
   <ItemGroup>
     <Compile Remove="Views\Configuration.xaml - Copy.cs" />
+  </ItemGroup>
+  
+  
+  <ItemGroup>
+    <None Remove="SiteMapEditer.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +31,19 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PLCSimPP.Comm\PLCSimPP.Comm.csproj" />
+    <ProjectReference Include="..\PLCSimPP.PresentationControls\PLCSimPP.PresentationControls.csproj" />
+    <ProjectReference Include="..\PLCSimPP.Service\PLCSimPP.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Content Include="SiteMapEditer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +53,13 @@
     <Compile Update="Views\AboutMenu.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

@@ -2,43 +2,33 @@
 using System.Collections.Generic;
 using System.Text;
 using PLCSimPP.Comm;
+using PLCSimPP.Comm.Constants;
 using PLCSimPP.Comm.Interfaces;
 using PLCSimPP.Comm.Models;
+using PLCSimPP.Service.Devicies.StandardResponds;
 
 namespace PLCSimPP.Service.Devicies
 {
     [Serializable]
     public class HMOutlet : UnitBase
     {
-        public override void EnqueueSample(ISample sample)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void MoveSample(SortingOrder order, string bcrNo, Direction direction = Direction.Forward)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void OnReceivedMsg(string cmd, string content)
         {
-            throw new NotImplementedException();
+            base.OnReceivedMsg(cmd, content);
+
+            if (cmd == LcCmds._0011)
+            {
+                
+                base.MoveSample();
+            }
+
+            //if (cmd == LcCmds._0012)
+            //{
+                
+            //}
         }
 
-        public override void ResetQueue()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TryDequeueSample(out ISample sample)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HMOutlet(int port, string address, string display) : base(port, address, display)
-        {
-
-        }
+      
 
         public HMOutlet() : base()
         {

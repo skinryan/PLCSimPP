@@ -6,33 +6,15 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using PLCSimPP.Comm;
 using PLCSimPP.Comm.Interfaces;
+using PLCSimPP.Comm.Models;
 using PLCSimPP.Service.Devicies;
 
 namespace PLCSimPP.Service.Config
 {
     public class XmlConverter
     {
-        public static string Serialize<T>(T obj)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            using (StringWriter writer = new StringWriter(CultureInfo.InvariantCulture))
-            {
-                serializer.Serialize(writer, obj);
-                string xml = writer.ToString();
-                return xml;
-            }
-        }
-
-        public static T Deserialize<T>(string xml)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            using (StringReader reader = new StringReader(xml))
-            {
-                T result = (T)(serializer.Deserialize(reader));
-                return result;
-            }
-        }
 
         public static string SerializeIUnit(IEnumerable<IUnit> UnitList)
         {
@@ -50,7 +32,7 @@ namespace PLCSimPP.Service.Config
                     xmlWriter.WriteStartDocument(false);
                     //root node
                     xmlWriter.WriteStartElement("root");
-                    WiriteObjest(UnitList, xmlWriter);
+                    WiriteIUnit(UnitList, xmlWriter);
 
                     xmlWriter.WriteEndElement();
                     xmlWriter.WriteEndDocument();
@@ -61,7 +43,7 @@ namespace PLCSimPP.Service.Config
             }
         }
 
-        private static void WiriteObjest(IEnumerable<IUnit> UnitList, XmlWriter xmlWriter)
+        private static void WiriteIUnit(IEnumerable<IUnit> UnitList, XmlWriter xmlWriter)
         {
             foreach (var unit in UnitList)
             {
@@ -72,11 +54,12 @@ namespace PLCSimPP.Service.Config
                 xmlWriter.WriteElementString("Port", unit.Port.ToString());
                 xmlWriter.WriteElementString("Address", unit.Address);
                 xmlWriter.WriteElementString("DisplayName", unit.DisplayName);
+                xmlWriter.WriteElementString("IsMaster", unit.IsMaster.ToString());
 
                 if (unit.HasChild)
                 {
                     xmlWriter.WriteStartElement("Children");
-                    WiriteObjest(unit.Children, xmlWriter);
+                    WiriteIUnit(unit.Children, xmlWriter);
                     xmlWriter.WriteEndElement();
                 }
 
@@ -94,31 +77,75 @@ namespace PLCSimPP.Service.Config
                 {
                     while (xrdr.Read())
                     {
-                        //如果是开始节点
+                        //node of start mark
                         if (xrdr.NodeType == XmlNodeType.Element)
                         {
-                            //通过rdr.Name得到节点名
+                            //get node name by xrdr.Name
                             string elementName = xrdr.Name;
 
                             if (elementName == "root")
                             {
                                 continue;
                             }
-                            //TODO :bulid a factory to create instance
-                            else if (elementName == "Aliquoter")
+                            //create instance
+                            else
                             {
-                                IUnit aliquoter = new Aliquoter();
-
-                                ReadIUnit(aliquoter, xrdr);
-
-                                result.Add(aliquoter);
+                                IUnit device = BuildDevice(elementName);
+                                ReadIUnit(device, xrdr);
+                                result.Add(device);
                             }
                         }
                     }
                 }
             }
-            
+
             return result;
+        }
+
+        private static IUnit BuildDevice(string elementName)
+        {
+            IUnit device;
+            switch (elementName)
+            {
+                case "Aliquoter":
+                    device = new Aliquoter();
+                    break;
+                case "Centrifuge":
+                    device = new Centrifuge();
+                    break;
+                case "DxC":
+                    device = new DxC();
+                    break;
+                case "DynamicInlet":
+                    device = new DynamicInlet();
+                    break;
+                case "HLane":
+                    device = new HLane();
+                    break;
+                case "HMOutlet":
+                    device = new HMOutlet();
+                    break;
+                case "ILane":
+                    device = new ILane();
+                    break;
+                case "Labeler":
+                    device = new Labeler();
+                    break;
+                case "LevelDetector":
+                    device = new LevelDetector();
+                    break;
+                case "Outlet":
+                    device = new Outlet();
+                    break;
+                case "Stocker":
+                    device = new Stocker();
+                    break;
+                default:
+                    device = new Devicies.GC();
+                    break;
+            }
+
+            return device;
         }
 
         private static void ReadIUnit(IUnit unit, XmlReader reader)
@@ -148,6 +175,127 @@ namespace PLCSimPP.Service.Config
                         reader.Read();
                         unit.DisplayName = reader.Value;
                     }
+                    if (name == "IsMaster")
+                    {
+                        reader.Read();
+                        if (bool.TryParse(reader.Value, out bool result))
+                            unit.IsMaster = result;
+                    }
+                    if (name == "Children")
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader.NodeType == XmlNodeType.EndElement && reader.Name == "Children")
+                            {
+                                break;
+                            }
+                            if (reader.NodeType == XmlNodeType.Element)
+                            {
+                                IUnit device = BuildDevice(reader.Name);
+                                ReadIUnit(device, reader);
+                                device.Parent = unit;
+                                unit.Children.Add(device);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static string SerializeISample(IEnumerable<ISample> sampleList)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+                settings.Encoding = new UTF8Encoding(false);
+                settings.NewLineChars = Environment.NewLine;
+
+                using (XmlWriter xmlWriter = XmlWriter.Create(ms, settings))
+                {
+
+                    //write xml header <?xml version="1.0" encoding="utf-8" ?>
+                    xmlWriter.WriteStartDocument(false);
+                    //root node
+                    xmlWriter.WriteStartElement("root");
+                    foreach (var sample in sampleList)
+                    {
+                        var type = sample.GetType();
+                        xmlWriter.WriteStartElement(type.Name);
+
+                        xmlWriter.WriteElementString("SampleID", sample.SampleID);
+                        xmlWriter.WriteElementString("Rack", "" + (int)sample.Rack);
+
+                        xmlWriter.WriteEndElement();
+                    }
+
+                    xmlWriter.WriteEndElement();
+                    xmlWriter.WriteEndDocument();
+                }
+
+                string xml = Encoding.UTF8.GetString(ms.ToArray());
+                return xml;
+            }
+        }
+
+        public static IEnumerable<ISample> DeserializeISample(string xml)
+        {
+            List<ISample> result = new List<ISample>();
+
+            using (StringReader strReader = new StringReader(xml))
+            {
+                using (XmlReader xrdr = XmlReader.Create(strReader))
+                {
+                    while (xrdr.Read())
+                    {
+                        //node of start mark
+                        if (xrdr.NodeType == XmlNodeType.Element)
+                        {
+                            //get node name by xrdr.Name
+                            string elementName = xrdr.Name;
+
+                            if (elementName == "root")
+                            {
+                                continue;
+                            }
+                            //create instance
+                            else
+                            {
+                                ISample sample = new Sample();
+                                ReadISample(sample, xrdr);
+                                result.Add(sample);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private static void ReadISample(ISample sample, XmlReader reader)
+        {
+            while (reader.Read())
+            {
+                if (reader.NodeType == XmlNodeType.EndElement && reader.Name == sample.GetType().Name)
+                {
+                    break;
+                }
+
+                if (reader.NodeType == XmlNodeType.Element)
+                {
+                    string name = reader.Name;
+                    if (name == "SampleID")
+                    {
+                        reader.Read();
+                        sample.SampleID = reader.Value;
+                    }
+                    if (name == "Rack")
+                    {
+                        reader.Read();
+                        sample.Rack = (RackType)int.Parse(reader.Value);
+                    }
+
                 }
             }
         }

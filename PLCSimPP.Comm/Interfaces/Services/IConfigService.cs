@@ -11,13 +11,13 @@ namespace PLCSimPP.Comm.Interfaces.Services
 
         //void Write<T>(List<T> unitCollection) where T : UnitBase;
 
-        List<IUnit> ReadSiteMap();
+        IEnumerable<IUnit> ReadSiteMap();
 
-        void SaveSiteMap();
+        void SaveSiteMap(string path, IEnumerable<IUnit> unitCollection);
 
-        void ReadSysConfig();
+        SystemInfo ReadSysConfig();
 
-        void SaveSysConfig();
+        void SaveSysConfig(SystemInfo cfg);
 
     }
 }

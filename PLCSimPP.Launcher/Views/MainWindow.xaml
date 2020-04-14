@@ -1,0 +1,17 @@
+﻿<Window x:Class="PLCSimPP.Launcher.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:comm="clr-namespace:PLCSimPP.Comm.Constant;assembly=PLCSimPP.Comm"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:PLCSimPP.Launcher"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:region="http://prismlibrary.com/"
+        Title="{Binding TitleText}"
+        Width="1000"
+        Height="600"
+        region:ViewModelLocator.AutoWireViewModel="True"
+        mc:Ignorable="d">
+    <Grid>
+        <ContentControl region:RegionManager.RegionName="{x:Static comm:RegionName.CONTENTREGION}" />
+    </Grid>
+</Window>

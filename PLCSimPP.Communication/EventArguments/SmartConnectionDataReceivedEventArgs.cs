@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using PLCSimPP.Comm.Interfaces;
 using PLCSimPP.Communication.Models;
 
 namespace PLCSimPP.Communication.EventArguments
 {
     public class SmartConnectionDataReceivedEventArgs : EventArgs
     {
-        public SmartConnectionDataReceivedEventArgs(CmdMsg msg)
+        public SmartConnectionDataReceivedEventArgs(IMessage msg)
         {
             Msg = msg;
         }
 
-        public CmdMsg Msg
+        public IMessage Msg
         {
             get;
             private set;

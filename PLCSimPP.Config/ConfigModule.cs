@@ -18,6 +18,7 @@ namespace PLCSimPP.Config
             regionManager.RegisterViewWithRegion(RegionName.MENUREGION, typeof(ConfigMenu));
             regionManager.RegisterViewWithRegion(RegionName.MENUREGION, typeof(AboutMenu));
             regionManager.RegisterViewWithRegion(RegionName.LAYOUTREGION, typeof(Configuration));
+            regionManager.RegisterViewWithRegion(RegionName.LAYOUTREGION, typeof(SiteMapEditer));
             regionManager.RegisterViewWithRegion(RegionName.LAYOUTREGION, typeof(About));
         }
 

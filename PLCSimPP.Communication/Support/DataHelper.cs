@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using PLCSimPP.Comm.Constants;
+using PLCSimPP.Comm.Interfaces;
+using PLCSimPP.Comm.Models;
 using PLCSimPP.Communication.Models;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -50,7 +53,7 @@ namespace PLCSimPP.Communication.Support
             Array.Reverse(cmdBuffer);
 
             string command = EncoderHelper.ToHexStringWithoutSpace(cmdBuffer);
-            if (!Commands.ReceivedCmds.Contains(command))
+            if (!LcCmds.ReceivedCmds.Contains(command))
             {
                 result.Result = ResultType.InvalidCmd;
                 result.InvalidCommand = command;
@@ -63,10 +66,10 @@ namespace PLCSimPP.Communication.Support
             return result;
         }
 
-        public static byte[] BuildSendData(CmdMsg msg)
+        public static byte[] BuildSendData(IMessage msg)
         {
             byte[] head = { 0x60, 0x00 };
-            byte[] unitAddr = EncoderHelper.HexStringToByteArray(msg.Unit);
+            byte[] unitAddr = EncoderHelper.HexStringToByteArray(msg.UnitAddr);
             byte[] cmd = EncoderHelper.HexStringToByteArray(msg.Command);
             byte[] param = EncoderHelper.GetBytes(msg.Param);
 

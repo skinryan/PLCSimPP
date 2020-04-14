@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using PLCSimPP.Comm.Interfaces;
+using PLCSimPP.Comm.Models;
 using PLCSimPP.Communication.Execption;
 using PLCSimPP.Communication.Models;
 
@@ -265,14 +267,14 @@ namespace PLCSimPP.Communication.Support
             return ret;
         }
 
-        public static CmdMsg ConvertToMsg(byte[] rawData)
+        public static Comm.Interfaces.IMessage ConvertToMsg(byte[] rawData)
         {
             if (rawData == null)
             {
                 throw (new ArgumentNullException("source"));
             }
 
-            CmdMsg result = new CmdMsg();
+            Comm.Interfaces.IMessage result = new Comm.Models.MsgCmd();
 
             try
             {
@@ -301,7 +303,7 @@ namespace PLCSimPP.Communication.Support
                 byte[] paramBuffer = new byte[length - 7];
                 Array.Copy(contentBuffer, 7, paramBuffer, 0, length - 7);
 
-                result.Unit = ToHexStringWithoutSpace(addressBuffer);
+                result.UnitAddr = ToHexStringWithoutSpace(addressBuffer);
                 result.Command = ToHexStringWithoutSpace(cmdBuffer);
                 result.Param = Encoding.ASCII.GetString(paramBuffer);
             }
