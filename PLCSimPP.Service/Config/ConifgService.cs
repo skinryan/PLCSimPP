@@ -54,10 +54,11 @@ namespace PLCSimPP.Service.Config
 
                 return sys;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 var result = new SystemInfo();
                 result.MsgSendInterval = 100;
+
                 result.SiteMapPath = "./Layout/Setting1.txt";
                 return result;
             }
@@ -86,7 +87,6 @@ namespace PLCSimPP.Service.Config
 
         public void SaveSiteMap(string path, IEnumerable<IUnit> unitCollection)
         {
-            //var mSitemapPath = AppConfig.Configuration["System:SiteMapPath"];
             var dir = path.Substring(0, path.LastIndexOf('\\'));
 
             if (!Directory.Exists(dir))
@@ -94,16 +94,18 @@ namespace PLCSimPP.Service.Config
                 Directory.CreateDirectory(dir);
             }
 
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+            if (File.Exists(path))
             {
-                using (StreamWriter sr = new StreamWriter(fs))
-                {
-                    var content = XmlConverter.SerializeIUnit(unitCollection);
-                    sr.Write(content);
-                }
+                File.Delete(path);
+            }
+
+            FileInfo myFile = new FileInfo(path);
+
+            using (StreamWriter sw = myFile.CreateText())
+            {
+                var content = XmlConverter.SerializeIUnit(unitCollection);
+                sw.Write(content);
             }
         }
-
-
     }
 }

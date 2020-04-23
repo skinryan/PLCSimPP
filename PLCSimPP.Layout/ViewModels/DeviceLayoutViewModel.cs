@@ -106,7 +106,7 @@ namespace PLCSimPP.Layout.ViewModels
             RackExchangeCmd = new DelegateCommand<object>(DoRackExchange);
             //TestCommand = new DelegateCommand(DoTest);
 
-            mEventAggr.GetEvent<ReLoadSiteMapEvent>().Subscribe(OnSiteMapPathChanged);
+            mEventAggr.GetEvent<ReLoadSiteMapEvent>().Subscribe(OnSiteMapPathChanged, ThreadOption.UIThread);
         }
 
         private void OnSiteMapPathChanged(bool needReload)
@@ -267,15 +267,8 @@ namespace PLCSimPP.Layout.ViewModels
             }
         }
 
-        private void LoadSample()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private void RackExchange()
-        {
-            throw new System.NotImplementedException();
-        }
+       
+      
 
         private void DisConnect()
         {
@@ -307,6 +300,8 @@ namespace PLCSimPP.Layout.ViewModels
                 }
 
                 sample.Rack = SampleRangeInfo.RackType;
+                sample.DcToken = "AAA";
+                sample.DxCToken = "AAA";
                 sample.IsLoaded = false;
 
                 SampleCollection.Add(sample);

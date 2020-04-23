@@ -9,7 +9,8 @@ namespace PLCSimPP.Communication.Models
         Heartbeat,
         RawData,
         InvalidLength,
-        InvalidCmd
+        InvalidCmd,
+        Confirm
     }
 
     public class CheckResult

@@ -17,6 +17,7 @@ namespace PLCSimPP.Comm.Models
         public ObservableCollection<AnalyzerItem> DcInstruments { get; set; }
         public string DxCSimLocation { get; set; }
         public ObservableCollection<AnalyzerItem> DxCInstruments { get; set; }
+        public string ConnectionString { get; set; }
 
         public SystemInfo()
         {

@@ -119,6 +119,7 @@ namespace PLCSimPP.Layout.Model
         {
             EndNumEnable = true;
             QuantityEnable = true;
+            Append = 4;
         }
     }
 

@@ -11,7 +11,10 @@ namespace PLCSimPP.Comm.Interfaces.Services
         //ObservableCollection<UnitBase> GetLayout();
         public void SetSiteMap(ObservableCollection<IUnit> unitColleciton);
 
-        //public void MoveSampleToTargetUnit(IUnit current, IUnit target);
+        public List<IUnit> FindTargetUnit(string targetAddr);
+
         public IUnit FindNextDestination(IUnit current);
+
+        public IUnit FindNextPort(IUnit current);
     }
 }

@@ -55,11 +55,12 @@ namespace PLCSimPP.Service.Services
             }
 
             mTcpSender = new TcpIpServerConnection();
-            mTcpSender.TransportLayerStateChangedEvent += TcpSender_OnStateChangedEvent;
-
+            //mTcpSender.TransportLayerDataReceivedEvent += TcpSender_OnDataReceivedEvent;
+            //mTcpSender.TransportLayerStateChangedEvent += TcpSender_OnStateChangedEvent;
+           
             mTcpReceiver = new TcpIpServerConnection();
             mTcpReceiver.TransportLayerDataReceivedEvent += TcpReceiver_OnDataReceivedEvent;
-            mTcpReceiver.TransportLayerStateChangedEvent += TcpReceiver_OnStateChangedEvent;
+            //mTcpReceiver.TransportLayerStateChangedEvent += TcpReceiver_OnStateChangedEvent;
 
             // tcp/ip servier started
         }
@@ -67,9 +68,7 @@ namespace PLCSimPP.Service.Services
         public void OpenConnect()
         {
             mTcpSender.Open(string.Format("Master Port {0} Sender", MasterPortNumber), IpAddress, SernderPort);
-            mTcpReceiver.Open(string.Format("Master Port {0} Receiver", MasterPortNumber), IpAddress, ReceiverPort);
-
-
+            mTcpReceiver.Open(string.Format("Master Port {0} Receiver", MasterPortNumber), IpAddress, ReceiverPort);         
         }
 
         public void CloseConnect()
@@ -90,6 +89,7 @@ namespace PLCSimPP.Service.Services
 
         private void TcpReceiver_OnDataReceivedEvent(object sender, TransportLayerDataReceivedEventArgs e)
         {
+            mlogger.LogSys($"Port {e.ReceivedMsg.Port} received msg {e.ReceivedMsg}");
             OnMsgReceived(sender, e);
         }
 

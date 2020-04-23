@@ -23,5 +23,8 @@ namespace PLCSimPP.Comm.Interfaces
         string DxCSimLocation { get; set; }
 
         ObservableCollection<AnalyzerItem> DxCInstruments { get; set; }
+
+
+        string ConnectionString { get; set; }
     }
 }

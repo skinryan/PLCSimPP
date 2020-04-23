@@ -17,51 +17,73 @@ namespace TestTcp
         static void Main(string[] args)
         {
 
-            int _1 = 0x0000000001;
-            int _2 = 0x0000000002;
-            int _3 = 0x0000000004;
-            int _4 = 0x0000000008;
-            int _5 = 0x0000000010;
-            int _6 = 0x0000000020;
-            int _7 = 0x0000000040;
+            //int _1 = 0x0000000001;
+            //int _2 = 0x0000000002;
+            //int _3 = 0x0000000004;
+            //int _4 = 0x0000000008;
+            //int _5 = 0x0000000010;
+            //int _6 = 0x0000000020;
+            //int _7 = 0x0000000040;
 
 
-            int _10 = 0x0000000080;
+            //int _10 = 0x0000000080;
 
 
             //Console.WriteLine(_1|_2|_3|_4|_5|_6|_7);
-            Console.WriteLine(_7 | 127);
+            //Console.WriteLine(_7 | 127);
 
 
 
-            ////receiver port 1281
-            //tcpReceiver = new TcpIpServerConnection();
-            //tcpReceiver.TransportLayerDataReceivedEvent += TcpReceiver_TransportLayerDataReceivedEvent;
-            ////tcpReceiver.TransportLayerStateChangedEvent += TcpReceiver_TransportLayerStateChangedEvent;
+            //receiver port 1281
+            tcpReceiver = new TcpIpServerConnection();
+            tcpReceiver.TransportLayerDataReceivedEvent += TcpReceiver_TransportLayerDataReceivedEvent;
+            //tcpReceiver.TransportLayerStateChangedEvent += TcpReceiver_TransportLayerStateChangedEvent;
 
-            ////sender port 1280 
-            //tcpSender = new TcpIpServerConnection();
-            //tcpSender.TransportLayerDataReceivedEvent += TcpReceiver_TransportLayerDataReceivedEvent;
-            //tcpSender.TransportLayerStateChangedEvent += TcpSender_TransportLayerStateChangedEvent;
+            //sender port 1280 
+            tcpSender = new TcpIpServerConnection();
+            tcpSender.TransportLayerDataReceivedEvent += TcpReceiver_TransportLayerDataReceivedEvent;
+            tcpSender.TransportLayerStateChangedEvent += TcpSender_TransportLayerStateChangedEvent;
 
-            //tcpSender.Open("Unit1 Sender", "128.0.15.2", 1280);
-            //tcpReceiver.Open("Unit1 Receiver", "128.0.15.2", 1281);
+            tcpSender.Open("Unit1 Sender", "128.0.15.2", 1280);
+            tcpReceiver.Open("Unit1 Receiver", "128.0.15.2", 1281);
+
+            var tcp1282 = new TcpIpServerConnection();
+            tcp1282.TransportLayerDataReceivedEvent += TcpReceiver_TransportLayerDataReceivedEvent;
+            //tcpReceiver.TransportLayerStateChangedEvent += TcpReceiver_TransportLayerStateChangedEvent;
+
+            //sender port 1280 
+            var tcp1283 = new TcpIpServerConnection();
+            tcp1283.TransportLayerDataReceivedEvent += TcpReceiver_TransportLayerDataReceivedEvent;
+            tcp1283.TransportLayerStateChangedEvent += TcpSender_TransportLayerStateChangedEvent;
+
+            tcp1282.Open("Unit1 Sender", "128.0.15.3", 1282);
+            tcp1283.Open("Unit1 Receiver", "128.0.15.3", 1283);
+
+            var tcp1284 = new TcpIpServerConnection();
+            tcp1284.TransportLayerDataReceivedEvent += TcpReceiver_TransportLayerDataReceivedEvent;
+            //tcpReceiver.TransportLayerStateChangedEvent += TcpReceiver_TransportLayerStateChangedEvent;
+
+            //sender port 1280 
+            var tcp1285 = new TcpIpServerConnection();
+            tcp1285.TransportLayerDataReceivedEvent += TcpReceiver_TransportLayerDataReceivedEvent;
+            tcp1285.TransportLayerStateChangedEvent += TcpSender_TransportLayerStateChangedEvent;
+
+            tcp1282.Open("Unit1 Sender", "128.0.15.4", 1284);
+            tcp1283.Open("Unit1 Receiver", "128.0.15.4", 1285);
+
+            Console.WriteLine("Server Started...!");
 
 
+            while (true)
+            {
+                //Thread.Sleep(1000);
+                //if (tcpSender.State == ConnectionState.Open)
+                //{
+                //    Unit1_1001Rep();
+                //}
 
-            //Console.WriteLine("Server Started...!");
-
-
-            //while (true)
-            //{
-            //    //Thread.Sleep(1000);
-            //    //if (tcpSender.State == ConnectionState.Open)
-            //    //{
-            //    //    Unit1_1001Rep();
-            //    //}
-
-            //    Console.ReadLine();
-            //}
+                Console.ReadLine();
+            }
         }
 
         private static void TcpSender_TransportLayerStateChangedEvent(object sender, TransportLayerStateChangedEventArgs e)

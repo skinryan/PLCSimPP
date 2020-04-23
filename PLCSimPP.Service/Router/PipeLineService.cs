@@ -11,11 +11,12 @@ using PLCSimPP.Comm.Interfaces.Services;
 using PLCSimPP.Comm.Models;
 using PLCSimPP.Service.Devicies;
 using PLCSimPP.Service.Devicies.StandardResponds;
+using Prism.Mvvm;
 using GC = PLCSimPP.Service.Devicies.GC;
 
 namespace PLCSimPP.Service.Router
 {
-    public class PipeLineService : IPipeLine
+    public class PipeLineService : BindableBase, IPipeLine
     {
         public const int MAX_ONLINE_COUNT = 200;
         private readonly ILogService mLogger;
@@ -39,7 +40,12 @@ namespace PLCSimPP.Service.Router
 
         public bool IsConnected { get; set; }
 
-        public ObservableCollection<IUnit> UnitCollection { get; set; }
+        private ObservableCollection<IUnit> mUnitCollection;
+        public ObservableCollection<IUnit> UnitCollection
+        {
+            get { return mUnitCollection; }
+            set { SetProperty(ref mUnitCollection, value); }
+        }
 
         public IAnalyzerSimBehavior AnalyzerSim { get; set; }
 
@@ -57,11 +63,12 @@ namespace PLCSimPP.Service.Router
 
         public void Connect()
         {
-            MsgReceiver.SetUnitCollection(UnitCollection);
+            RouterService.SetSiteMap(UnitCollection);
+            //MsgReceiver.SetUnitCollection(UnitCollection);
             MsgService.Connect();
             MsgReceiver.ActiveRecvTask("");
             MsgSender.ActiveSendTask("");
-            
+
             IsConnected = true;
 
             foreach (var port in UnitCollection)
@@ -69,6 +76,16 @@ namespace PLCSimPP.Service.Router
                 if (port.GetType() == typeof(DynamicInlet))
                 {
                     inlet = port;
+                }
+
+                port.InitUnit();
+
+                if (port.HasChild)
+                {
+                    foreach (var device in port.Children)
+                    {
+                        device.InitUnit();
+                    }
                 }
             }
         }
@@ -136,22 +153,23 @@ namespace PLCSimPP.Service.Router
 
         public void Init()
         {
-            if (UnitCollection == null)
-                UnitCollection = new ObservableCollection<IUnit>();
+            //if (UnitCollection == null)
+            //    UnitCollection = new ObservableCollection<IUnit>();
 
-            UnitCollection.Clear();
-            foreach (var unit in ConfigService.ReadSiteMap())
-            {
-                UnitCollection.Add(unit);
-            };
+            //UnitCollection.Clear();
+            //foreach (var unit in ConfigService.ReadSiteMap())
+            //{
+            //    UnitCollection.Add(unit);
+            //};
 
             //set instrument unmber
             var dcCount = 1;
             var dxcCount = 1;
             foreach (var unit in UnitCollection)
-            {
+            {               
                 if (unit.HasChild)
                 {
+                    unit.IsMaster = true;
                     foreach (var subUnit in unit.Children)
                     {
                         if (subUnit.GetType() == typeof(GC))

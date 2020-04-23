@@ -103,6 +103,7 @@ namespace PLCSimPP.Service.Devicies
 
             dest.EnqueueSample(this.CurrentSample);
             this.CurrentSample = null;
+            RaisePropertyChanged("PendingCount");
         }
 
         public virtual void OnReceivedMsg(string cmd, string content)
@@ -138,9 +139,10 @@ namespace PLCSimPP.Service.Devicies
         {
             //mOwner = owner;
             if (this.GetType() != typeof(Centrifuge))
-                mWaitArrivalTask = Task.Run(new Action(ProcessPendingQueue));
-
-            mWaitArrivalTask.Start();
+            {
+                mWaitArrivalTask = new Task(ProcessPendingQueue);
+                mWaitArrivalTask.Start();
+            }
         }
 
         private void ProcessPendingQueue()

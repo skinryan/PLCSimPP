@@ -59,14 +59,14 @@ namespace PLCSimPP.Service.Devicies.StandardResponds
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
-        public static IMessage GetMsg_1024(IUnit unit, ISample sample)
+        public static IMessage GetMsg_1024(IUnit unit)
         {
             MsgCmd msg = new MsgCmd();
             msg.Command = UnitCmds._1024;
             msg.Port = unit.Port;
             msg.UnitAddr = unit.Address;
-            string rack = sample.Rack == Comm.RackType.Unrecognized ? "  " : ((int)sample.Rack).ToString();
-            msg.Param = ParamConst.BCR_1 + sample.SampleID.PadRight(15) + rack;
+            string rack = unit.CurrentSample.Rack == Comm.RackType.Unrecognized ? "  " : ((int)unit.CurrentSample.Rack).ToString();
+            msg.Param = ParamConst.BCR_1 + unit.CurrentSample.SampleID.PadRight(15) + rack;
             return msg;
         }
 
@@ -117,7 +117,7 @@ namespace PLCSimPP.Service.Devicies.StandardResponds
             string rackType = recvParamFrom1017.Substring(21, 2);
             string cassette = recvParamFrom1017.Substring(23, 1);
 
-            string param = sid.PadRight(15) + floor + rack + position + (int)Flag.Normal + "0";//Fixed value of 0
+            string param = sid.PadRight(15) + floor + rack + position + (int)Flag.Normal + cassette;
             return new MsgCmd()
             {
                 Command = UnitCmds._1015,

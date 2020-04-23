@@ -25,7 +25,13 @@ namespace PLCSimPP.Log.ViewModels
             set { SetProperty(ref mFreezeScreen, value); }
         }
 
-        private ObservableCollection<MsgLog> LogCollection { get; set; }
+        private ObservableCollection<MsgLog> mLogCollection;
+
+        public ObservableCollection<MsgLog> LogCollection
+        {
+            get { return mLogCollection; }
+            set { SetProperty(ref mLogCollection, value); }
+        }
 
         public ICommand CancelCommand { get; set; }
 
@@ -34,7 +40,7 @@ namespace PLCSimPP.Log.ViewModels
             mEventAggr = eventAggr;
 
             LogCollection = new ObservableCollection<MsgLog>();
-            mEventAggr.GetEvent<MonitorEvent>().Subscribe(AddToMonitor);
+            mEventAggr.GetEvent<MonitorEvent>().Subscribe(AddToMonitor, ThreadOption.UIThread);
 
             CancelCommand = new DelegateCommand<string>(viewName =>
             {
@@ -49,8 +55,9 @@ namespace PLCSimPP.Log.ViewModels
                 if (LogCollection.Count > 10000)
                 {
                     LogCollection.RemoveAt(0);
-                    LogCollection.Add(msgLog);
                 }
+
+                LogCollection.Add(msgLog);
             }
         }
     }

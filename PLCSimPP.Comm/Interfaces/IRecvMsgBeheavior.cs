@@ -6,8 +6,6 @@ namespace PLCSimPP.Comm.Interfaces
 {
     public interface IRecvMsgBeheavior
     {
-
-
         /// <summary>
         /// Start the receive message task
         /// </summary>
@@ -18,13 +16,7 @@ namespace PLCSimPP.Comm.Interfaces
         /// Stop the receive message task
         /// </summary>
         void StopRecvTask();
-
-        //void PushReceivedMsg(IMessage msg);
-
-        /// <summary>
-        /// Set the unitcollection of pipeline
-        /// </summary>
-        /// <param name="unitCollection">unit collection</param>
-        void SetUnitCollection(ObservableCollection<IUnit> unitCollection);
+               
+        
     }
 }

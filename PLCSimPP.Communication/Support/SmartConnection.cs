@@ -78,8 +78,7 @@ namespace PLCSimPP.Communication.Support
 
         public SmartConnection()
         {
-            //IContainerProvider containerProvider;
-            //var regionManager = containerProvider.Resolve<ILogService>();
+           
         }
 
         private void LogBytesData(string msg, byte[] content)
@@ -129,7 +128,7 @@ namespace PLCSimPP.Communication.Support
                     // Data received.
                     count = mClient.GetStream().EndRead(ar);
                 }
-                catch (Exception)
+                catch (Exception wx)
                 {
                     // Server closed ungracefully.
                     count = 0;
@@ -193,10 +192,12 @@ namespace PLCSimPP.Communication.Support
                     break;
                 case ResultType.Heartbeat:
                 case ResultType.RawData:
-                default:
                     //replay E000：correct
                     DoSend(new byte[2] { 0xE0, 0x00 });
                     break;
+                default:
+                    //do nothing
+                    return;
             }
 
             if (checkResult.Result == ResultType.RawData)
@@ -282,16 +283,15 @@ namespace PLCSimPP.Communication.Support
                 try
                 {
                     if ((mClientStream != null) && mClientStream.CanWrite)
-                        if ((mClientStream != null) && mClientStream.CanWrite)
+                    {
+                        if (mClient != null)
                         {
-                            if (mClient != null)
+                            if (mClient.Connected)
                             {
-                                if (mClient.Connected)
-                                {
-                                    buffer.WriteTo(mClientStream);
-                                }
+                                buffer.WriteTo(mClientStream);
                             }
                         }
+                    }
                 }
                 catch (Exception)
                 {
@@ -319,7 +319,8 @@ namespace PLCSimPP.Communication.Support
             }
             else
             {
-                ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(DoSend), data);
+                var bytesData = DataHelper.BuildSendData(data);
+                ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(DoSend), bytesData);
             }
         }
 

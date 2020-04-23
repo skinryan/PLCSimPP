@@ -90,7 +90,7 @@ namespace PLCSimPP.Service.Devicies
         {
             base.InitUnit();
 
-            mWaitArrivalTask = Task.Run(new Action(ProcessInSample));
+            mWaitArrivalTask = new Task(ProcessInSample);
             mWaitArrivalTask.Start();
 
             //mSpinningTimer.Start();
@@ -131,7 +131,7 @@ namespace PLCSimPP.Service.Devicies
 
         private void ProcessSpinning(object state)
         {
-           
+
             //while (true)
             //{
             if (!CanSortingSample && !mSpinning)

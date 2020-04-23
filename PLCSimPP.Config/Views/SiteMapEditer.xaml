@@ -78,10 +78,11 @@
 
         <Style x:Key="SiteStyle" TargetType="{x:Type ListBoxItem}">
             <Setter Property="Background" Value="SkyBlue" />
+            <Setter Property="Margin" Value="2"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Margin="{TemplateBinding Margin}">
 
                             <Border Background="{TemplateBinding Background}"
                                     BorderBrush="Black"
@@ -95,7 +96,7 @@
                                                Text="Master"
                                                TextWrapping="Wrap"
                                                Visibility="{Binding IsMaster, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                    <TextBlock MinWidth="120"
+                                    <TextBlock Width="120"
                                                Margin="3,2"
                                                VerticalAlignment="Center"
                                                Text="{Binding ., Converter={StaticResource NameConverter}}"
@@ -245,7 +246,7 @@
             </StackPanel>
         </GroupBox>
         <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
-            <GroupBox Width="200" Header="Port 1">
+            <GroupBox Width="220" Header="Port 1">
                 <ListBox x:Name="ls_port1"
                          BorderThickness="0"
                          ItemContainerStyle="{StaticResource SiteStyle}"
@@ -259,7 +260,7 @@
                     </i:Interaction.Triggers>-->
                 </ListBox>
             </GroupBox>
-            <GroupBox Width="200" Header="Port 2">
+            <GroupBox Width="220" Header="Port 2">
                 <ListBox x:Name="ls_port2"
                          BorderThickness="0"
                          ItemContainerStyle="{StaticResource SiteStyle}"
@@ -273,7 +274,7 @@
                     </i:Interaction.Triggers>-->
                 </ListBox>
             </GroupBox>
-            <GroupBox Width="200" Header="Port 3">
+            <GroupBox Width="220" Header="Port 3">
                 <ListBox x:Name="ls_port3"
                          BorderThickness="0"
                          ItemContainerStyle="{StaticResource SiteStyle}"

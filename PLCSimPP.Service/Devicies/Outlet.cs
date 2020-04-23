@@ -13,7 +13,23 @@ namespace PLCSimPP.Service.Devicies
     public class Outlet : UnitBase
     {
         private Dictionary<string, Shelf> mShelfList = new Dictionary<string, Shelf>();
+        public int StoredCount
+        {
+            get
+            {
+                int result = 0;
 
+                foreach (var shelf in mShelfList.Values)
+                {
+                    foreach (var rack in shelf.RackList.Values)
+                    {
+                        result += rack.SampleList.Count;
+                    }
+                }
+
+                return result;
+            }
+        }
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
@@ -56,6 +72,7 @@ namespace PLCSimPP.Service.Devicies
             }
 
             mShelfList[shelf].RackList[rack].SampleList[position] = sample;
+            RaisePropertyChanged("StoredCount");
         }
 
 

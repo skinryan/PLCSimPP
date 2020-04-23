@@ -26,12 +26,27 @@ namespace PLCSimPP.Service.Devicies
                 MoveSample();
             }
 
+            if (cmd == LcCmds._0012)
+            {
+                MoveSampelToPort2();
+            }
+
             if (cmd == LcCmds._0016)
             {
                 var tubeid = content.Substring(0, 15);
                 var secTubeid = content.Substring(15, 15);
                 mEventAggr.GetEvent<PrintLabelEvent>().Publish(tubeid + secTubeid);
             }
+        }
+
+
+        private void MoveSampelToPort2()
+        {
+            var dest = mRouterService.FindNextPort(this);
+
+            dest.EnqueueSample(this.CurrentSample);
+            this.CurrentSample = null;
+            RaisePropertyChanged("PendingCount");
         }
 
         protected override void OnSampleArrived()

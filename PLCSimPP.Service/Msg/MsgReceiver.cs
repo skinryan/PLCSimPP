@@ -22,7 +22,7 @@ namespace PLCSimPP.Service.Msg
         private bool mCanActive;//can active flag
         private string mToken;//script token
         private Task mRecvTask;//receive msg task  
-        private ObservableCollection<IUnit> mUnitCollection;
+        private IRouterService mRouterService;
 
         //private readonly ConcurrentQueue<IMessage> mReceiveQueue;// receive msg queue
         private readonly ILogService mLogger;
@@ -77,7 +77,7 @@ namespace PLCSimPP.Service.Msg
                                 Direction = Comm.Constants.CommConst.RECV
                             });
 
-                        var units = mUnitCollection.FindTargetUnit(result.UnitAddr);
+                        var units = mRouterService.FindTargetUnit(result.UnitAddr);
                         foreach (var unit in units)
                         {
                             unit.OnReceivedMsg(result.Command, result.Param);
@@ -100,7 +100,7 @@ namespace PLCSimPP.Service.Msg
             {
                 mCanActive = true;
             });
-            mUnitCollection = null;
+            //mUnitCollection = null;
         }
 
         //public void PushReceivedMsg(IMessage msg)
@@ -108,17 +108,17 @@ namespace PLCSimPP.Service.Msg
         //    this.mReceiveQueue.Enqueue(msg);
         //}
 
-        public void SetUnitCollection(ObservableCollection<IUnit> unitCollection)
-        {
-            this.mUnitCollection = unitCollection;
-        }
+        //public void SetUnitCollection(ObservableCollection<IUnit> unitCollection)
+        //{
+        //    this.mUnitCollection = unitCollection;
+        //}
 
-        public MsgReceiver(IEventAggregator eventAggr, ILogService logger, IMsgService msgService)
+        public MsgReceiver(IEventAggregator eventAggr, ILogService logger, IMsgService msgService, IRouterService router)
         {
             mEventAggr = eventAggr;
             mLogger = logger;
             mMsgService = msgService;
-            //mReceiveQueue = new ConcurrentQueue<IMessage>();
+            mRouterService = router;
 
             mRecvTask = new Task(RecvSequence);
             mCanActive = true;

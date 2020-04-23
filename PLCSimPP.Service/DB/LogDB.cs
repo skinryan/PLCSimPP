@@ -1,4 +1,6 @@
-﻿using Dapper;
+﻿using CommonServiceLocator;
+using Dapper;
+using PLCSimPP.Comm.Interfaces.Services;
 using PLCSimPP.Service.Log;
 using Prism.Mvvm;
 using System;
@@ -42,7 +44,10 @@ namespace PLCSimPP.Service.DB
 
         private LogDB()
         {
-            mConn = new SqlConnection("data source=.\\SQLEXPRESS;initial catalog=PLCSimPP;integrated security=SSPI;");
+            IConfigService configServ = ServiceLocator.Current.GetInstance<IConfigService>();
+            var config = configServ.ReadSysConfig();
+            mConn = new SqlConnection(config.ConnectionString);
+            //mConn = new SqlConnection("data source=.\\SQLEXPRESS;initial catalog=PLCSimPP;integrated security=SSPI;");
             //mConn = new SqlConnection(ConfigurationManager.AppSettings[DbConst.SQL_CONNECTION_KEY]);
 
         }

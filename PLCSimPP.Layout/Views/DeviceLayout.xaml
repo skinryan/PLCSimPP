@@ -21,6 +21,7 @@
             <cvt:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
             <cvt:TypeToVisibilityConverter x:Key="TypeToVisibilityConverter" />
             <cvt:RackExchangeParamConverter x:Key="RackExchangeParamConverter" />
+            <cvt:UnitType2VisibilityConverter x:Key="UnitType2VisibilityConverter"/>
 
             <ItemsPanelTemplate x:Key="HorizontalPanel">
                 <StackPanel Orientation="Vertical" />
@@ -86,12 +87,26 @@
                                                 BorderBrush="Black"
                                                 BorderThickness="0,1,1,1"
                                                 CornerRadius="0,4,4,0">
-                                            <TextBlock Width="30"
+                                            <StackPanel>
+                                                <TextBlock Width="30"
                                                        Padding="15,0"
                                                        VerticalAlignment="Center"
-                                                       Text="{Binding PendingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                        TextAlignment="Right"
-                                                       TextWrapping="Wrap" />
+                                                       TextWrapping="Wrap" >
+                                                    <!--<Run Text="Panding:"/>-->
+                                                    <Run Text="{Binding PendingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </TextBlock>
+                                                <TextBlock Width="30"
+                                                       Padding="15,0"
+                                                       VerticalAlignment="Center"
+                                                       TextAlignment="Right"
+                                                       TextWrapping="Wrap"
+                                                        Visibility="{Binding .,Converter={StaticResource UnitType2VisibilityConverter}}">
+                                                    <!--<Run Text="Stored:"/>-->
+                                                    <Run Text="{Binding StoredCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                       />
+                                                </TextBlock>
+                                            </StackPanel>
                                         </Border>
                                     </StackPanel>
                                 </Grid>
@@ -383,7 +398,7 @@
                                 <DataGridTextColumn Binding="{Binding SampleID}" Header="Sample ID" />
                                 <!--<DataGridTextColumn Binding="{Binding Diameter}" Header="Tube Diameter" />
                         <DataGridTextColumn Binding="{Binding Height}" Header="Tube Height" />-->
-                                <DataGridTextColumn Binding="{Binding Type, Converter={StaticResource RackToStrConverter}}" Header="Rack Type" />
+                                <DataGridTextColumn Binding="{Binding Rack, Converter={StaticResource RackToStrConverter}}" Header="Rack Type" />
                             </DataGrid.Columns>
                             <DataGrid.ContextMenu>
                                 <ContextMenu>

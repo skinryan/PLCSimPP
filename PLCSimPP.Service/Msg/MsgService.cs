@@ -42,7 +42,7 @@ namespace PLCSimPP.Service.Services
         public MsgService(ILogService logger)
         {
             mLogger = logger;
-            
+
             MasterPort_1 = new PortConnection(1, mLogger);
             MasterPort_2 = new PortConnection(2, mLogger);
             MasterPort_3 = new PortConnection(3, mLogger);
@@ -67,14 +67,17 @@ namespace PLCSimPP.Service.Services
             if (msg.Port == 1)
             {
                 MasterPort_1.SendMsg(msg);
+                
             }
             else if (msg.Port == 2)
             {
                 MasterPort_2.SendMsg(msg);
+               
             }
             else if (msg.Port == 3)
             {
                 MasterPort_3.SendMsg(msg);
+                
             }
         }
 

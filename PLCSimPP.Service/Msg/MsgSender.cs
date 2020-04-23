@@ -36,7 +36,7 @@ namespace PLCSimPP.Service.Msg
             mLogger = logger;
             mConfig = config;
 
-            mSendInterval = 200;//config.ReadSysConfig().MsgSendInterval;
+            mSendInterval = 50;//config.ReadSysConfig().MsgSendInterval;
             mSendQueue = new ConcurrentQueue<IMessage>();
             mSendTask = new Task(SendSequence);
             mCanActive = true;

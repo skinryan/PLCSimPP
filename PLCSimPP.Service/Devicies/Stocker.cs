@@ -11,8 +11,26 @@ namespace PLCSimPP.Service.Devicies
 {
     public class Stocker : UnitBase
     {
-        //private
+
         private Dictionary<string, Shelf> mShelfList = new Dictionary<string, Shelf>();
+
+        public int StoredCount
+        {
+            get
+            {
+                int result = 0;
+
+                foreach (var shelf in mShelfList.Values)
+                {
+                    foreach (var rack in shelf.RackList.Values)
+                    {
+                        result += rack.SampleList.Count;
+                    }
+                }
+
+                return result;
+            }
+        }
 
         public override void OnReceivedMsg(string cmd, string content)
         {
@@ -36,6 +54,14 @@ namespace PLCSimPP.Service.Devicies
 
                 CurrentSample = null;
             }
+
+            if (cmd == LcCmds._0019)
+            {
+                string sid = content.Substring(0, 15);
+                string floor = content.Substring(16, 1);
+                string rack = content.Substring(17, 1);
+                string position = content.Substring(18, 3);
+            }
         }
 
         private void StoreSample(string shelf, string rack, string position, ISample sample)
@@ -51,6 +77,8 @@ namespace PLCSimPP.Service.Devicies
             }
 
             mShelfList[shelf].RackList[rack].SampleList[position] = sample;
+            RaisePropertyChanged("StoredCount");
+            RaisePropertyChanged("PendingCount");
         }
 
 

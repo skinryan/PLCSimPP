@@ -30,13 +30,13 @@
                   CanUserAddRows="False"
                   FontFamily="Courier New"
                   IsReadOnly="True"
-                  ItemsSource="{Binding LogCollection}">
+                  ItemsSource="{Binding LogCollection,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Time, Converter={StaticResource DateTimeToStringConverter}}" Header="Date/Time" />
                 <DataGridTextColumn Binding="{Binding Direction}" Header="Direction" />
                 <DataGridTextColumn Binding="{Binding Address}" Header="Address" />
                 <DataGridTextColumn Binding="{Binding Command}" Header="Command" />
-                <DataGridTextColumn Binding="{Binding Message}" Header="Message" />
+                <DataGridTextColumn Binding="{Binding Details}" Header="Message" />
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Grid.Row="1"
@@ -48,10 +48,7 @@
                           Content="{Binding FreezeScreen, Converter={StaticResource ContentConverter}}"
                           IsChecked="{Binding FreezeScreen}" />
             <!--  IsEnabled="{Binding FreezeScreen, Converter={StaticResource BoolReverseConverter}}"  -->
-            <!--<Button Command="{Binding UnfreezeCommand}"
-                    Content="Unfreeze"
-                    IsEnabled="{Binding FreezeScreen}"
-                    Style="{StaticResource ControlButtonStyle}" />-->
+
             <Button Command="{Binding CancelCommand}"
                     Content="Cancel"
                     Style="{StaticResource ControlButtonStyle}" />

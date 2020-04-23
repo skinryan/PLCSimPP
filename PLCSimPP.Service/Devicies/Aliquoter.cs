@@ -61,25 +61,35 @@ namespace PLCSimPP.Service.Devicies
                     Command = UnitCmds._1014
                 };
                 msg.Param = CurrentSample.SampleID.PadRight(15) + " ";
+                
                 mSendBehavior.PushMsg(msg);
             }
 
             if (cmd == LcCmds._0015)
             {
-                var tubid = content.Substring(0, 15);
-                var seq = content.Substring(21, 2);
-                var sample = new Sample()
+                try
                 {
-                    SampleID = tubid.Trim(),
-                };
+                    var tubid = content.Substring(0, 15);
+                    var seq = content.Substring(19, 2);
+                    var sample = new Sample()
+                    {
+                        SampleID = tubid.Trim(),
+                    };
 
-                var dest = mRouterService.FindNextDestination(this);
-                dest.EnqueueSample(sample);
+                    var dest = mRouterService.FindNextDestination(this);
+                    dest.EnqueueSample(sample);
 
-                if (seq == LASTORDER)
-                {
-                    MoveSample();
+                    if (seq == LASTORDER)
+                    {
+                        MoveSample();
+                    }
                 }
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine(ex);
+                    
+                }
+                
             }
         }
 

@@ -17,6 +17,7 @@ namespace PLCSimPP.Service.Devicies
         private List<ISample> mClotedSamples;
         private Timer mClotTimer;
         private int mClotTime;
+        private object mlocker;
 
         public override void OnReceivedMsg(string cmd, string content)
         {
@@ -26,6 +27,7 @@ namespace PLCSimPP.Service.Devicies
             {
                 mClotedSamples.Add(CurrentSample);
                 CurrentSample = null;
+                RaisePropertyChanged("PendingCount");
 
                 if (mClotedSamples.Count == 5)
                 {
@@ -41,19 +43,27 @@ namespace PLCSimPP.Service.Devicies
 
         private void Reply_1012()
         {
-            //reply 1012
-            MsgCmd msg = new MsgCmd();
-            msg.Command = UnitCmds._1012;
-            msg.Port = this.Port;
-            msg.UnitAddr = this.Address;
+            lock (mlocker)
+            {
+                if (mClotedSamples.Count > 0)
+                {
+                    //reply 1012
+                    MsgCmd msg = new MsgCmd();
+                    msg.Command = UnitCmds._1012;
+                    msg.Port = this.Port;
+                    msg.UnitAddr = this.Address;
 
-            msg.Param = mClotedSamples.Count.ToString();
-            foreach (var sample in mClotedSamples)
-                msg.Param += sample.SampleID.PadRight(15) + "0000";
+                    msg.Param = mClotedSamples.Count.ToString();
+                    foreach (var sample in mClotedSamples)
+                        msg.Param += sample.SampleID.PadRight(15) + "0000";
 
-            mSendBehavior.PushMsg(msg);
+                    mSendBehavior.PushMsg(msg);
 
-            MoveDetectedSample();
+                    MoveDetectedSample();
+
+                    mClotedSamples.Clear();
+                }
+            }
         }
 
         private void MoveDetectedSample()
@@ -62,12 +72,17 @@ namespace PLCSimPP.Service.Devicies
 
             foreach (var sample in mClotedSamples)
             {
-                dest.EnqueueSample(sample);
+                dest.EnqueueSample(sample);                
             }
         }
 
         private void ProcessClot(object state)
         {
+            if (mClotedSamples.Count <= 0)
+            {
+                return;
+            }
+
             if (mClotTime >= CLOT_TIME_OUT)
             {
                 Reply_1012();
@@ -79,6 +94,7 @@ namespace PLCSimPP.Service.Devicies
 
         public LevelDetector() : base()
         {
+            mlocker = new object();
             mClotedSamples = new List<ISample>();
             mClotTimer = new Timer(ProcessClot, null, 1000, 1000);
 

@@ -13,6 +13,7 @@ using System;
 using PLCSimPP.Config.ViewDatas;
 using CommonServiceLocator;
 using PLCSimPP.Comm.Interfaces.Services;
+using System.Threading;
 
 namespace PLCSimPP.Config.ViewModels
 {
@@ -149,10 +150,8 @@ namespace PLCSimPP.Config.ViewModels
 
             if (ConfigurationController.Save())
             {
-                if (data.SitemapFilePath != oldpath)
-                {
-                    mEventAggr.GetEvent<ReLoadSiteMapEvent>().Publish(true);
-                }
+                Thread.Sleep(500);
+                mEventAggr.GetEvent<ReLoadSiteMapEvent>().Publish(true);
 
                 MessageBox.Show("Save Sucess");
             }

@@ -16,6 +16,13 @@ namespace PLCSimPP.Communication.Support
         {
             CheckResult result = new CheckResult() { Result = ResultType.InvalidCmd };
 
+            //length ==2 ,think of it as a confirm msg
+            if (rawData.Length == 2)
+            {
+                result.Result = ResultType.Confirm;
+                return result;
+            }
+
             /* Ingore first 2 bytes,it is header 
                next 2 bytes convert to int as data length
                next 5 bytes convert to hex string as unit address

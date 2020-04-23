@@ -5,7 +5,7 @@ using PLCSimPP.Comm.Models;
 
 namespace PLCSimPP.Service.Devicies.StandardResponds
 {
-    internal class ReplyMsg_0004 : IResponds
+    internal class ReplyMsg_1001 : IResponds
     {
         public List<IMessage> GetRespondsMsg(IUnit unit, string recvParam)
         {

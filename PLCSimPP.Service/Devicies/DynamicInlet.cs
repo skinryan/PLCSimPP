@@ -12,8 +12,6 @@ namespace PLCSimPP.Service.Devicies
     [Serializable]
     public class DynamicInlet : UnitBase
     {
-
-
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
@@ -31,7 +29,11 @@ namespace PLCSimPP.Service.Devicies
 
 
 
-       
+        protected override void OnSampleArrived()
+        {
+            var msg = SendMsg.GetMsg_1024(this);
+            this.mSendBehavior.PushMsg(msg);
+        }
 
         public DynamicInlet() : base()
         {

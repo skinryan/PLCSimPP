@@ -147,7 +147,7 @@ namespace PLCSimPP.Config.ViewModels
             {
                 if (item.Port == 1)
                 {
-                    SetPortCollection(item,Port1);
+                    SetPortCollection(item, Port1);
                 }
 
                 if (item.Port == 2)
@@ -164,33 +164,32 @@ namespace PLCSimPP.Config.ViewModels
 
         private void SetPortCollection(IUnit item, ObservableCollection<IUnit> portCollection)
         {
-            if (item.Port == 1)
-            {
-                portCollection.Add(item);
 
-                if (item.HasChild)
+            portCollection.Add(item);
+
+            if (item.HasChild)
+            {
+                item.IsMaster = true;
+                foreach (var subitem in item.Children)
                 {
-                    item.IsMaster = true;
-                    foreach (var subitem in item.Children)
-                    {
-                        portCollection.Add(subitem);
-                    }
+                    portCollection.Add(subitem);
                 }
             }
+
         }
 
         private void DoMoveDown(IUnit unit)
         {
 
-            if (Port == 1)
+            if (unit.Port == 1)
             {
                 MoveDown(Port1, unit);
             }
-            if (Port == 2)
+            if (unit.Port == 2)
             {
                 MoveDown(Port2, unit);
             }
-            if (Port == 3)
+            if (unit.Port == 3)
             {
                 MoveDown(Port3, unit);
             }
@@ -310,6 +309,7 @@ namespace PLCSimPP.Config.ViewModels
             if (Port1.Count > 0)
             {
                 var master1 = Port1.First();
+                master1.Children.Clear();
                 for (int i = 1; i < Port1.Count; i++)
                 {
                     master1.Children.Add(Port1[i]);
@@ -320,6 +320,7 @@ namespace PLCSimPP.Config.ViewModels
             if (Port2.Count > 0)
             {
                 var master2 = Port2.First();
+                master2.Children.Clear();
                 for (int i = 1; i < Port2.Count; i++)
                 {
                     master2.Children.Add(Port2[i]);
@@ -330,6 +331,7 @@ namespace PLCSimPP.Config.ViewModels
             if (Port3.Count > 0)
             {
                 var master3 = Port3.First();
+                master3.Children.Clear();
                 for (int i = 1; i < Port3.Count; i++)
                 {
                     master3.Children.Add(Port3[i]);
@@ -494,15 +496,15 @@ namespace PLCSimPP.Config.ViewModels
 
         private void DoRemove(IUnit unit)
         {
-            if (Port == 1)
+            if (unit.Port == 1)
             {
                 RemoveFromPort(Port1, unit);
             }
-            if (Port == 2)
+            if (unit.Port == 2)
             {
                 RemoveFromPort(Port2, unit);
             }
-            if (Port == 3)
+            if (unit.Port == 3)
             {
                 RemoveFromPort(Port3, unit);
             }
