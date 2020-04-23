@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PLCSimPP.Log.ViewModels.LogMenuViewModel">
+    <Position X="9" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAEAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>ViewModels\LogMenuViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PLCSimPP.Log.ViewModels.LogViewerViewModel">
+    <Position X="13" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABACAAAAAAEAAAAAAgAAAAAI=</HashCode>
+      <FileName>ViewModels\LogViewerViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PLCSimPP.Log.Views.LogMenu">
+    <Position X="7.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\LogMenu.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PLCSimPP.Log.Views.LogViewer">
+    <Position X="11.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\LogViewer.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

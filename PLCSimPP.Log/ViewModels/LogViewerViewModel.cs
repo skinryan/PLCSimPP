@@ -1,0 +1,266 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Windows.Forms;
+using System.Windows.Input;
+using PLCSimPP.Comm.Constants;
+using PLCSimPP.Comm.Events;
+using PLCSimPP.Comm.Interfaces;
+using PLCSimPP.Log.CustomControl;
+using PLCSimPP.Service.DB;
+using PLCSimPP.Service.Log;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Mvvm;
+
+namespace PLCSimPP.Log.ViewModels
+{
+    public class LogViewerViewModel : BindableBase
+    {
+
+        #region property
+        private readonly IPipeLine mPipeLine;
+        private readonly IEventAggregator mEventAggr;
+        public ICommand CancelCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
+        //public int CurrentPage { get; set; }
+
+        public int TotalPage { get; set; }
+
+        private List<string> mAddresses = new List<string>();
+        /// <summary>
+        ///     Gets or sets search begin datetime
+        /// </summary>
+        public List<string> Addresses
+        {
+            get { return mAddresses; }
+            set
+            {
+                mAddresses = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private int mPageSize;
+        /// <summary>
+        /// Page size
+        /// </summary>
+        public int PageSize
+        {
+            get { return mPageSize; }
+            set { SetProperty(ref mPageSize, value); }
+        }
+
+
+        private int mSearchIndex = 0;
+        /// <summary>
+        /// Search Index
+        /// </summary>
+        public int SearchIndex
+        {
+            get { return mSearchIndex; }
+            set { SetProperty(ref mSearchIndex, value); }
+        }
+
+
+
+        private PageData<LogContent> mCurrentPage;
+
+        /// <summary>
+        /// Current page
+        /// </summary>
+        public PageData<LogContent> CurrentPage
+        {
+            get { return mCurrentPage; }
+            set { SetProperty(ref mCurrentPage, value); }
+        }
+
+        private string mAddress;
+
+        /// <summary>
+        /// Address
+        /// </summary>
+        public string Address
+        {
+            get { return mAddress; }
+            set { SetProperty(ref mAddress, value); }
+        }
+
+
+        private string mParam;
+
+        /// <summary>
+        /// Param
+        /// </summary>
+        public string Param
+        {
+            get { return mParam; }
+            set { SetProperty(ref mParam, value); }
+        }
+
+        private DateTime mSearchFromDatetime = DateTime.Now.AddDays(-1);
+        /// <summary>
+        ///     Gets or sets search begin datetime
+        /// </summary>
+        public DateTime SearchFromDatetime
+        {
+            get { return mSearchFromDatetime; }
+            set
+            {
+                mSearchFromDatetime = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private DateTime mSearchToDatetime = DateTime.Now;
+        /// <summary>
+        ///     Gets or sets search end datetime
+        /// </summary>
+        public DateTime SearchToDatetime
+        {
+            get { return mSearchToDatetime; }
+            set
+            {
+                mSearchToDatetime = value;
+                RaisePropertyChanged();
+            }
+        }
+
+
+        #endregion
+        private ICommand mSearchCmd;
+        /// <summary>
+        /// Search result command
+        /// </summary>
+        public ICommand SearchCmd
+        {
+            get
+            {
+                if (mSearchCmd == null)
+                {
+                    mSearchCmd = new DelegateCommand<object>((obj) =>
+                    {
+                        CurrentPage = GetPage(1, PageSize, mSearchFromDatetime, mSearchToDatetime);
+                        SearchIndex++;
+                    });
+                }
+                return mSearchCmd;
+            }
+        }
+
+        private ICommand mPageChangingCommand;
+        /// <summary>
+        /// Page changing command
+        /// </summary>
+        public ICommand PageChangingCommand
+        {
+            get
+            {
+                if (mPageChangingCommand == null)
+                {
+                    mPageChangingCommand = new DelegateCommand<object>((e) =>
+                    {
+                        var args = (DatePageRoutedEventArgs)e;
+                        CurrentPage = GetPage(args.PageIndex, PageSize, mSearchFromDatetime, mSearchToDatetime);
+                    });
+                }
+                return mPageChangingCommand;
+            }
+        }
+
+        private PageData<LogContent> GetPage(int page, int pageSize, DateTime tmStart, DateTime tmEnd)
+        {
+            PageCriteria criteria = new PageCriteria() { Condition = $"[Time] <= '{tmEnd}' and [Time] >= '{tmStart}'" };
+
+            if (!string.IsNullOrEmpty(Address))
+                criteria.Condition += $" and [Address] = '{Address}'";
+
+            if (!string.IsNullOrEmpty(Param))
+                criteria.Condition += $" and [Details] like '%{Param}%'";
+
+
+            criteria.CurrentPage = page;
+            criteria.PageSize = pageSize;
+            criteria.TableName = DbConst.MSGLOG_TABLE_NAME;
+            criteria.PrimaryKey = DbConst.PAGE_DEFAULT_VALUE_PRIMARYKEY;
+
+            var result = LogDB.Current.GetPageData<LogContent>(criteria);
+            return result;
+        }
+
+
+        public void GetAddresses()
+        {
+            mAddresses.Clear();
+            mAddresses.Add(string.Empty);
+            if (mPipeLine.UnitCollection.Count > 0)
+            {
+                for (var i = 0; i < mPipeLine.UnitCollection.Count; i++)
+                {
+                    var children = mPipeLine.UnitCollection[i].Children;
+                    for (var j = 0; j < children.Count; j++)
+                    {
+                        if (!mAddresses.Contains(children[j].Address))
+                        {
+                            mAddresses.Add(children[j].Address);
+                        }
+                    }
+                }
+            }
+            mAddresses.Sort();
+            RaisePropertyChanged("Addresses");
+        }
+
+        public LogViewerViewModel(IEventAggregator eventAggr, IPipeLine pipeLine)
+        {
+
+            mPipeLine = pipeLine;
+            GetAddresses();
+            PageSize = DbConst.PAGE_DEFAULT_VALUE_PAGESIZE;
+
+            CurrentPage = GetPage(1, PageSize, mSearchFromDatetime, mSearchToDatetime);
+            mEventAggr = eventAggr;
+
+            SaveCommand = new DelegateCommand(DoSave);
+            CancelCommand = new DelegateCommand(() =>
+            {
+                mEventAggr.GetEvent<NavigateEvent>().Publish("DeviceLayout");
+            });
+        }
+
+        private void DoSave()
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Title = "Select the save path for the current query result";
+            sfd.Filter = "Text File(*.txt)|*.txt";
+            sfd.CheckPathExists = true;
+            sfd.DefaultExt = "txt";
+            sfd.RestoreDirectory = true;
+            sfd.ShowDialog();
+
+             try
+            {
+                using (FileStream fs = new FileStream(sfd.FileName, FileMode.OpenOrCreate))
+                {
+                    using (StreamWriter sw = new StreamWriter(fs))
+                    {
+                        var result = LogDB.Current.QueryLogContents(SearchFromDatetime, SearchToDatetime, Address, Param);
+
+                        foreach (var log in result)
+                        {
+                            sw.WriteLine($"[{log.Time}] [{log.Direction}] [{log.Address}] [{log.Command}] [{log.Details}]");
+                        }
+
+                        sw.Flush();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                MessageBox.Show("File Save Expection");
+            }
+
+        }
+    }
+}
