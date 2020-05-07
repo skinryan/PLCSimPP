@@ -23,18 +23,22 @@ namespace PLCSimPP.Service.Devicies
 
             if (cmd == LcCmds._0011)
             {
-                string bcr = content.Substring(1, 1);
+                string bcr = content.Substring(0, 1);
                 if (bcr == ParamConst.BCR_1)
                 {
                     var msg = SendMsg.GetMsg_1011(this, ParamConst.BCR_2);
                     this.mSendBehavior.PushMsg(msg);
                 }
+                               
+
                 if (bcr == ParamConst.BCR_2)
                 {
                     var msg = SendMsg.GetMsg_1015(this);
                     this.mSendBehavior.PushMsg(msg);
 
-                    mDxCSimService.SendMsg(InstrumentUnitNum, CurrentSample.DxCToken, CurrentSample.SampleID);
+                   
+                        mDxCSimService.SendMsg(InstrumentUnitNum, CurrentSample.DxCToken, CurrentSample.SampleID);
+                    
 
                     base.MoveSample();
                 }

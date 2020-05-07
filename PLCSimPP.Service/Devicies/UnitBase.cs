@@ -61,7 +61,12 @@ namespace PLCSimPP.Service.Devicies
 
         public int PendingCount
         {
-            get { return mPendingQueue.Count; }
+            get { return GetPendingCount(); }
+        }
+
+        protected virtual int GetPendingCount()
+        {
+            return mPendingQueue.Count;
         }
 
         public bool HasChild

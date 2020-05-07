@@ -14,5 +14,7 @@
         string DcToken { get; set; }
 
         string DxCToken { get; set; }
+
+        bool Retrieving { get; set; }
     }
 }

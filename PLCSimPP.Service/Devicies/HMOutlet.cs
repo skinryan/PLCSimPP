@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CommonServiceLocator;
 using PLCSimPP.Comm;
 using PLCSimPP.Comm.Constants;
+using PLCSimPP.Comm.Events;
 using PLCSimPP.Comm.Interfaces;
 using PLCSimPP.Comm.Models;
 using PLCSimPP.Service.Devicies.StandardResponds;
+using Prism.Events;
 
 namespace PLCSimPP.Service.Devicies
 {
     [Serializable]
     public class HMOutlet : UnitBase
     {
-
+        private IEventAggregator mEvent;
         private Dictionary<string, Shelf> mShelfList = new Dictionary<string, Shelf>();
 
         public int StoredCount
@@ -74,11 +77,13 @@ namespace PLCSimPP.Service.Devicies
             mShelfList[shelf].RackList[rack].SampleList[position] = sample;
             RaisePropertyChanged("StoredCount");
             RaisePropertyChanged("PendingCount");
+            mEvent.GetEvent<NotifyOffLineEvent>().Publish(true);
         }
 
         public HMOutlet() : base()
         {
-            mLogger.LogSys($"HMOutlet init");
+            //mLogger.LogSys($"HMOutlet init");
+            mEvent = ServiceLocator.Current.GetInstance<IEventAggregator>();
         }
     }
 }

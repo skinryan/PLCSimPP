@@ -36,11 +36,6 @@ namespace PLCSimPP.Test.HelperTest
             //Aliquoter ali = list.ToList()[0];
         }
 
-        [TestMethod]
-        public void SerializerJsonTest()
-        {
-
-
-        }
+       
     }
 }

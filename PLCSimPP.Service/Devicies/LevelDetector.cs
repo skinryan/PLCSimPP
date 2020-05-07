@@ -19,6 +19,11 @@ namespace PLCSimPP.Service.Devicies
         private int mClotTime;
         private object mlocker;
 
+        protected override int GetPendingCount()
+        {
+            return mClotedSamples.Count + mPendingQueue.Count;
+        }
+
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
@@ -62,6 +67,8 @@ namespace PLCSimPP.Service.Devicies
                     MoveDetectedSample();
 
                     mClotedSamples.Clear();
+
+                    RaisePropertyChanged("PendingCount");
                 }
             }
         }

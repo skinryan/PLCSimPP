@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using PLCSimPP.Comm;
 using PLCSimPP.Comm.Constants;
+using PLCSimPP.Comm.Events;
 using PLCSimPP.Comm.Interfaces;
 using PLCSimPP.Comm.Models;
 using PLCSimPP.Service.Devicies.StandardResponds;
+using Prism.Events;
 
 namespace PLCSimPP.Service.Devicies
 {
     [Serializable]
     public class Outlet : UnitBase
     {
+        private readonly IEventAggregator mEvent;
         private Dictionary<string, Shelf> mShelfList = new Dictionary<string, Shelf>();
         public int StoredCount
         {
@@ -33,11 +36,6 @@ namespace PLCSimPP.Service.Devicies
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
-
-            if (cmd == LcCmds._0011)
-            {
-                //todo replay 1015
-            }
 
             if (cmd == LcCmds._0012)
             {
@@ -73,12 +71,14 @@ namespace PLCSimPP.Service.Devicies
 
             mShelfList[shelf].RackList[rack].SampleList[position] = sample;
             RaisePropertyChanged("StoredCount");
+            mEvent.GetEvent<NotifyOffLineEvent>().Publish(true);
         }
 
 
         public Outlet() : base()
         {
-
+            mEvent = CommonServiceLocator.ServiceLocator.Current.GetInstance<IEventAggregator>();
+            
         }
     }
 }

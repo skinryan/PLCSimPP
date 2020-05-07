@@ -6,11 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using PLCSimPP.Comm.Events;
 using PLCSimPP.Comm.Interfaces;
 using PLCSimPP.Comm.Interfaces.Services;
 using PLCSimPP.Comm.Models;
 using PLCSimPP.Service.Devicies;
 using PLCSimPP.Service.Devicies.StandardResponds;
+using Prism.Events;
 using Prism.Mvvm;
 using GC = PLCSimPP.Service.Devicies.GC;
 
@@ -20,11 +22,14 @@ namespace PLCSimPP.Service.Router
     {
         public const int MAX_ONLINE_COUNT = 200;
         private readonly ILogService mLogger;
+        private readonly IEventAggregator mEventAggr;
         private Thread mSampleLoadingTask;
         private ConcurrentQueue<ISample> mSampleOnlineQueue;//inlet queue
         private IUnit inlet = null;
+        private object mCountLocker = new object();
 
-        public PipeLineService(IMsgService msgService, IRouterService router, IConfigService config,
+
+        public PipeLineService(IMsgService msgService, IRouterService router, IConfigService config, IEventAggregator eventAggregator,
                                ILogService logger, ISendMsgBehavior sender, IRecvMsgBeheavior receiver)
         {
             mLogger = logger;
@@ -33,9 +38,12 @@ namespace PLCSimPP.Service.Router
             ConfigService = config;
             MsgSender = sender;
             MsgReceiver = receiver;
+            mEventAggr = eventAggregator;
 
             UnitCollection = new ObservableCollection<IUnit>(ConfigService.ReadSiteMap());
             mSampleOnlineQueue = new ConcurrentQueue<ISample>();
+
+            mEventAggr.GetEvent<NotifyOffLineEvent>().Subscribe(SampleOffLine);
         }
 
         public bool IsConnected { get; set; }
@@ -151,6 +159,17 @@ namespace PLCSimPP.Service.Router
             MsgSender.PushMsg(msg);
         }
 
+        private void SampleOffLine(bool off)
+        {
+            lock (mCountLocker)
+            {
+                if (off)
+                {
+                    OnlineSampleCount += 1;
+                }
+            }
+        }
+
         public void Init()
         {
             //if (UnitCollection == null)
@@ -166,7 +185,7 @@ namespace PLCSimPP.Service.Router
             var dcCount = 1;
             var dxcCount = 1;
             foreach (var unit in UnitCollection)
-            {               
+            {
                 if (unit.HasChild)
                 {
                     unit.IsMaster = true;

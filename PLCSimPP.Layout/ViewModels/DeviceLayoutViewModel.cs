@@ -92,7 +92,7 @@ namespace PLCSimPP.Layout.ViewModels
             InitRackType();
             PipeLineService.Init();
 
-            SampleRangeInfo = new SampleRange();
+            SampleRangeInfo = new SampleRange() { RackType = RackType.Bypass };
             SampleCollection = new ObservableCollection<ISample>();
 
             ConnectCmd = new DelegateCommand(DoConnect);
@@ -267,8 +267,8 @@ namespace PLCSimPP.Layout.ViewModels
             }
         }
 
-       
-      
+
+
 
         private void DisConnect()
         {

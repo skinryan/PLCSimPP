@@ -20,15 +20,26 @@ namespace PLCSimPP.Service.Router
 
         }
 
+        /// <summary>
+        /// FindNextDestination of current unit
+        /// </summary>
+        /// <param name="current"></param>
+        /// <returns></returns>
         public IUnit FindNextDestination(IUnit current)
         {
-            if (current.IsMaster )
+            if (mUnitCollection.Count < 2)
+            {
+                throw new Exception("Incorrect configuration");
+            }
+
+            if (current.IsMaster)
             {
                 return current.Children.First();
             }
 
             var master = current.Parent;
             var index = master.Children.IndexOf(current);
+
             if (index + 1 < master.Children.Count)
             {
                 return master.Children[index + 1];
@@ -36,7 +47,15 @@ namespace PLCSimPP.Service.Router
 
             var masterIndex = mUnitCollection.IndexOf(master);
 
-            return mUnitCollection[masterIndex + 1].Children.First();
+            if (masterIndex + 1 < mUnitCollection.Count)
+            {
+                //jump the I-lane and H-lane 
+                return mUnitCollection[masterIndex + 1].Children.First();
+            }
+
+            //add on 
+            //return to first unit of Port2            
+            return mUnitCollection[1].Children.First();
         }
 
 

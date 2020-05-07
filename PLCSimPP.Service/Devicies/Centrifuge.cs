@@ -18,10 +18,18 @@ namespace PLCSimPP.Service.Devicies
     {
         const int CENTRIFUGE_MAX_CAPACITY = 40;
         const int SPINNING_TIME = 2000;
+        const int CENT_TIMEOUT = 30;
         private int mSecCount;// time count
         private bool mSpinning;// centrifuge working flag
         private readonly Timer mSpinningTimer;
+        private object mlocker;
+
         private List<ISample> StoredSamples { get; set; }
+
+        protected override int GetPendingCount()
+        {
+            return StoredSamples.Count + mPendingQueue.Count;
+        }
 
         /// <summary>
         /// if centrifuge is full ,return false
@@ -48,6 +56,7 @@ namespace PLCSimPP.Service.Devicies
             if (cmd == LcCmds._0011)
             {
                 StoreSample();
+                RaisePropertyChanged("PendingCount");
             }
 
             if (cmd == LcCmds._0012)
@@ -68,6 +77,8 @@ namespace PLCSimPP.Service.Devicies
                 this.MoveSampleToNext(sample);
             }
 
+            StoredSamples.Clear();
+
             IMessage notifyUnloading = new MsgCmd()
             {
                 Command = UnitCmds._1022,
@@ -75,9 +86,12 @@ namespace PLCSimPP.Service.Devicies
                 Port = this.Port,
                 UnitAddr = this.Address
             };
+
             base.mSendBehavior.PushMsg(notifyUnloading);
 
             mSpinning = false;
+
+            RaisePropertyChanged("PendingCount");
         }
 
         private void MoveSampleToNext(ISample sample)
@@ -92,15 +106,13 @@ namespace PLCSimPP.Service.Devicies
 
             mWaitArrivalTask = new Task(ProcessInSample);
             mWaitArrivalTask.Start();
-
-            //mSpinningTimer.Start();
         }
 
         private void StoreSample()
         {
             StoredSamples.Add(CurrentSample);
-
             CurrentSample = null;
+            mSecCount = 0;
         }
 
         private void ProcessInSample()
@@ -125,16 +137,33 @@ namespace PLCSimPP.Service.Devicies
             }
             catch (System.Exception ex)
             {
-                mLogger.LogSys("ProcessPendingQueue() error", ex);
+                mLogger.LogSys("ProcessInSample() error", ex);
             }
         }
 
         private void ProcessSpinning(object state)
         {
+            if (mSpinning)
+            {
+                return;
+            }
 
-            //while (true)
-            //{
-            if (!CanSortingSample && !mSpinning)
+            if (CanSortingSample && StoredSamples.Count > 0)
+            {
+                mSecCount += 1;
+            }
+
+            if (mSecCount >= CENT_TIMEOUT || StoredSamples.Count >= CENTRIFUGE_MAX_CAPACITY)
+            {
+                DoSpin();
+                mSecCount = 0;
+            }
+        }
+
+
+        private void DoSpin()
+        {
+            lock (mlocker)
             {
                 mSpinning = true;
 
@@ -166,18 +195,16 @@ namespace PLCSimPP.Service.Devicies
                     Port = this.Port,
                     UnitAddr = this.Address
                 };
-                base.mSendBehavior.PushMsg(querySorting);
+
                 //mSpinning = false;
+                base.mSendBehavior.PushMsg(querySorting);
             }
-
-            //    Thread.Sleep(1000);
-            //}
         }
-
 
 
         public Centrifuge() : base()
         {
+            mlocker = new object();
             StoredSamples = new List<ISample>();
             mSpinningTimer = new Timer(ProcessSpinning, null, 1000, 1000);
 

@@ -20,7 +20,7 @@ namespace PLCSimPP.Service.Console
 
         public void ConsoleInput(string inputText)
         {
-            mEventAggr.GetEvent<ConsoleOutputEvent>().Publish(inputText + " Done.");
+            //mEventAggr.GetEvent<ConsoleOutputEvent>().Publish(inputText + " Done.");
         }
 
         //private void HandleConsoleInput(string consoleCmdText)

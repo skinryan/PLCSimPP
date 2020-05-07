@@ -77,7 +77,7 @@ namespace PLCSimPP.Launcher
                 PrismApp.Dispatcher.Invoke(new Action(() =>
                 {
                     IEventAggregator eventAgg = (IEventAggregator)prismApp.Container.Resolve(typeof(IEventAggregator));
-                    eventAgg.GetEvent<ConsoleOutputEvent>().Subscribe(Print);
+                    //eventAgg.GetEvent<ConsoleOutputEvent>().Subscribe(Print);
                 }));
 
                 hookFlag = true;

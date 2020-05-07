@@ -63,6 +63,15 @@ namespace PLCSimPP.Comm.Models
             get { return mDxCToken; }
             set { SetProperty(ref mDxCToken, value); }
         }
+
+        private bool mRetrieving;
+
+        public bool Retrieving
+        {
+            get { return mRetrieving; }
+            set { SetProperty(ref mRetrieving, value); }
+        }
+
         public override string ToString()
         {
             return base.ToString();

@@ -17,6 +17,14 @@ namespace PLCSimPP.Service.Analyzer
         private readonly IConfigService mConfigService;
         private SystemInfo mConfig;
 
+        public bool Connected
+        {
+            get
+            {
+                return CommServerForDxCSim.Instance.HasConnectedClient;
+            }
+        }
+
         public DxCSimService(IConfigService config)
         {
             mConfigService = config;
@@ -53,7 +61,7 @@ namespace PLCSimPP.Service.Analyzer
 
             DxCSimCommandLine dxcl = new DxCSimCommandLine(dxcSimPath)
             {
-                LcSimServerPortNumber = CommServerForDcSim.Instance.ServerPortNumber
+                LcSimServerPortNumber = CommServerForDxCSim.Instance.ServerPortNumber
             };
 
             foreach (var item in mConfig.DxCInstruments)

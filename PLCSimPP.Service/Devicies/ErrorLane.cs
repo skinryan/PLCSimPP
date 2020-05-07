@@ -16,20 +16,14 @@ namespace PLCSimPP.Service.Devicies
 
             if (cmd == LcCmds._0011)
             {
-
                 base.MoveSample();
             }
-
-            //if (cmd == LcCmds._0012)
-            //{
-
-            //}
         }
 
         public ErrorLane()
         {
         }
 
-       
+
     }
 }

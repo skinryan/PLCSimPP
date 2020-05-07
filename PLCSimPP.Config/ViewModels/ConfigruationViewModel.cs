@@ -111,7 +111,7 @@ namespace PLCSimPP.Config.ViewModels
                                  //The index value of the first filter entry is 1.
                                  //RestoreDirectory = true //Gets or sets a value indicating whether the dialog box restores the current directory before closing.
             };
-            //var path = dialog.FileName;
+           
             var path = dialog.ShowDialog() == DialogResult.OK ? dialog.FileName.Trim() : string.Empty;
             return path;
         }
