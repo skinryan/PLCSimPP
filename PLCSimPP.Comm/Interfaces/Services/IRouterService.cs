@@ -15,6 +15,6 @@ namespace PLCSimPP.Comm.Interfaces.Services
 
         public IUnit FindNextDestination(IUnit current);
 
-        public IUnit FindNextPort(IUnit current);
+       // public IUnit FindNextPort(IUnit current);
     }
 }

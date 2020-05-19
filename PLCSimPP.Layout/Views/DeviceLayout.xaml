@@ -6,8 +6,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:prism="http://prismlibrary.com/"
+            xmlns:libBinding="clr-namespace:PLCSimPP.Layout.Model"
              d:DesignHeight="450"
              d:DesignWidth="1000"
+             Name="uc"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d">
     <UserControl.Resources>
@@ -16,6 +18,7 @@
                 <ResourceDictionary Source="../Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <libBinding:BindingProxy x:Key="BindingProxy" Data="{Binding}"/>
             <Geometry x:Key="geometry_exchange">M213.546667 384.853333l136.533333-136.533333L401.493333 299.946667 316.586667 384.853333H896v85.333334H128l85.333333-85.333334h0.213334z m597.12 298.666667l-136.234667 136.192L622.933333 768.426667l84.821334-84.906667H128v-85.333333h768l-85.333333 85.333333z</Geometry>
             <cvt:RackToStrConverter x:Key="RackToStrConverter" />
             <cvt:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
@@ -141,6 +144,11 @@
                                                         Margin="0,3"
                                                         VerticalAlignment="Top"
                                                         Orientation="Horizontal">
+                                                <StackPanel.ContextMenu>
+                                                    <ContextMenu  >
+                                                        <MenuItem Header="Clear Current Sample" Command="{Binding Data.ClearJammedCommand,Source={StaticResource BindingProxy}}" CommandParameter="{Binding .}" ></MenuItem>
+                                                    </ContextMenu>
+                                                </StackPanel.ContextMenu>
                                                 <Border Background="SkyBlue"
                                                         BorderBrush="Black"
                                                         BorderThickness="1,1,0,1"
@@ -155,6 +163,7 @@
                                                                    VerticalAlignment="Center"
                                                                    Text="{Binding Address}"
                                                                    TextWrapping="Wrap" />
+
                                                     </StackPanel>
                                                 </Border>
                                                 <Border Background="Aqua"
@@ -200,7 +209,6 @@
             </Style>
         </ResourceDictionary>
 
-
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -211,7 +219,7 @@
                  Margin="2,2,2,2"
                  BorderThickness="0"
                  ItemContainerStyle="{StaticResource LayoutStyle}"
-                 ItemsSource="{Binding PipeLineService.UnitCollection}">
+                 ItemsSource="{Binding AutomationService.UnitCollection}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" />
@@ -245,10 +253,11 @@
                                 <ColumnDefinition Width="30*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0"
                                        Style="{StaticResource TextStyle}"
@@ -312,8 +321,6 @@
                                      Text="{Binding SampleRangeInfo.Quantity}"
                                      TextAlignment="Right"
                                      TextChanged="TextBox_TextChanged" />
-                            <!--<TextBlock HorizontalAlignment="Left" Text="mm" />-->
-                            <!--<TextBlock HorizontalAlignment="Left" Text="mm" />-->
 
 
                             <TextBlock Grid.Row="2"
@@ -330,19 +337,31 @@
                                       SelectedValue="{Binding SampleRangeInfo.RackType}"
                                       SelectedValuePath="Value" />
 
-                            <!--<TextBlock Grid.Row="3"
+                            <TextBlock Grid.Row="3"
+                                       Grid.Column="0"
+                                       Style="{StaticResource TextStyle}"
+                                       Text="DcToken:" />
+                            <TextBox x:Name="tb_ss"
+                                     Grid.Row="3"
+                                     Grid.Column="1"                                     
+                                     Style="{StaticResource TextBoxStyle}"
+                                     CharacterCasing="Upper"
+                                     Text="{Binding SampleRangeInfo.DcToken}"
+                                     TextAlignment="Left"
+                                     />
+
+                            <TextBlock Grid.Row="3"
                                        Grid.Column="2"
                                        Style="{StaticResource TextStyle}"
-                                       Text="Token:" />
-                            <StackPanel Grid.Row="3"
-                                        Grid.Column="3"
-                                        Orientation="Horizontal">
-                                <TextBox Text="{Binding Current.AnalyzerToken}" TextAlignment="Right" />
-                            -->
-                            <!--<TextBlock HorizontalAlignment="Left" Text="mm" />-->
-                            <!--
-                            </StackPanel>-->
-
+                                       Text="DcToken:" />
+                            <TextBox Grid.Row="3"
+                                      Grid.Column="3"
+                                      Margin="3"
+                                      Style="{StaticResource TextBoxStyle}"
+                                      CharacterCasing="Upper"
+                                      Text="{Binding SampleRangeInfo.DxCToken}"
+                                      TextAlignment="Left"/>
+                            
                             <DockPanel Grid.Row="5"
                                        Grid.ColumnSpan="4"
                                        LastChildFill="False">
@@ -399,6 +418,8 @@
                                 <!--<DataGridTextColumn Binding="{Binding Diameter}" Header="Tube Diameter" />
                         <DataGridTextColumn Binding="{Binding Height}" Header="Tube Height" />-->
                                 <DataGridTextColumn Binding="{Binding Rack, Converter={StaticResource RackToStrConverter}}" Header="Rack Type" />
+                                <DataGridTextColumn Binding="{Binding DcToken}" Header="DcToken" />
+                                <DataGridTextColumn Binding="{Binding DxCToken}" Header="DxCToken" />
                             </DataGrid.Columns>
                             <DataGrid.ContextMenu>
                                 <ContextMenu>

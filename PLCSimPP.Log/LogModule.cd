@@ -2,15 +2,35 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="PLCSimPP.Log.ViewModels.LogMenuViewModel">
     <Position X="9" Y="4" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAAAAEAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAIAQAIAAAgg=</HashCode>
       <FileName>ViewModels\LogMenuViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PLCSimPP.Log.ViewModels.LogViewerViewModel">
     <Position X="13" Y="4" Width="1.75" />
+    <Members>
+      <Property Name="Address" Hidden="true" />
+      <Property Name="Addresses" Hidden="true" />
+      <Property Name="CurrentPage" Hidden="true" />
+      <Method Name="GetAddresses" Hidden="true" />
+      <Method Name="LogViewerViewModel" Hidden="true" />
+      <Property Name="PageSize" Hidden="true" />
+      <Property Name="Param" Hidden="true" />
+      <Property Name="SearchFromDatetime" Hidden="true" />
+      <Property Name="SearchIndex" Hidden="true" />
+      <Property Name="SearchToDatetime" Hidden="true" />
+      <Property Name="TotalPage" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAABACAAAAAAEAAAAAAgAAAAAI=</HashCode>
+      <HashCode>RABAAIIBAAAAEAAAAAAAAQAhCAkQAUACAAQgEAQEIiI=</HashCode>
       <FileName>ViewModels\LogViewerViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -27,6 +47,29 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\LogViewer.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PLCSimPP.Log.ViewModels.MonitorViewModel">
+    <Position X="10.25" Y="8.25" Width="2" />
+    <Members>
+      <Property Name="FreezeScreen" Hidden="true" />
+      <Property Name="LogCollection" Hidden="true" />
+      <Method Name="MonitorViewModel" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>QAAAEAAAAAgAAAAAAAAAAAAEAACAAAAAAAAgAAAAgAA=</HashCode>
+      <FileName>ViewModels\MonitorViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PLCSimPP.Log.Views.Monitor">
+    <Position X="8.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\Monitor.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

@@ -24,15 +24,15 @@ namespace PLCSimPP.Service.Msg
         private readonly ILogService mLogger;
         private readonly IRecvMsgBeheavior mMsgReceiver;
         private readonly IConfigService mConfig;
-        private readonly IMsgService mMsgService;
+        private readonly IPortService mPortService;
         private readonly IEventAggregator mEventAggr;
 
         public bool IsPaused { get; set; } = false;
 
-        public MsgSender(IMsgService msgService, ILogService logger, IConfigService config, IEventAggregator eventAggr)
+        public MsgSender(IPortService msgService, ILogService logger, IConfigService config, IEventAggregator eventAggr)
         {
             mEventAggr = eventAggr;
-            mMsgService = msgService;
+            mPortService = msgService;
             mLogger = logger;
             mConfig = config;
 
@@ -77,7 +77,7 @@ namespace PLCSimPP.Service.Msg
                         bool deqflag = mSendQueue.TryDequeue(out var msg);
                         if (deqflag)
                         {
-                            mMsgService.SendMsg(msg);
+                            mPortService.SendMsg(msg);
                                                         
                             mLogger.LogSendMsg(msg.UnitAddr, msg.Command, msg.Param);
 

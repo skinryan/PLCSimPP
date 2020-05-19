@@ -16,6 +16,8 @@ using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using System.Threading;
 using PLCSimPP.Comm.Models;
+using PLCSimPP.Comm.Events;
+using Prism.Events;
 
 namespace PLCSimPP.Service.Devicies
 {
@@ -132,7 +134,16 @@ namespace PLCSimPP.Service.Devicies
 
         public virtual void ResetQueue()
         {
-            mPendingQueue = new ConcurrentQueue<ISample>();
+            this.CurrentSample = null;
+            RaisePropertyChanged("PendingCount");
+
+            var eventAggr = ServiceLocator.Current.GetInstance<IEventAggregator>();
+            if (eventAggr != null)
+            {
+                eventAggr.GetEvent<NotifyOffLineEvent>().Publish(true);
+            }
+           
+            //mPendingQueue = new ConcurrentQueue<ISample>();
         }
 
         protected virtual bool TryDequeueSample(out ISample sample)
@@ -181,6 +192,7 @@ namespace PLCSimPP.Service.Devicies
 
         public UnitBase()
         {
+
             mChildren = new ObservableCollection<IUnit>();
             mPendingQueue = new ConcurrentQueue<ISample>();
 

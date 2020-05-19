@@ -115,6 +115,23 @@ namespace PLCSimPP.Layout.Model
         }
 
 
+        private string mDcToken;
+
+        public string DcToken
+        {
+            get { return mDcToken; }
+            set { SetProperty(ref mDcToken, value); }
+        }
+
+        private string mDxCToken;
+
+        public string DxCToken
+        {
+            get { return mDxCToken; }
+            set { SetProperty(ref mDxCToken, value); }
+        }
+
+
         public SampleRange()
         {
             EndNumEnable = true;

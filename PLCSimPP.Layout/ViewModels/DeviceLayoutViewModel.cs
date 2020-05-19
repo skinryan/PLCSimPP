@@ -77,20 +77,20 @@ namespace PLCSimPP.Layout.ViewModels
 
         public ICommand LoadSampleSetCmd { get; set; }
 
-        //public ICommand TestCommand { get; set; }
+        public ICommand ClearJammedCommand { get; set; }
         #endregion
 
-        public IPipeLine PipeLineService { get; private set; }
+        public IAutomation AutomationService { get; private set; }
 
-        public DeviceLayoutViewModel(IPipeLine pipeline, IConfigService config, IEventAggregator eventAggr, DCSimService dcsim, DxCSimService dxcSim)
+        public DeviceLayoutViewModel(IAutomation automation, IConfigService config, IEventAggregator eventAggr, DCSimService dcsim, DxCSimService dxcSim)
         {
             mEventAggr = eventAggr;
-            PipeLineService = pipeline;
+            AutomationService = automation;
             mConfigServ = config;
             mDCSimService = dcsim;
             mDxCSimService = dxcSim;
             InitRackType();
-            PipeLineService.Init();
+            AutomationService.Init();
 
             SampleRangeInfo = new SampleRange() { RackType = RackType.Bypass };
             SampleCollection = new ObservableCollection<ISample>();
@@ -104,9 +104,18 @@ namespace PLCSimPP.Layout.ViewModels
             LoadSampleCmd = new DelegateCommand(DoLoadSample);
             LoadSampleSetCmd = new DelegateCommand(DoLoadSampleSet);
             RackExchangeCmd = new DelegateCommand<object>(DoRackExchange);
-            //TestCommand = new DelegateCommand(DoTest);
-
+            ClearJammedCommand = new DelegateCommand<IUnit>(DoClearJammedSample);
+           
             mEventAggr.GetEvent<ReLoadSiteMapEvent>().Subscribe(OnSiteMapPathChanged, ThreadOption.UIThread);
+        }
+
+        private void DoClearJammedSample(IUnit unit)
+        {
+
+            if (unit.CurrentSample != null)
+            {
+                unit.ResetQueue();
+            }
         }
 
         private void OnSiteMapPathChanged(bool needReload)
@@ -115,7 +124,7 @@ namespace PLCSimPP.Layout.ViewModels
                 return;
 
             DoDisconnect();
-            PipeLineService.Init();
+            AutomationService.Init();
         }
 
         private void StartInstrumentSim()
@@ -137,7 +146,7 @@ namespace PLCSimPP.Layout.ViewModels
             string rack = list[1].ToString();
             IUnit unit = (IUnit)list[2];
 
-            PipeLineService.RackExchange(unit, floor, rack);
+            AutomationService.RackExchange(unit, floor, rack);
         }
 
         //private void DoTest()
@@ -159,7 +168,7 @@ namespace PLCSimPP.Layout.ViewModels
         private void DoLoadSample()
         {
             var unloadedSamples = from p in SampleCollection where !p.IsLoaded select p;
-            PipeLineService.LoadSample(unloadedSamples.ToList());
+            AutomationService.LoadSample(unloadedSamples.ToList());
         }
 
         private void DoClearSample()
@@ -251,7 +260,7 @@ namespace PLCSimPP.Layout.ViewModels
         {
             if (ConnectedButtonEnable)
             {
-                PipeLineService.Connect();
+                AutomationService.Connect();
                 ConnectedButtonEnable = false;
                 StartInstrumentSim();
             }
@@ -261,18 +270,16 @@ namespace PLCSimPP.Layout.ViewModels
         {
             if (!ConnectedButtonEnable)
             {
-                PipeLineService.Disconnect();
+                AutomationService.Disconnect();
                 ConnectedButtonEnable = true;
                 StopInstrumentSim();
             }
         }
 
 
-
-
         private void DisConnect()
         {
-            PipeLineService.Disconnect();
+            AutomationService.Disconnect();
         }
 
         private void DoAddSample()
@@ -300,8 +307,8 @@ namespace PLCSimPP.Layout.ViewModels
                 }
 
                 sample.Rack = SampleRangeInfo.RackType;
-                sample.DcToken = "AAA";
-                sample.DxCToken = "AAA";
+                sample.DcToken = string.IsNullOrEmpty(SampleRangeInfo.DcToken) ? "AAA" : SampleRangeInfo.DcToken;
+                sample.DxCToken = string.IsNullOrEmpty(SampleRangeInfo.DxCToken) ? "AAA" : SampleRangeInfo.DxCToken; ;
                 sample.IsLoaded = false;
 
                 SampleCollection.Add(sample);

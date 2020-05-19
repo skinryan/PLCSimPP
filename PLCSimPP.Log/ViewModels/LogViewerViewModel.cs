@@ -19,7 +19,7 @@ namespace PLCSimPP.Log.ViewModels
     {
 
         #region property
-        private readonly IPipeLine mPipeLine;
+        private readonly IAutomation mAutomation;
         private readonly IEventAggregator mEventAggr;
         public ICommand CancelCommand { get; set; }
         public ICommand SaveCommand { get; set; }
@@ -184,7 +184,7 @@ namespace PLCSimPP.Log.ViewModels
             criteria.TableName = DbConst.MSGLOG_TABLE_NAME;
             criteria.PrimaryKey = DbConst.PAGE_DEFAULT_VALUE_PRIMARYKEY;
 
-            var result = LogDB.Current.GetPageData<LogContent>(criteria);
+            var result = DBService.Current.GetPageData<LogContent>(criteria);
             return result;
         }
 
@@ -193,11 +193,11 @@ namespace PLCSimPP.Log.ViewModels
         {
             mAddresses.Clear();
             mAddresses.Add(string.Empty);
-            if (mPipeLine.UnitCollection.Count > 0)
+            if (mAutomation.UnitCollection.Count > 0)
             {
-                for (var i = 0; i < mPipeLine.UnitCollection.Count; i++)
+                for (var i = 0; i < mAutomation.UnitCollection.Count; i++)
                 {
-                    var children = mPipeLine.UnitCollection[i].Children;
+                    var children = mAutomation.UnitCollection[i].Children;
                     for (var j = 0; j < children.Count; j++)
                     {
                         if (!mAddresses.Contains(children[j].Address))
@@ -211,10 +211,10 @@ namespace PLCSimPP.Log.ViewModels
             RaisePropertyChanged("Addresses");
         }
 
-        public LogViewerViewModel(IEventAggregator eventAggr, IPipeLine pipeLine)
+        public LogViewerViewModel(IEventAggregator eventAggr, IAutomation pipeLine)
         {
 
-            mPipeLine = pipeLine;
+            mAutomation = pipeLine;
             GetAddresses();
             PageSize = DbConst.PAGE_DEFAULT_VALUE_PAGESIZE;
 
@@ -244,7 +244,7 @@ namespace PLCSimPP.Log.ViewModels
                 {
                     using (StreamWriter sw = new StreamWriter(fs))
                     {
-                        var result = LogDB.Current.QueryLogContents(SearchFromDatetime, SearchToDatetime, Address, Param);
+                        var result = DBService.Current.QueryLogContents(SearchFromDatetime, SearchToDatetime, Address, Param);
 
                         foreach (var log in result)
                         {

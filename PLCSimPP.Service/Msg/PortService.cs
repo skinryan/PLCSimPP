@@ -7,19 +7,21 @@ using PLCSimPP.Comm.Interfaces;
 using PLCSimPP.Comm.Interfaces.Services;
 using PLCSimPP.Comm.Models;
 using PLCSimPP.Communication.Models;
+using Prism.Events;
 
 namespace PLCSimPP.Service.Services
 {
-    public class MsgService : IMsgService
+    public class PortService : IPortService
     {
         private readonly ILogService mLogger;
+        private readonly IEventAggregator mEventAggr;
         private ConcurrentQueue<IMessage> mReceivedQueue;
 
         public PortConnection MasterPort_1 { get; set; }
         public PortConnection MasterPort_2 { get; set; }
         public PortConnection MasterPort_3 { get; set; }
 
-        public MsgService()
+        public PortService()
         {
             mReceivedQueue = new ConcurrentQueue<IMessage>();
         }
@@ -39,13 +41,14 @@ namespace PLCSimPP.Service.Services
             mReceivedQueue = new ConcurrentQueue<IMessage>();
         }
 
-        public MsgService(ILogService logger)
+        public PortService(ILogService logger, IEventAggregator aggregator)
         {
             mLogger = logger;
+            mEventAggr = aggregator;
 
-            MasterPort_1 = new PortConnection(1, mLogger);
-            MasterPort_2 = new PortConnection(2, mLogger);
-            MasterPort_3 = new PortConnection(3, mLogger);
+            MasterPort_1 = new PortConnection(1, mLogger, mEventAggr);
+            MasterPort_2 = new PortConnection(2, mLogger, mEventAggr);
+            MasterPort_3 = new PortConnection(3, mLogger, mEventAggr);
 
             MasterPort_1.OnMsgReceived += MasterPort_OnMsgReceived;
             MasterPort_2.OnMsgReceived += MasterPort_OnMsgReceived;
@@ -57,27 +60,20 @@ namespace PLCSimPP.Service.Services
             mReceivedQueue.Enqueue(e.ReceivedMsg);
         }
 
-        //public void SetReceiveQueue(ConcurrentQueue<IMessage> queue)
-        //{
-        //    mReceivedQueue = queue;
-        //}
 
         public void SendMsg(IMessage msg)
         {
             if (msg.Port == 1)
             {
                 MasterPort_1.SendMsg(msg);
-                
             }
             else if (msg.Port == 2)
             {
                 MasterPort_2.SendMsg(msg);
-               
             }
             else if (msg.Port == 3)
             {
                 MasterPort_3.SendMsg(msg);
-                
             }
         }
 

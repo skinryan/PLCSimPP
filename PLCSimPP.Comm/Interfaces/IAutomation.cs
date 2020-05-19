@@ -7,7 +7,7 @@ using PLCSimPP.Comm.Models;
 
 namespace PLCSimPP.Comm.Interfaces
 {
-    public interface IPipeLine
+    public interface IAutomation
     {
         int OnlineSampleCount { get; }
 
@@ -22,14 +22,9 @@ namespace PLCSimPP.Comm.Interfaces
         ObservableCollection<IUnit> UnitCollection { get; set; }
 
         /// <summary>
-        /// Analyzer simulator 
-        /// </summary>
-        IAnalyzerSimBehavior AnalyzerSim { get; set; }
-
-        /// <summary>
         /// msg receive/send handler
         /// </summary>
-        IMsgService MsgService { get; set; }
+        IPortService PortService { get; set; }
 
         /// <summary>
         /// Load sample on line

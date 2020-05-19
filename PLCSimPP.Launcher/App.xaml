@@ -6,8 +6,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/XamlImages/Index.xaml"></ResourceDictionary>
-                <ResourceDictionary Source="/Styles/Index.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/XamlImages/Index.xaml" />
+                <ResourceDictionary Source="/Styles/Index.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

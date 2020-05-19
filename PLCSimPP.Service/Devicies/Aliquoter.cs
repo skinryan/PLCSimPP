@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using CommonServiceLocator;
 using PLCSimPP.Comm;
 using PLCSimPP.Comm.Constants;
@@ -17,7 +20,12 @@ namespace PLCSimPP.Service.Devicies
     {
         private const string SERUM = "0041";
         private const string LASTORDER = "FF";
-        private readonly IEventAggregator mEventAggr;
+        private IEventAggregator mEventAggr;
+
+        private ISample mSecTube = null;
+        private ConcurrentQueue<ISample> mSecQueue;
+        private Task mSecTask;
+
 
         public override void OnReceivedMsg(string cmd, string content)
         {
@@ -61,35 +69,25 @@ namespace PLCSimPP.Service.Devicies
                     Command = UnitCmds._1014
                 };
                 msg.Param = CurrentSample.SampleID.PadRight(15) + " ";
-                
+
                 mSendBehavior.PushMsg(msg);
+
+                
             }
 
             if (cmd == LcCmds._0015)
             {
-                try
-                {
-                    var tubid = content.Substring(0, 15);
-                    var seq = content.Substring(19, 2);
-                    var sample = new Sample()
-                    {
-                        SampleID = tubid.Trim(),
-                    };
+                var seq = content.Substring(19, 2);
+                var dest = mRouterService.FindNextDestination(this);
+                dest.EnqueueSample(this.mSecTube);
+                this.mSecTube = null;
 
-                    var dest = mRouterService.FindNextDestination(this);
-                    dest.EnqueueSample(sample);
-
-                    if (seq == LASTORDER)
-                    {
-                        MoveSample();
-                    }
-                }
-                catch (Exception ex)
+                //must wait all secondary tube is finished,then move primary tube
+                if (seq == LASTORDER)
                 {
-                    System.Console.WriteLine(ex);
-                    
+                    MoveSample();
                 }
-                
+               
             }
         }
 
@@ -106,28 +104,69 @@ namespace PLCSimPP.Service.Devicies
             this.mSendBehavior.PushMsg(msg);
         }
 
+        public override void InitUnit()
+        {
+            base.InitUnit();
+            mSecTask = new Task(ProcessSecQueue);
+            mSecTask.Start();
+
+            mEventAggr.GetEvent<PrintLabelEvent>().Subscribe(OnLabelPrinted);
+        }
+
+        private void ProcessSecQueue()
+        {
+            try
+            {
+                while (true)
+                {
+                    if (mSecTube == null)
+                    {
+                        if (this.mSecQueue.TryDequeue(out mSecTube))
+                        {
+                            //On secondary sample arrived
+                            var msg = new MsgCmd()
+                            {
+                                Port = this.Port,
+                                UnitAddr = this.Address,
+                                Command = UnitCmds._1011
+                            };
+                            msg.Param = ParamConst.BCR_3 + mSecTube.SampleID.Trim().PadRight(15);
+
+                            this.mSendBehavior.PushMsg(msg);
+                        }
+                    }
+
+                    Thread.Sleep(mArrivalInterval);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                mLogger.LogSys("ProcessSecQueue() error", ex);
+            }
+        }
 
         public Aliquoter() : base()
         {
             mEventAggr = ServiceLocator.Current.GetInstance<IEventAggregator>();
-            mEventAggr.GetEvent<PrintLabelEvent>().Subscribe(OnLabelPrinted);
+            mSecQueue = new ConcurrentQueue<ISample>();
         }
 
         private void OnLabelPrinted(string tubeid)
         {
-            // send 1011 for sec tube
+            // create secondary tube 
             var id = tubeid.Substring(0, 15);
             var secid = tubeid.Substring(15, 15);
 
-            var msg = new MsgCmd()
+            var subSample = new Sample()
             {
-                Port = this.Port,
-                UnitAddr = this.Address,
-                Command = UnitCmds._1011
+                SampleID = id.Trim() + secid.Trim(),
+                DcToken = CurrentSample.DcToken,
+                DxCToken = CurrentSample.DxCToken,
+                IsSubTube = true
             };
-            msg.Param = ParamConst.BCR_3 + (id.Trim() + secid.Trim()).PadRight(15);
 
-            this.mSendBehavior.PushMsg(msg);
+            mSecQueue.Enqueue(subSample);
+
         }
     }
 }

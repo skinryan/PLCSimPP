@@ -50,7 +50,7 @@ namespace PLCSimPP.Service.DB
 
         public const string PAGE_DEFAULT_VALUE_PRIMARYKEY = "ID";
         public const string PAGE_DEFAULT_VALUE_FIELDS = "*";
-        public const int PAGE_DEFAULT_VALUE_PAGESIZE = 4;
+        public const int PAGE_DEFAULT_VALUE_PAGESIZE = 100;
 
     }
 }

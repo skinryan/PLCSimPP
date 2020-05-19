@@ -41,7 +41,12 @@ namespace PLCSimPP.Service.Devicies
                     var msg = SendMsg.GetMsg_1015(this);
                     this.mSendBehavior.PushMsg(msg);
 
-                    mDCSimService.SendMsg(InstrumentUnitNum, CurrentSample.DcToken, CurrentSample.SampleID);
+                    var tubeid = CurrentSample.SampleID;
+                    if (CurrentSample.IsSubTube)
+                    {
+                        tubeid = tubeid.Substring(0, tubeid.Length - 1);
+                    }
+                    mDCSimService.SendMsg(InstrumentUnitNum, CurrentSample.DcToken, tubeid);
 
                     base.MoveSample();
                 }

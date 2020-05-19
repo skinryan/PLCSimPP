@@ -2,23 +2,42 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="PLCSimPP.Layout.ViewModels.DeviceLayoutViewModel">
     <Position X="9.25" Y="3.75" Width="2" />
+    <Members>
+      <Property Name="ConnectedButtonEnable" Hidden="true" />
+      <Field Name="mConnectedButtonEnable" Hidden="true" />
+      <Field Name="mEventAggr" Hidden="true" />
+      <Field Name="mSampleCollection" Hidden="true" />
+      <Field Name="mSampleRangeInfo" Hidden="true" />
+      <Property Name="RackTypeList" Hidden="true" />
+      <Property Name="SampleCollection" Hidden="true" />
+      <Property Name="SampleRangeInfo" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAACAOAAAAAAAAAEAAAIIACAAAQAAAAAAAgAAQAAA=</HashCode>
+      <HashCode>BgAAIAJsEAAQgCCGAQAMRAIACAAEEGKAACAgAIAQEgA=</HashCode>
       <FileName>ViewModels\DeviceLayoutViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PLCSimPP.Layout.Views.DeviceLayout" BaseTypeListCollapsed="true">
     <Position X="7.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AQAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
       <FileName>Views\DeviceLayout.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="PLCSimPP.Layout.ViewModels.LayoutMenuViewModel">
     <Position X="4.5" Y="3.75" Width="2" />
+    <Members>
+      <Method Name="LayoutMenuViewModel" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAg=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAIAAAgA=</HashCode>
       <FileName>ViewModels\LayoutMenuViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>

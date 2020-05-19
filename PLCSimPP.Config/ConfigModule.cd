@@ -9,24 +9,92 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="PLCSimPP.Config.ViewModels.ConfigMenuViewModel">
-    <Position X="3" Y="3.5" Width="2.5" />
+    <Position X="3" Y="3.5" Width="1.75" />
+    <Members>
+      <Method Name="ConfigMenuViewModel" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAQAIAAAgA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAIAAAgA=</HashCode>
       <FileName>ViewModels\ConfigMenuViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PLCSimPP.Config.ViewModels.ConfigruationViewModel">
-    <Position X="10" Y="3.5" Width="1.5" />
+    <Position X="10" Y="3.5" Width="2.25" />
+    <Members>
+      <Method Name="ConfigruationViewModel" Hidden="true" />
+      <Method Name="DoCancel" Hidden="true" />
+      <Method Name="DoSelectPath" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAACIAAAAAAAAAAAAAAgAAAAAAABAAA=</HashCode>
+      <HashCode>QAAAAIgAABAAEAgBIAAAABAAAEABAAAAAAAgAAAAAIA=</HashCode>
       <FileName>ViewModels\ConfigruationViewModel.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ConfigurationController" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="PLCSimPP.Config.Views.Configuration" Collapsed="true">
-    <Position X="7.75" Y="3.5" Width="1.5" />
+    <Position X="10" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\Configuration.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PLCSimPP.Config.ViewModels.SiteMapEditerViewModel">
+    <Position X="5.75" Y="7.25" Width="3" />
+    <Members>
+      <Property Name="Address" Hidden="true" />
+      <Property Name="IsInEdit" Hidden="true" />
+      <Property Name="IsMaster" Hidden="true" />
+      <Property Name="Name" Hidden="true" />
+      <Property Name="Port" Hidden="true" />
+      <Property Name="Port1" Hidden="true" />
+      <Property Name="Port2" Hidden="true" />
+      <Property Name="Port3" Hidden="true" />
+      <Property Name="PortList" Hidden="true" />
+      <Property Name="SaveBtnText" Hidden="true" />
+      <Property Name="Type" Hidden="true" />
+      <Property Name="UnitTypeList" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>TAkBECADIAKQFAgDBBAAAVYGGAAEgIACaQjEBAoEERo=</HashCode>
+      <FileName>ViewModels\SiteMapEditerViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PLCSimPP.Config.Controllers.ConfigurationController">
+    <Position X="14.25" Y="3.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAIACAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\ConfigurationController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PLCSimPP.Config.Views.SiteMapEditer">
+    <Position X="3.5" Y="7.25" Width="2" />
+    <Members>
+      <Method Name="Add_Button_Click" Hidden="true" />
+      <Method Name="Cancel_Button_Click" Hidden="true" />
+      <Method Name="ListBox_SelectionChanged_1" Hidden="true" />
+      <Method Name="ListBox_SelectionChanged_2" Hidden="true" />
+      <Method Name="ListBox_SelectionChanged_3" Hidden="true" />
+      <Method Name="TextBox_TextChanged" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAQAAgAAAAAEAIAAAgAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\SiteMapEditer.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

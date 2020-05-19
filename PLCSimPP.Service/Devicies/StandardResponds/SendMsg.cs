@@ -53,6 +53,21 @@ namespace PLCSimPP.Service.Devicies.StandardResponds
             return msg;
         }
 
+        /// <summary>
+        /// Holder Request
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="condition">'0': Holder Shortage cleared, '1': Holder Shortage occurred</param>
+        /// <returns></returns>
+        public static IMessage GetMsg_1026(IUnit unit,string condition)
+        {
+            MsgCmd msg = new MsgCmd();
+            msg.Command = UnitCmds._1026;
+            msg.Port = unit.Port;
+            msg.UnitAddr = unit.Address;
+            msg.Param = condition;
+            return msg;
+        }
 
         /// <summary>
         /// The first command when the sample online

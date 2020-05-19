@@ -100,6 +100,9 @@ namespace PLCSimPP.Service.Devicies
 
             if (cmd == LcCmds._0019)
             {
+                var msg1026 = SendMsg.GetMsg_1026(this, "1");//'0': Holder Shortage cleared, '1': Holder Shortage occurred
+                mSendBehavior.PushMsg(msg1026);
+
                 string sid = content.Substring(0, 15);
                 string floor = content.Substring(15, 1);
                 string rack = content.Substring(16, 1);
@@ -112,8 +115,6 @@ namespace PLCSimPP.Service.Devicies
                 msg.Param = $"{sid.PadRight(15)}{floor}{rack}{position}0"; //last number '0': Normal, '1': Error
                 mSendBehavior.PushMsg(msg);
 
-                //
-
                 string param = ParamConst.BCR_2 + sid;
                 var arrivalMsg = new MsgCmd()
                 {
@@ -123,6 +124,12 @@ namespace PLCSimPP.Service.Devicies
                     UnitAddr = this.Address
                 };
                 this.mSendBehavior.PushMsg(arrivalMsg);
+            }
+
+            if (cmd == LcCmds._0026)
+            {
+                var msg1026 = SendMsg.GetMsg_1026(this, "0");//'0': Holder Shortage cleared, '1': Holder Shortage occurred
+                mSendBehavior.PushMsg(msg1026);
             }
         }
 

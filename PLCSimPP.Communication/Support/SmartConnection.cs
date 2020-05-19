@@ -175,7 +175,7 @@ namespace PLCSimPP.Communication.Support
             byte[] buffer = new byte[System.Convert.ToInt32(mBufferStream.Length - 1) + 1];
             mBufferStream.Read(buffer, 0, buffer.Length);
 
-            LogBytesData(string.Format("{0} Received Data:", this.mClient.Client.LocalEndPoint), buffer);
+            //LogBytesData(string.Format("{0} Received Data:", this.mClient.Client.LocalEndPoint), buffer);
             //Console.WriteLine("Received Data: {0}", EncoderHelper.ToHexString(buffer));
 
             //check data valid
@@ -183,16 +183,24 @@ namespace PLCSimPP.Communication.Support
             switch (checkResult.Result)
             {
                 case ResultType.InvalidLength:
+                    LogBytesData(string.Format("{0} Received Data:", this.mClient.Client.LocalEndPoint), buffer);
+
                     //replay 0x50:Invalid Command
                     DoSend(new byte[2] { 0xE0, 0x50 });
                     break;
                 case ResultType.InvalidCmd:
+                    LogBytesData(string.Format("{0} Received Data:", this.mClient.Client.LocalEndPoint), buffer);
+
                     //replay 0x52: Invalid data length
                     DoSend(new byte[2] { 0xE0, 0x52 });
                     break;
                 case ResultType.Heartbeat:
+                    DoSend(new byte[2] { 0xE0, 0x00 });
+                    break;
                 case ResultType.RawData:
                     //replay E000：correct
+                    LogBytesData(string.Format("{0} Received Data:", this.mClient.Client.LocalEndPoint), buffer);
+
                     DoSend(new byte[2] { 0xE0, 0x00 });
                     break;
                 default:

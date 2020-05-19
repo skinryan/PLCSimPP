@@ -12,7 +12,7 @@ using PLCSimPP.Comm.Models;
 
 namespace PLCSimPP.Service.Analyzer
 {
-    public class DxCSimService : IAnalyzerSimBehavior
+    public class DxCSimService : IAnalyzerSimService
     {
         private readonly IConfigService mConfigService;
         private SystemInfo mConfig;

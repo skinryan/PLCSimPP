@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-	<DrawingBrush x:Key="PicError" Stretch="Uniform">
-		<!--<DrawingBrush.Drawing>
+    <DrawingBrush x:Key="PicError" Stretch="Uniform">
+        <!--<DrawingBrush.Drawing>
 			<DrawingGroup>
 				<DrawingGroup.Children>
 					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 12.0878,12.9507L 28.1691,28.6987"/>
@@ -19,7 +19,7 @@
         <DrawingBrush.Drawing>
             <DrawingGroup>
                 <DrawingGroup.Children>
-                    <GeometryDrawing Brush="#FFFF0000" Geometry="F1 M 0,0L 10,0L 10,10"/>
+                    <GeometryDrawing Brush="#FFFF0000" Geometry="F1 M 0,0L 10,0L 10,10" />
                 </DrawingGroup.Children>
             </DrawingGroup>
         </DrawingBrush.Drawing>

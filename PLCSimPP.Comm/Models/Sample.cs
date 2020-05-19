@@ -72,6 +72,13 @@ namespace PLCSimPP.Comm.Models
             set { SetProperty(ref mRetrieving, value); }
         }
 
+        private bool mIsSubTube;
+        public bool IsSubTube
+        {
+            get { return mIsSubTube; }
+            set { SetProperty(ref mIsSubTube, value); }
+        }
+
         public override string ToString()
         {
             return base.ToString();

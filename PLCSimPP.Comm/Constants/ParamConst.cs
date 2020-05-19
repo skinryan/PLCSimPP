@@ -33,5 +33,6 @@ namespace PLCSimPP.Comm.Constants
         public const string CENT_STATUS_START = "1";
         public const string CENT_STATUS_UNLOADING = "2";
 
+
     }
 }

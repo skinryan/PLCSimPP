@@ -18,7 +18,7 @@ using GC = PLCSimPP.Service.Devicies.GC;
 
 namespace PLCSimPP.Service.Router
 {
-    public class PipeLineService : BindableBase, IPipeLine
+    public class AutomationService : BindableBase, IAutomation
     {
         public const int MAX_ONLINE_COUNT = 200;
         private readonly ILogService mLogger;
@@ -29,11 +29,11 @@ namespace PLCSimPP.Service.Router
         private object mCountLocker = new object();
 
 
-        public PipeLineService(IMsgService msgService, IRouterService router, IConfigService config, IEventAggregator eventAggregator,
+        public AutomationService(IPortService msgService, IRouterService router, IConfigService config, IEventAggregator eventAggregator,
                                ILogService logger, ISendMsgBehavior sender, IRecvMsgBeheavior receiver)
         {
             mLogger = logger;
-            MsgService = msgService;
+            PortService = msgService;
             RouterService = router;
             ConfigService = config;
             MsgSender = sender;
@@ -55,9 +55,7 @@ namespace PLCSimPP.Service.Router
             set { SetProperty(ref mUnitCollection, value); }
         }
 
-        public IAnalyzerSimBehavior AnalyzerSim { get; set; }
-
-        public IMsgService MsgService { get; set; }
+        public IPortService PortService { get; set; }
 
         public ISendMsgBehavior MsgSender { get; set; }
 
@@ -73,7 +71,7 @@ namespace PLCSimPP.Service.Router
         {
             RouterService.SetSiteMap(UnitCollection);
             //MsgReceiver.SetUnitCollection(UnitCollection);
-            MsgService.Connect();
+            PortService.Connect();
             MsgReceiver.ActiveRecvTask("");
             MsgSender.ActiveSendTask("");
 
@@ -100,7 +98,7 @@ namespace PLCSimPP.Service.Router
 
         public void Disconnect()
         {
-            MsgService.Disconnect();
+            PortService.Disconnect();
             IsConnected = false;
         }
 
@@ -172,14 +170,11 @@ namespace PLCSimPP.Service.Router
 
         public void Init()
         {
-            //if (UnitCollection == null)
-            //    UnitCollection = new ObservableCollection<IUnit>();
-
-            //UnitCollection.Clear();
-            //foreach (var unit in ConfigService.ReadSiteMap())
-            //{
-            //    UnitCollection.Add(unit);
-            //};
+            UnitCollection.Clear();
+            foreach (var unit in ConfigService.ReadSiteMap())
+            {
+                UnitCollection.Add(unit);
+            };
 
             //set instrument unmber
             var dcCount = 1;
@@ -210,6 +205,8 @@ namespace PLCSimPP.Service.Router
 
             this.Disconnect();
             mSampleLoadingTask = new Thread(new ThreadStart(LoadingSample));
+
+            mEventAggr.GetEvent<NotifyPortCountEvent>().Publish(UnitCollection.Count);
         }
 
 

@@ -225,6 +225,8 @@ namespace PLCSimPP.Service.Config
 
                         xmlWriter.WriteElementString("SampleID", sample.SampleID);
                         xmlWriter.WriteElementString("Rack", "" + (int)sample.Rack);
+                        xmlWriter.WriteElementString("DcToken", sample.DcToken);
+                        xmlWriter.WriteElementString("DxCToken", sample.DxCToken);
 
                         xmlWriter.WriteEndElement();
                     }
@@ -295,7 +297,16 @@ namespace PLCSimPP.Service.Config
                         reader.Read();
                         sample.Rack = (RackType)int.Parse(reader.Value);
                     }
-
+                    if (name == "DcToken")
+                    {
+                        reader.Read();
+                        sample.DcToken = reader.Value;
+                    }
+                    if (name == "DxCToken")
+                    {
+                        reader.Read();
+                        sample.DxCToken = reader.Value;
+                    }
                 }
             }
         }

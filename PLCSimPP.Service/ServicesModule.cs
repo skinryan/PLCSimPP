@@ -34,9 +34,9 @@ namespace PLCSimPP.Service
             containerRegistry.RegisterSingleton<IConfigService, ConifgService>();
             containerRegistry.RegisterSingleton<IRouterService, RouterService>();
             containerRegistry.RegisterSingleton<IRecvMsgBeheavior, MsgReceiver>();
-            containerRegistry.RegisterSingleton<IMsgService, MsgService>();
+            containerRegistry.RegisterSingleton<IPortService, PortService>();
             containerRegistry.RegisterSingleton<ISendMsgBehavior, MsgSender>();
-            containerRegistry.RegisterSingleton<IPipeLine, PipeLineService>();
+            containerRegistry.RegisterSingleton<IAutomation, AutomationService>();
             containerRegistry.RegisterSingleton<DCSimService>();
             containerRegistry.RegisterSingleton<DxCSimService>();
         }

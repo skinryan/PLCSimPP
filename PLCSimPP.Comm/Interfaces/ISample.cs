@@ -15,6 +15,8 @@
 
         string DxCToken { get; set; }
 
+        bool IsSubTube { get; set; }
+
         bool Retrieving { get; set; }
     }
 }

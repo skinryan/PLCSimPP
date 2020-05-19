@@ -27,7 +27,7 @@ namespace PLCSimPP.Service.Msg
         //private readonly ConcurrentQueue<IMessage> mReceiveQueue;// receive msg queue
         private readonly ILogService mLogger;
         private readonly IEventAggregator mEventAggr;
-        private readonly IMsgService mMsgService;
+        private readonly IPortService mPortService;
 
         public void ActiveRecvTask(string token)
         {
@@ -56,7 +56,7 @@ namespace PLCSimPP.Service.Msg
 
                 try
                 {
-                    var flag = mMsgService.TryDequeue(out IMessage result);
+                    var flag = mPortService.TryDequeue(out IMessage result);
 
                     if (flag)
                     {
@@ -113,11 +113,11 @@ namespace PLCSimPP.Service.Msg
         //    this.mUnitCollection = unitCollection;
         //}
 
-        public MsgReceiver(IEventAggregator eventAggr, ILogService logger, IMsgService msgService, IRouterService router)
+        public MsgReceiver(IEventAggregator eventAggr, ILogService logger, IPortService msgService, IRouterService router)
         {
             mEventAggr = eventAggr;
             mLogger = logger;
-            mMsgService = msgService;
+            mPortService = msgService;
             mRouterService = router;
 
             mRecvTask = new Task(RecvSequence);

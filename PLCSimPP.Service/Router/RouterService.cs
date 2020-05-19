@@ -37,24 +37,23 @@ namespace PLCSimPP.Service.Router
                 return current.Children.First();
             }
 
+            //if in same port
             var master = current.Parent;
             var index = master.Children.IndexOf(current);
-
             if (index + 1 < master.Children.Count)
             {
                 return master.Children[index + 1];
             }
 
+            //move to next port
             var masterIndex = mUnitCollection.IndexOf(master);
-
             if (masterIndex + 1 < mUnitCollection.Count)
             {
                 //jump the I-lane and H-lane 
                 return mUnitCollection[masterIndex + 1].Children.First();
             }
 
-            //add on 
-            //return to first unit of Port2            
+            //add on return to first unit of Port2            
             return mUnitCollection[1].Children.First();
         }
 
@@ -94,20 +93,20 @@ namespace PLCSimPP.Service.Router
             return result;
         }
 
-        public IUnit FindNextPort(IUnit current)
-        {
-            int masterIndex;
-            if (current.IsMaster)
-            {
-                masterIndex = mUnitCollection.IndexOf(current);
-            }
-            else
-            {
-                var master = current.Parent;
-                masterIndex = mUnitCollection.IndexOf(master);
-            }
+        //public IUnit FindNextPort(IUnit current)
+        //{
+        //    int masterIndex;
+        //    if (current.IsMaster)
+        //    {
+        //        masterIndex = mUnitCollection.IndexOf(current);
+        //    }
+        //    else
+        //    {
+        //        var master = current.Parent;
+        //        masterIndex = mUnitCollection.IndexOf(master);
+        //    }
 
-            return mUnitCollection[masterIndex + 1].Children.First();
-        }
+        //    return mUnitCollection[masterIndex + 1].Children.First();
+        //}
     }
 }

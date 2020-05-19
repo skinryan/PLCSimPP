@@ -69,7 +69,7 @@ namespace PLCSimPP.Comm.Interfaces
         //bool TryDequeueSample(out ISample sample);
 
         /// <summary>
-        /// Clear all samples in the queue
+        /// clear jammed sample
         /// </summary>
         void ResetQueue();
 

@@ -22,9 +22,9 @@ namespace PLCSimPP.Service.Log
     /// </summary>
     public class LogService : ILogService
     {
-        private ILog sysLogger;
-        private ILog dbLogger;
-        private ILog rawDataLogger;
+        private ILog mSysLogger;
+        private ILog mDbLogger;
+        private ILog mRawDataLogger;
 
         public LogService()
         {
@@ -33,9 +33,9 @@ namespace PLCSimPP.Service.Log
             ILoggerRepository repository = LogManager.CreateRepository("NETCoreRepository");
             XmlConfigurator.Configure(repository, new FileInfo("log4net.config"));
 
-            sysLogger = LogManager.GetLogger(repository.Name, "SYSTEM");
-            dbLogger = LogManager.GetLogger(repository.Name, "COMMUNICATION");
-            rawDataLogger = LogManager.GetLogger(repository.Name, "ROWDATA");
+            mSysLogger = LogManager.GetLogger(repository.Name, "SYSTEM");
+            mDbLogger = LogManager.GetLogger(repository.Name, "COMMUNICATION");
+            mRawDataLogger = LogManager.GetLogger(repository.Name, "ROWDATA");
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace PLCSimPP.Service.Log
         /// <param name="ex">Exception</param>
         public void LogSys(string content, Exception ex)
         {
-            sysLogger.Debug(content, ex);
+            mSysLogger.Debug(content, ex);
         }
 
         /// <summary>
@@ -54,12 +54,12 @@ namespace PLCSimPP.Service.Log
         /// <param name="content">Text content</param>
         public void LogSys(string content)
         {
-            sysLogger.Debug(content);
+            mSysLogger.Debug(content);
         }
 
         public void LogSys(Exception ex, string content, params string[] strs)
         {
-            sysLogger.Debug(string.Format(content, strs), ex);
+            mSysLogger.Debug(string.Format(content, strs), ex);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace PLCSimPP.Service.Log
             log4net.LogicalThreadContext.Properties["Direction"] = CommConst.SEND;
             log4net.LogicalThreadContext.Properties["Details"] = message.Details;
             log4net.LogicalThreadContext.Properties["Token"] = message.Token;
-            dbLogger.Info(message);
+            mDbLogger.Info(message);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace PLCSimPP.Service.Log
             log4net.LogicalThreadContext.Properties["Direction"] = CommConst.SEND;
             log4net.LogicalThreadContext.Properties["Details"] = details;
             log4net.LogicalThreadContext.Properties["Token"] = token;
-            dbLogger.Info("");
+            mDbLogger.Info("");
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace PLCSimPP.Service.Log
             log4net.LogicalThreadContext.Properties["Direction"] = CommConst.RECV;
             log4net.LogicalThreadContext.Properties["Details"] = message.Details;
             log4net.LogicalThreadContext.Properties["Token"] = message.Token;
-            dbLogger.Info(message);
+            mDbLogger.Info(message);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace PLCSimPP.Service.Log
             log4net.LogicalThreadContext.Properties["Direction"] = CommConst.RECV;
             log4net.LogicalThreadContext.Properties["Details"] = details;
             log4net.LogicalThreadContext.Properties["Token"] = token;
-            dbLogger.Info("");
+            mDbLogger.Info("");
         }
 
         public void Dispose()
@@ -131,7 +131,7 @@ namespace PLCSimPP.Service.Log
 
         public void LogRawData(string addrAndPort, byte[] dataContent)
         {
-            rawDataLogger.Debug(string.Format("{0} {1}", addrAndPort, EncoderHelper.ToHexString(dataContent)));
+            mRawDataLogger.Debug(string.Format("{0} {1}", addrAndPort, EncoderHelper.ToHexString(dataContent)));
         }
     }
 }

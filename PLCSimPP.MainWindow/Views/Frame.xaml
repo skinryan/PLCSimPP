@@ -4,13 +4,16 @@
              xmlns:comm="clr-namespace:PLCSimPP.Comm.Constant;assembly=PLCSimPP.Comm"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:PLCSimPP.MainWindow.Views"
+             xmlns:cvt="clr-namespace:PLCSimPP.MainWindow.Converter"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:prism="http://prismlibrary.com/"
+             xmlns:prism="http://prismlibrary.com/" 
              d:DesignHeight="450"
              d:DesignWidth="800"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d">
     <UserControl.Resources>
+        <cvt:Bool2ColorConverter x:Key="Bool2ColorConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <Style x:Key="MenuItemStyle" TargetType="MenuItem">
             <Setter Property="FontWeight" Value="Normal" />
         </Style>
@@ -27,7 +30,42 @@
         <!--<TextBlock FontSize="80" Text="{Binding Title}" />-->
         <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static comm:RegionName.LAYOUTREGION}" />
         <StatusBar Grid.Row="2">
-            <TextBlock Text="{Binding BackWorkerStatus}" />
+            <!--<StatusBarItem>
+                
+            </StatusBarItem>
+            <Separator HorizontalAlignment="Right"></Separator>
+            <StatusBarItem  HorizontalAlignment="Right">
+                <Ellipse Width="15" Height="15" Fill="Red"></Ellipse>
+            </StatusBarItem>-->
+
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="auto" />
+                            <!--<ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="100" />-->
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem>
+                <TextBlock Text="{Binding BackWorkerStatus}" />
+            </StatusBarItem>
+            <Separator Grid.Column="1" />
+            <StatusBarItem Grid.Column="2">
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse Width="12" Height="12" Fill="{Binding Port1Status,Converter={StaticResource Bool2ColorConverter}}"  Margin="8,0,0,0" ToolTip="Port 1 connected status"></Ellipse>
+                    <Ellipse Width="12" Height="12" Fill="{Binding Port2Status,Converter={StaticResource Bool2ColorConverter}}"  Margin="8,0" ToolTip="Port 2 connected status"></Ellipse>
+                    <Ellipse Width="12" Height="12" Fill="{Binding Port3Status,Converter={StaticResource Bool2ColorConverter}}" Visibility="{Binding Port3Enabled,Converter={StaticResource BooleanToVisibilityConverter}}"  Margin="0,0,8,0" ToolTip="Port 3 connected status"></Ellipse>
+                </StackPanel>
+            </StatusBarItem>
+            <!--<Separator Grid.Column="3" />
+            <StatusBarItem Grid.Column="4">
+                <ProgressBar Value="50" Width="90" Height="16" />
+            </StatusBarItem>-->
         </StatusBar>
     </Grid>
 </UserControl>
