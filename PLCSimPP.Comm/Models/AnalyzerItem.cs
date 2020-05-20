@@ -17,7 +17,7 @@ namespace PLCSimPP.Comm.Models
         /// <summary>
         /// instrument number
         /// </summary>
-        public int Num
+        public int Num 
         {
             get { return mNum; }
             set { SetProperty(ref mNum, value); }
