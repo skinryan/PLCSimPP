@@ -23,7 +23,6 @@ namespace PLCSimPP.Log.ViewModels
         private readonly IEventAggregator mEventAggr;
         public ICommand CancelCommand { get; set; }
         public ICommand SaveCommand { get; set; }
-        //public int CurrentPage { get; set; }
 
         public int TotalPage { get; set; }
 
@@ -170,19 +169,17 @@ namespace PLCSimPP.Log.ViewModels
 
         private PageData<LogContent> GetPage(int page, int pageSize, DateTime tmStart, DateTime tmEnd)
         {
-            PageCriteria criteria = new PageCriteria() { Condition = $"[Time] <= '{tmEnd}' and [Time] >= '{tmStart}'" };
+            PageCriteria criteria = new PageCriteria() { Condition = $"`Time` <= '{tmEnd.ToString("yyyy-MM-dd HH:mm:ss")}' and `Time` >= '{tmStart.ToString("yyyy-MM-dd HH:mm:ss")}'" };
 
             if (!string.IsNullOrEmpty(Address))
-                criteria.Condition += $" and [Address] = '{Address}'";
+                criteria.Condition += $" and `Address` = '{Address}'";
 
             if (!string.IsNullOrEmpty(Param))
-                criteria.Condition += $" and [Details] like '%{Param}%'";
-
+                criteria.Condition += $" and `Details` like '%{Param}%'";
 
             criteria.CurrentPage = page;
             criteria.PageSize = pageSize;
             criteria.TableName = DbConst.MSGLOG_TABLE_NAME;
-            criteria.PrimaryKey = DbConst.PAGE_DEFAULT_VALUE_PRIMARYKEY;
 
             var result = DBService.Current.GetPageData<LogContent>(criteria);
             return result;
@@ -211,10 +208,9 @@ namespace PLCSimPP.Log.ViewModels
             RaisePropertyChanged("Addresses");
         }
 
-        public LogViewerViewModel(IEventAggregator eventAggr, IAutomation pipeLine)
+        public LogViewerViewModel(IEventAggregator eventAggr, IAutomation automation)
         {
-
-            mAutomation = pipeLine;
+            mAutomation = automation;
             GetAddresses();
             PageSize = DbConst.PAGE_DEFAULT_VALUE_PAGESIZE;
 
@@ -238,7 +234,7 @@ namespace PLCSimPP.Log.ViewModels
             sfd.RestoreDirectory = true;
             sfd.ShowDialog();
 
-             try
+            try
             {
                 using (FileStream fs = new FileStream(sfd.FileName, FileMode.OpenOrCreate))
                 {
@@ -257,7 +253,7 @@ namespace PLCSimPP.Log.ViewModels
             }
             catch (Exception ex)
             {
-                
+
                 MessageBox.Show("File Save Expection");
             }
 

@@ -10,7 +10,6 @@ namespace PLCSimPP.Service.DB
     {
         public string TableName { get; set; }
         public string Fields { get; set; } = DbConst.PAGE_DEFAULT_VALUE_FIELDS;
-        public string PrimaryKey { get; set; } = DbConst.PAGE_DEFAULT_VALUE_PRIMARYKEY;
         public int PageSize { get; set; } = DbConst.PAGE_DEFAULT_VALUE_PAGESIZE;
         public int CurrentPage { get; set; } = 1;
         public string Sort { get; set; } = string.Empty;

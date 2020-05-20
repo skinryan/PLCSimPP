@@ -55,15 +55,12 @@ namespace PLCSimPP.Service.DB
         /// <param name="tableName">table name</param>
         static public void NewTable(string dbPath)
         {
-
             SQLiteConnection sqliteConn = new SQLiteConnection("data source=" + dbPath);
             if (sqliteConn.State != System.Data.ConnectionState.Open)
             {
                 sqliteConn.Open();
                 SQLiteCommand cmd = new SQLiteCommand();
-                cmd.Connection = sqliteConn;
-
-
+                cmd.Connection = sqliteConn;                
                 cmd.CommandText = @"DROP TABLE IF EXISTS `MsgLog`;
                                        CREATE TABLE `MsgLog` (
                                       `ID` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -74,7 +71,6 @@ namespace PLCSimPP.Service.DB
                                       `Details` text,
                                       `Token` text); ";
                 cmd.ExecuteNonQuery();
-
             }
             sqliteConn.Close();
         }

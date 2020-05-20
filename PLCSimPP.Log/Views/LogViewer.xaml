@@ -124,6 +124,7 @@
                                         Height="25"
                                         Margin="0"
                                         HorizontalAlignment="Left"
+                                        CurrentIndex="{Binding CurrentPage.CurrentPage}"
                                         PageCount="{Binding CurrentPage.TotalPageCount}"
                                         PageSize="{Binding PageSize}"
                                         TotalRowCount="{Binding CurrentPage.TotalNum}">
