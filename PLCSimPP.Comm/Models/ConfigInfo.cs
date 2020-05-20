@@ -19,6 +19,8 @@ namespace PLCSimPP.Comm.Models
         public ObservableCollection<AnalyzerItem> DxCInstruments { get; set; }
         public string ConnectionString { get; set; }
 
+        public string SQLiteConnString { get; set; }
+
         public SystemInfo()
         {
             DcInstruments = new ObservableCollection<AnalyzerItem>();
