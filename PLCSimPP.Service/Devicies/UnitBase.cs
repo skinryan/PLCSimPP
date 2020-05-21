@@ -27,6 +27,7 @@ namespace PLCSimPP.Service.Devicies
         protected readonly ISendMsgBehavior mSendBehavior;
         protected readonly ILogService mLogger;
         protected readonly IRouterService mRouterService;
+        protected readonly IEventAggregator mEventAggr;
         protected ConcurrentQueue<ISample> mPendingQueue;
         protected Task mWaitArrivalTask;
         protected int mArrivalInterval = 1000;
@@ -142,7 +143,7 @@ namespace PLCSimPP.Service.Devicies
             {
                 eventAggr.GetEvent<NotifyOffLineEvent>().Publish(true);
             }
-           
+
             //mPendingQueue = new ConcurrentQueue<ISample>();
         }
 
@@ -196,12 +197,13 @@ namespace PLCSimPP.Service.Devicies
             mChildren = new ObservableCollection<IUnit>();
             mPendingQueue = new ConcurrentQueue<ISample>();
 
-            mLogger = ServiceLocator.Current.GetInstance<ILogService>();
-            mSendBehavior = ServiceLocator.Current.GetInstance<ISendMsgBehavior>();
-            mRouterService = ServiceLocator.Current.GetInstance<IRouterService>();
+            if (ServiceLocator.IsLocationProviderSet)
+            {
+                mLogger = ServiceLocator.Current.GetInstance<ILogService>();
+                mSendBehavior = ServiceLocator.Current.GetInstance<ISendMsgBehavior>();
+                mRouterService = ServiceLocator.Current.GetInstance<IRouterService>();
+                mEventAggr = ServiceLocator.Current.GetInstance<IEventAggregator>();
+            }
         }
-
-
-
     }
 }

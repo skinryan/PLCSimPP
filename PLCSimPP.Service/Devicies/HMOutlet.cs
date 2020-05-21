@@ -82,8 +82,10 @@ namespace PLCSimPP.Service.Devicies
 
         public HMOutlet() : base()
         {
-            //mLogger.LogSys($"HMOutlet init");
-            mEvent = ServiceLocator.Current.GetInstance<IEventAggregator>();
+            if (ServiceLocator.IsLocationProviderSet)
+            {
+                mEvent = ServiceLocator.Current.GetInstance<IEventAggregator>();
+            }            
         }
     }
 }

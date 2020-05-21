@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -10,7 +11,7 @@ using PLCSimPP.Service.Router;
 namespace PLCSimPP.Test.ServiceTest
 {
     [TestClass]
-    public class UnitTest
+    public class LayoutTest
     {
         public List<IUnit> GetLayout()
         {
@@ -24,8 +25,8 @@ namespace PLCSimPP.Test.ServiceTest
             Labeler laber = new Labeler() { Address = "0000000020", Port = 1, DisplayName = "Labeler" };
             Aliquoter ali = new Aliquoter() { Address = "0000000040", Port = 1, DisplayName = "Aliquoter" };
 
-            UnitCollection.Add(hmoutlet);
-            hmoutlet.Children.Add(di);
+            UnitCollection.Add(di);
+            hmoutlet.Children.Add(hmoutlet);
             hmoutlet.Children.Add(cent1);
             hmoutlet.Children.Add(cent2);
             hmoutlet.Children.Add(ld);
@@ -87,29 +88,22 @@ namespace PLCSimPP.Test.ServiceTest
         [TestMethod]
         public void TestUnitFind()
         {
-            string[] ss = new string[] { "0000000001",
-                                       "0000000002",
-                                       "0000000004",
-                                       "0000000008",
-                                       "0000000010",
-                                       "0000000020",
-                                       "0000000040", };
+            ObservableCollection<IUnit> layout = new ObservableCollection<IUnit>(GetLayout());
 
-            int count = 0;
-            foreach (var unit in ss)
-            {
-                int targetValue = int.Parse("0000000004", System.Globalization.NumberStyles.HexNumber);
-                int unitValue = int.Parse(unit, System.Globalization.NumberStyles.HexNumber);
-                if ((unitValue | targetValue) == targetValue)
-                {
-                    count += 1;
-                }
-            }
+            RouterService serv = new RouterService();
+            serv.SetSiteMap(layout);
 
-            //var result = from p in GetLayout() ;
-            //var units = UnitHelper.FindTargetUnit(result, "000000007F");
+            IUnit unit1 = serv.FindNextDestination(layout.First());
+            Assert.IsTrue(unit1.Address == "0000000001");
 
-            Assert.IsTrue(count == 1);
+            IUnit unit2 = serv.FindNextDestination(layout.First().Children.Last());
+            Assert.IsTrue(unit2.Address == "0000000100");
+
+            IUnit unit3 = serv.FindNextDestination(layout[1].Children.Last());
+            Assert.IsTrue(unit3.Address == "0000200000");
+
+            var units = serv.FindTargetUnit("000000007F");
+            Assert.IsTrue(units.Count == 7);
         }
     }
 }

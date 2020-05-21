@@ -15,11 +15,6 @@ namespace PLCSimPP.Service.Router
     {
         private ObservableCollection<IUnit> mUnitCollection;
 
-        public RouterService()
-        {
-
-        }
-
         /// <summary>
         /// FindNextDestination of current unit
         /// </summary>
@@ -93,20 +88,6 @@ namespace PLCSimPP.Service.Router
             return result;
         }
 
-        //public IUnit FindNextPort(IUnit current)
-        //{
-        //    int masterIndex;
-        //    if (current.IsMaster)
-        //    {
-        //        masterIndex = mUnitCollection.IndexOf(current);
-        //    }
-        //    else
-        //    {
-        //        var master = current.Parent;
-        //        masterIndex = mUnitCollection.IndexOf(master);
-        //    }
-
-        //    return mUnitCollection[masterIndex + 1].Children.First();
-        //}
+       
     }
 }

@@ -15,8 +15,7 @@ namespace PLCSimPP.Service.Devicies
     [Serializable]
     public class Labeler : UnitBase
     {
-        private readonly IEventAggregator mEventAggr;
-
+       
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
@@ -51,7 +50,7 @@ namespace PLCSimPP.Service.Devicies
 
         public Labeler() : base()
         {
-            mEventAggr = ServiceLocator.Current.GetInstance<IEventAggregator>();
+            
         }
     }
 }

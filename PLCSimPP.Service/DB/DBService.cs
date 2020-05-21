@@ -50,11 +50,15 @@ namespace PLCSimPP.Service.DB
             mConn = new SQLiteConnection(config.SQLiteConnString);
         }
 
+        public DBService(string connString)
+        {
+            mConn = new SQLiteConnection(connString);
+        }
 
         public PageData<T> GetPageData<T>(PageCriteria criteria) where T : BindableBase
         {
             string querystring = $"SELECT * FROM {criteria.TableName} WHERE {criteria.Condition} LIMIT {criteria.PageSize} OFFSET {criteria.PageSize * (criteria.CurrentPage - 1)}";
-            
+
             PageData<T> pageData = new PageData<T>()
             {
                 Items = new ObservableCollection<T>(mConn.Query<T>(querystring)),

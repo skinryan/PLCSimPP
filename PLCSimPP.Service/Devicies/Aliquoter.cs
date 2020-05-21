@@ -20,7 +20,7 @@ namespace PLCSimPP.Service.Devicies
     {
         private const string SERUM = "0041";
         private const string LASTORDER = "FF";
-        private IEventAggregator mEventAggr;
+        
 
         private ISample mSecTube = null;
         private ConcurrentQueue<ISample> mSecQueue;
@@ -147,7 +147,7 @@ namespace PLCSimPP.Service.Devicies
 
         public Aliquoter() : base()
         {
-            mEventAggr = ServiceLocator.Current.GetInstance<IEventAggregator>();
+            
             mSecQueue = new ConcurrentQueue<ISample>();
         }
 
