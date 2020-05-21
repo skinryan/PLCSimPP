@@ -14,7 +14,7 @@ namespace PLCSimPP.Comm.Interfaces
 
         //int MsgReceiveInterval { get; set; }
 
-        int MsgSendInterval { get; set; }
+        int SendInterval { get; set; }
 
         string DcSimLocation { get; set; }
 
@@ -25,6 +25,6 @@ namespace PLCSimPP.Comm.Interfaces
         ObservableCollection<AnalyzerItem> DxCInstruments { get; set; }
 
 
-        string ConnectionString { get; set; }
+        string SQLiteConnString { get; set; }
     }
 }

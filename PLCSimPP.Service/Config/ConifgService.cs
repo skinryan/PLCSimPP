@@ -57,7 +57,7 @@ namespace PLCSimPP.Service.Config
             catch (Exception ex)
             {
                 var result = new SystemInfo();
-                result.MsgSendInterval = 100;
+                result.SendInterval = 100;
 
                 result.SiteMapPath = "./Layout/Setting1.txt";
                 return result;
@@ -74,7 +74,7 @@ namespace PLCSimPP.Service.Config
             string josnString = File.ReadAllText(path, Encoding.Default);
 
             SystemInfo sys = JsonConvert.DeserializeObject<SystemInfo>(josnString);
-            sys.MsgSendInterval = info.MsgSendInterval;
+            sys.SendInterval = info.SendInterval;
             sys.SiteMapPath = info.SiteMapPath;
             sys.DcSimLocation = info.DcSimLocation;
             sys.DcInstruments = info.DcInstruments;

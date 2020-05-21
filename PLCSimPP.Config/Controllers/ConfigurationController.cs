@@ -44,7 +44,7 @@ namespace PLCSimPP.Config.Controllers
                 configInfo.DcInstruments = data.AnalyzerItems;
                 configInfo.DxCSimLocation = data.DxCSimLocation;
                 configInfo.DxCInstruments = data.DxCAnalyzerItems;
-                configInfo.MsgSendInterval = data.SendInterval;
+                configInfo.SendInterval = data.SendInterval;
 
                 //if (NumberRange.IsValid(data.SendInterval, MIN_SEND_INTERVAL, MAX_SEND_INTERVAL))
                 //{
@@ -68,7 +68,7 @@ namespace PLCSimPP.Config.Controllers
                 var configService = ServiceLocator.Current.GetInstance<IConfigService>();
                 var config = configService.ReadSysConfig();
                 data.SitemapFilePath = config.SiteMapPath;
-                data.SendInterval = config.MsgSendInterval;
+                data.SendInterval = config.SendInterval;
                 data.DxCSimLocation = config.DxCSimLocation;
                 data.DxCAnalyzerItems = config.DxCInstruments;
                 data.DcSimLocation = config.DcSimLocation;

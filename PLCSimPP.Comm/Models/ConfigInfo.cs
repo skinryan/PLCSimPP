@@ -12,12 +12,11 @@ namespace PLCSimPP.Comm.Models
     {
         public string SiteMapPath { get; set; }
         //public int MsgReceiveInterval { get; set; }
-        public int MsgSendInterval { get; set; }
+        public int SendInterval { get; set; }
         public string DcSimLocation { get; set; }
         public ObservableCollection<AnalyzerItem> DcInstruments { get; set; }
         public string DxCSimLocation { get; set; }
         public ObservableCollection<AnalyzerItem> DxCInstruments { get; set; }
-        public string ConnectionString { get; set; }
 
         public string SQLiteConnString { get; set; }
 
