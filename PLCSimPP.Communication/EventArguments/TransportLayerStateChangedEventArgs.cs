@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using PLCSimPP.Communication.Support;
+using BCI.PLCSimPP.Communication.Support;
 
-namespace PLCSimPP.Communication.EventArguments
+namespace BCI.PLCSimPP.Communication.EventArguments
 {
     public class TransportLayerStateChangedEventArgs : EventArgs
     {

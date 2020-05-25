@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
-using PLCSimPP.Comm;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Service.Devicies;
 
-namespace PLCSimPP.Layout.Converter
+namespace BCI.PLCSimPP.Layout.Converter
 {
     public class TypeToVisibilityConverter : IValueConverter
     {

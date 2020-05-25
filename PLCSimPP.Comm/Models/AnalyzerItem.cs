@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Prism.Mvvm;
 
-namespace PLCSimPP.Comm.Models
+namespace BCI.PLCSimPP.Comm.Models
 {
     /// <summary>
     /// Analyzer config item

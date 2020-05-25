@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Resources;
 using System.Threading;
 
-namespace PLCSimPP.PresentationControls.ViewData
+namespace BCI.PLCSimPP.PresentationControls.ViewData
 {
     /// <summary>
     /// Base class for setup view data

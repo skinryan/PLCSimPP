@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PLCSimPP.Comm.Constants;
-using PLCSimPP.Comm.Events;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Interfaces.Services;
-using PLCSimPP.Communication;
-using PLCSimPP.Communication.EventArguments;
-using PLCSimPP.Communication.Models;
-using PLCSimPP.Communication.Support;
+using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Comm.Events;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Communication;
+using BCI.PLCSimPP.Communication.EventArguments;
+using BCI.PLCSimPP.Communication.Models;
+using BCI.PLCSimPP.Communication.Support;
 using Prism.Events;
 
-namespace PLCSimPP.Service.Services
+namespace BCI.PLCSimPP.Service.Services
 {
     public class PortConnection
     {

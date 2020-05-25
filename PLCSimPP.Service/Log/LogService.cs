@@ -4,18 +4,18 @@ using System.Data;
 using System.IO;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-using PLCSimPP.Comm.Configuration;
-using PLCSimPP.Comm.Constants;
-using PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Comm.Configuration;
+using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Comm.Models;
 using Dapper;
-using PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
 using Microsoft.Data.SqlClient;
 using log4net.Config;
 using log4net.Repository;
 using log4net;
-using PLCSimPP.Communication.Support;
+using BCI.PLCSimPP.Communication.Support;
 
-namespace PLCSimPP.Service.Log
+namespace BCI.PLCSimPP.Service.Log
 {
     /// <summary>
     /// Logger service

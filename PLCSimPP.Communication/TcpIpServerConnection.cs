@@ -2,14 +2,14 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Communication.EventArguments;
-using PLCSimPP.Communication.Interface;
-using PLCSimPP.Communication.Models;
-using PLCSimPP.Communication.Support;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Communication.EventArguments;
+using BCI.PLCSimPP.Communication.Interface;
+using BCI.PLCSimPP.Communication.Models;
+using BCI.PLCSimPP.Communication.Support;
 
-namespace PLCSimPP.Communication
+namespace BCI.PLCSimPP.Communication
 {
     public class TcpIpServerConnection : ITcpIpServerConnection
     {

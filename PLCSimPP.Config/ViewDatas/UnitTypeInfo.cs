@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm;
 using Prism.Mvvm;
 
-namespace PLCSimPP.Config.ViewDatas
+namespace BCI.PLCSimPP.Config.ViewDatas
 {
     public class UnitTypeInfo : BindableBase
     {

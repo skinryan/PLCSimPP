@@ -5,14 +5,14 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using CommonServiceLocator;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Interfaces.Services;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Communication.EventArguments;
-using PLCSimPP.Communication.Models;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Communication.EventArguments;
+using BCI.PLCSimPP.Communication.Models;
 using Prism.Ioc;
 
-namespace PLCSimPP.Communication.Support
+namespace BCI.PLCSimPP.Communication.Support
 {
     public class SmartConnection
     {

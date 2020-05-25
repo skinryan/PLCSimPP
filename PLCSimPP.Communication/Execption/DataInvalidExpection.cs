@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PLCSimPP.Communication.Execption
+namespace BCI.PLCSimPP.Communication.Execption
 {
     public class InvalidCommandExecption : Exception
     {

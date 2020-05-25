@@ -1,7 +1,7 @@
-﻿<prism:PrismApplication x:Class="PLCSimPP.Launcher.App"
+﻿<prism:PrismApplication x:Class="BCI.PLCSimPP.Launcher.App"
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                        xmlns:local="clr-namespace:PLCSimPP.Launcher"
+                        xmlns:local="clr-namespace:BCI.PLCSimPP.Launcher"
                         xmlns:prism="http://prismlibrary.com/">
     <Application.Resources>
         <ResourceDictionary>

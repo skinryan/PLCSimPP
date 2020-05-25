@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Service.Devicies;
-using PLCSimPP.Service.Devicies.StandardResponds;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Service.Devicies.StandardResponds;
 
-namespace PLCSimPP.Test.ServiceTest
+namespace BCI.PLCSimPP.Test.ServiceTest
 {
     [TestClass]
     public class MsgTest
     {
 
         [TestMethod]
-        public void TestMsg1017()
+        public void Msg1017Test()
         {
             string recev = "13678860130     11031K31 ";
             IUnit stocker = new Stocker()

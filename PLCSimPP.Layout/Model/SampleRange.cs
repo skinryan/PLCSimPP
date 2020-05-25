@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm;
 using Prism.Mvvm;
 
-namespace PLCSimPP.Layout.Model
+namespace BCI.PLCSimPP.Layout.Model
 {
     public class SampleRange : BindableBase
     {

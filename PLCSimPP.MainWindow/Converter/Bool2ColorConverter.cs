@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace PLCSimPP.MainWindow.Converter
+namespace BCI.PLCSimPP.MainWindow.Converter
 {
     public class Bool2ColorConverter : IValueConverter
     {

@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
-using PLCSimPP.Comm;
-using PLCSimPP.Comm.Constant;
-using PLCSimPP.Comm.Events;
-using PLCSimPP.Comm.Helper;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Interfaces.Services;
-using PLCSimPP.Config.ViewDatas;
-using PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.Comm.Events;
+using BCI.PLCSimPP.Comm.Helper;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Config.ViewDatas;
+using BCI.PLCSimPP.Service.Devicies;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 
-namespace PLCSimPP.Config.ViewModels
+namespace BCI.PLCSimPP.Config.ViewModels
 {
     public class SiteMapEditerViewModel : BindableBase
     {

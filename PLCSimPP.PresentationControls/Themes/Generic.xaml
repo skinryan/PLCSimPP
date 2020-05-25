@@ -1,8 +1,8 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:comm="clr-namespace:PLCSimPP.Comm;assembly=PLCSimPP.Comm"
-                    xmlns:local="clr-namespace:PLCSimPP.PresentationControls"
-                    xmlns:sc="clr-namespace:PLCSimPP.PresentationControls.Controls"
+                    xmlns:comm="clr-namespace:BCI.PLCSimPP.Comm;assembly=BCI.PLCSimPP.Comm"
+                    xmlns:local="clr-namespace:BCI.PLCSimPP.PresentationControls"
+                    xmlns:sc="clr-namespace:BCI.PLCSimPP.PresentationControls.Controls"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <!--<cvt:IndexConverter x:Key="IndexConverter" />-->
     <ObjectDataProvider x:Key="AnaTypeEnum"

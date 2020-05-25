@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using CommonServiceLocator;
-using PLCSimPP.Comm;
-using PLCSimPP.Comm.Constants;
-using PLCSimPP.Comm.Events;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Service.Devicies.StandardResponds;
+using BCI.PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Comm.Events;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Service.Devicies.StandardResponds;
 using Prism.Events;
 
-namespace PLCSimPP.Service.Devicies
+namespace BCI.PLCSimPP.Service.Devicies
 {
     [Serializable]
     public class Labeler : UnitBase

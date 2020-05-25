@@ -6,17 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using PLCSimPP.Comm.Events;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Interfaces.Services;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Service.Devicies;
-using PLCSimPP.Service.Devicies.StandardResponds;
+using BCI.PLCSimPP.Comm.Events;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Service.Devicies.StandardResponds;
 using Prism.Events;
 using Prism.Mvvm;
-using GC = PLCSimPP.Service.Devicies.GC;
+using GC = BCI.PLCSimPP.Service.Devicies.GC;
 
-namespace PLCSimPP.Service.Router
+namespace BCI.PLCSimPP.Service.Router
 {
     public class AutomationService : BindableBase, IAutomation
     {

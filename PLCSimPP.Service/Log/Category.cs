@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PLCSimPP.Service.Log
+namespace BCI.PLCSimPP.Service.Log
 {
     public class Category
     {

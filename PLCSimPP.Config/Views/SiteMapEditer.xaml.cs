@@ -13,10 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CommonServiceLocator;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Config.ViewModels;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Config.ViewModels;
 
-namespace PLCSimPP.Config.Views
+namespace BCI.PLCSimPP.Config.Views
 {
     /// <summary>
     /// Interaction logic for SiteMapEditer.xaml

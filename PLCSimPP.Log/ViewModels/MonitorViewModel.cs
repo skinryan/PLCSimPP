@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
-using PLCSimPP.Comm.Constant;
-using PLCSimPP.Comm.Events;
-using PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.Comm.Events;
+using BCI.PLCSimPP.Comm.Models;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 
-namespace PLCSimPP.Log.ViewModels
+namespace BCI.PLCSimPP.Log.ViewModels
 {
     public class MonitorViewModel : BindableBase
     {

@@ -3,6 +3,8 @@
   <PropertyGroup>
 	  <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
 	  <UseWPF>true</UseWPF>
+	  <AssemblyName>BCI.PLCSimPP.Log</AssemblyName>
+	  <RootNamespace>BCI.PLCSimPP.Log</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

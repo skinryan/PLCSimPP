@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PLCSimPP.Comm.Constants
+namespace BCI.PLCSimPP.Comm.Constants
 {
     public class ParamConst
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace PLCSimPP.PresentationControls.ViewData
+namespace BCI.PLCSimPP.PresentationControls.ViewData
 {
     /// <summary>
     /// Enhanced Property Changed Event Args

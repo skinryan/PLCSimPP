@@ -3,8 +3,8 @@
   <PropertyGroup>
 	  <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
 	  <UseWPF>true</UseWPF>
-    <AssemblyName>PLCSimPP.MainWindow</AssemblyName>
-    <RootNamespace>PLCSimPP.MainWindow</RootNamespace>
+    <AssemblyName>BCI.PLCSimPP.MainWindow</AssemblyName>
+    <RootNamespace>BCI.PLCSimPP.MainWindow</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

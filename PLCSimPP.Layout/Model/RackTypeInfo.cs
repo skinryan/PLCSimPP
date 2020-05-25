@@ -1,7 +1,7 @@
-﻿using PLCSimPP.Comm;
+﻿using BCI.PLCSimPP.Comm;
 using Prism.Mvvm;
 
-namespace PLCSimPP.Layout.Model
+namespace BCI.PLCSimPP.Layout.Model
 {
     public class RackTypeInfo : BindableBase
     {

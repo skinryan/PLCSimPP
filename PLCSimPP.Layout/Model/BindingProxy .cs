@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace PLCSimPP.Layout.Model
+namespace BCI.PLCSimPP.Layout.Model
 {
     public class BindingProxy : Freezable
     {

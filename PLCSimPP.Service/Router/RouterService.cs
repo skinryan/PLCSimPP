@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Interfaces.Services;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Service.Devicies;
-using PLCSimPP.Service.Config;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Service.Config;
 using System.Linq;
 
-namespace PLCSimPP.Service.Router
+namespace BCI.PLCSimPP.Service.Router
 {
     public class RouterService : IRouterService
     {

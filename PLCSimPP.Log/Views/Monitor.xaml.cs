@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PLCSimPP.Log.Views
+namespace BCI.PLCSimPP.Log.Views
 {
     /// <summary>
     /// Interaction logic for Monitor.xaml

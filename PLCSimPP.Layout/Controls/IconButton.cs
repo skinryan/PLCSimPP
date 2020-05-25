@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace PLCSimPP.Layout.Controls
+namespace BCI.PLCSimPP.Layout.Controls
 {
     public class IconButton : Button
     {

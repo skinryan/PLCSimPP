@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Comm.Models;
 
-namespace PLCSimPP.Comm.Interfaces
+namespace BCI.PLCSimPP.Comm.Interfaces
 {
     public interface IRecvMsgBeheavior
     {

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PLCSimPP.Comm.Constant;
-using PLCSimPP.Log.Views;
+using BCI.PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.Log.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 
-namespace PLCSimPP.Log
+namespace BCI.PLCSimPP.Log
 {
     public class LogModule : IModule
     {

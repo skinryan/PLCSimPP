@@ -4,9 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Comm.Models;
 
-namespace PLCSimPP.Comm.Interfaces
+namespace BCI.PLCSimPP.Comm.Interfaces
 {
     public interface IConfigInfo
     {
@@ -25,6 +25,6 @@ namespace PLCSimPP.Comm.Interfaces
         ObservableCollection<AnalyzerItem> DxCInstruments { get; set; }
 
 
-        string SQLiteConnString { get; set; }
+        string ConnectionString { get; set; }
     }
 }

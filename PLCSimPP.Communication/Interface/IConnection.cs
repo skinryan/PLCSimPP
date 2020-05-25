@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PLCSimPP.Communication.EventArguments;
-using PLCSimPP.Communication.Support;
+using BCI.PLCSimPP.Communication.EventArguments;
+using BCI.PLCSimPP.Communication.Support;
 
-namespace PLCSimPP.Communication.Interface
+namespace BCI.PLCSimPP.Communication.Interface
 {
     public delegate void TransportLayerDataReceivedEventHandler(object sender, TransportLayerDataReceivedEventArgs e);
     public delegate void TransportLayerStateChangedEventHandler(object sender, TransportLayerStateChangedEventArgs e);

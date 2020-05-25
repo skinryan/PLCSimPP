@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace PLCSimPP.Communication.Support
+namespace BCI.PLCSimPP.Communication.Support
 {
     public sealed class HostHelper
     {

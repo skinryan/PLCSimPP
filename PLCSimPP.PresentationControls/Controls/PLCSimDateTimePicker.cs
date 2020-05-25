@@ -1,7 +1,7 @@
 ﻿using System;
 using Xceed.Wpf.Toolkit;
 
-namespace PLCSimPP.PresentationControls.Controls
+namespace BCI.PLCSimPP.PresentationControls.Controls
 {
     public class PLCSimDateTimePicker : DateTimePicker
     {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace PLCSimPP.Layout.Converter
+namespace BCI.PLCSimPP.Layout.Converter
 {
     public class RackExchangeParamConverter : IMultiValueConverter
     {

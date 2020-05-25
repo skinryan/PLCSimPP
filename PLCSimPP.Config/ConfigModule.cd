@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="PLCSimPP.Config.Views.ConfigMenu">
+  <Class Name="BCI.PLCSimPP.Config.Views.ConfigMenu">
     <Position X="1.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -8,7 +8,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="PLCSimPP.Config.ViewModels.ConfigMenuViewModel">
+  <Class Name="BCI.PLCSimPP.Config.ViewModels.ConfigMenuViewModel">
     <Position X="3" Y="3.5" Width="1.75" />
     <Members>
       <Method Name="ConfigMenuViewModel" Hidden="true" />
@@ -21,7 +21,7 @@
       <FileName>ViewModels\ConfigMenuViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Config.ViewModels.ConfigruationViewModel">
+  <Class Name="BCI.PLCSimPP.Config.ViewModels.ConfigruationViewModel">
     <Position X="10" Y="3.5" Width="2.25" />
     <Members>
       <Method Name="ConfigruationViewModel" Hidden="true" />
@@ -39,7 +39,7 @@
       <Property Name="ConfigurationController" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="PLCSimPP.Config.Views.Configuration" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Config.Views.Configuration" Collapsed="true">
     <Position X="10" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -47,7 +47,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="PLCSimPP.Config.ViewModels.SiteMapEditerViewModel">
+  <Class Name="BCI.PLCSimPP.Config.ViewModels.SiteMapEditerViewModel">
     <Position X="5.75" Y="7.25" Width="3" />
     <Members>
       <Property Name="Address" Hidden="true" />
@@ -72,7 +72,7 @@
       <FileName>ViewModels\SiteMapEditerViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Config.Controllers.ConfigurationController">
+  <Class Name="BCI.PLCSimPP.Config.Controllers.ConfigurationController">
     <Position X="14.25" Y="3.5" Width="2.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
@@ -82,7 +82,7 @@
       <FileName>Controllers\ConfigurationController.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Config.Views.SiteMapEditer">
+  <Class Name="BCI.PLCSimPP.Config.Views.SiteMapEditer">
     <Position X="3.5" Y="7.25" Width="2" />
     <Members>
       <Method Name="Add_Button_Click" Hidden="true" />

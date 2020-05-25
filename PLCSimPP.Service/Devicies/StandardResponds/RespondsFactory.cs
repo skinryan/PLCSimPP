@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PLCSimPP.Comm.Constants;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Communication.Execption;
+using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Communication.Execption;
 
-namespace PLCSimPP.Service.Devicies.StandardResponds
+namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
 {
 
     public static class RespondsFactory

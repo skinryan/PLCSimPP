@@ -1,7 +1,7 @@
 ﻿using Prism.Mvvm;
 using System.Collections.ObjectModel;
 
-namespace PLCSimPP.Service.Log
+namespace BCI.PLCSimPP.Service.Log
 {
     public class PageData<T> : BindableBase where T : BindableBase
     {

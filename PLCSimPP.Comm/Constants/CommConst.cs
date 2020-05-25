@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PLCSimPP.Comm.Constants
+namespace BCI.PLCSimPP.Comm.Constants
 {
     public class CommConst
     {

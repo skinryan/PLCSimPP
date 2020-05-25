@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PLCSimPP.Service.DB
+namespace BCI.PLCSimPP.Service.DB
 {
     public class DbConst
     {

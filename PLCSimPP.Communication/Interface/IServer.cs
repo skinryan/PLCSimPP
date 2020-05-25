@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Communication.Models;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Communication.Models;
 
-namespace PLCSimPP.Communication.Interface
+namespace BCI.PLCSimPP.Communication.Interface
 {
     internal interface IServer
     {

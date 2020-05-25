@@ -1,17 +1,17 @@
-﻿using PLCSimPP.Config.ViewDatas;
-using PLCSimPP.PresentationControls;
-using PLCSimPP.PresentationControls.ValidationAttributes;
+﻿using BCI.PLCSimPP.Config.ViewDatas;
+using BCI.PLCSimPP.PresentationControls;
+using BCI.PLCSimPP.PresentationControls.ValidationAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PLCSimPP.Service.Config;
+using BCI.PLCSimPP.Service.Config;
 using System.Text.RegularExpressions;
-using PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
 using CommonServiceLocator;
 
-namespace PLCSimPP.Config.Controllers
+namespace BCI.PLCSimPP.Config.Controllers
 {
     public class ConfigurationController : ControllerBase
     {

@@ -1,10 +1,10 @@
-﻿using PLCSimPP.PresentationControls.ViewData;
-using PLCSimPP.PresentationControls.ValidationAttributes;
+﻿using BCI.PLCSimPP.PresentationControls.ViewData;
+using BCI.PLCSimPP.PresentationControls.ValidationAttributes;
 using System.Collections.ObjectModel;
-using PLCSimPP.PresentationControls.Controls;
-using PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.PresentationControls.Controls;
+using BCI.PLCSimPP.Comm.Models;
 
-namespace PLCSimPP.Config.ViewDatas
+namespace BCI.PLCSimPP.Config.ViewDatas
 {
     public class ConfigruationViewData : EditViewDataBase
     {

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PLCSimPP.Comm.Constants;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Communication.Support;
+using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Communication.Support;
 
-namespace PLCSimPP.Test.DataReaderTest
+namespace BCI.PLCSimPP.Test.DataReaderTest
 {
     [TestClass]
     public class DataReaderTest

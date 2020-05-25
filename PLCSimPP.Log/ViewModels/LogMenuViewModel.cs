@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Input;
-using PLCSimPP.Comm.Constant;
-using PLCSimPP.Comm.Events;
-using PLCSimPP.Comm.Interfaces.Services;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Service.DB;
+using BCI.PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.Comm.Events;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Service.DB;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 
-namespace PLCSimPP.Log.ViewModels
+namespace BCI.PLCSimPP.Log.ViewModels
 {
     public class LogMenuViewModel : BindableBase
     {

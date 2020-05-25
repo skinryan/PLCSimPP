@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using System.Windows.Input;
-using PLCSimPP.Comm.Constants;
-using PLCSimPP.Comm.Events;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Log.CustomControl;
-using PLCSimPP.Service.DB;
-using PLCSimPP.Service.Log;
+using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Comm.Events;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Log.CustomControl;
+using BCI.PLCSimPP.Service.DB;
+using BCI.PLCSimPP.Service.Log;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 
-namespace PLCSimPP.Log.ViewModels
+namespace BCI.PLCSimPP.Log.ViewModels
 {
     public class LogViewerViewModel : BindableBase
     {
@@ -169,13 +169,13 @@ namespace PLCSimPP.Log.ViewModels
 
         private PageData<LogContent> GetPage(int page, int pageSize, DateTime tmStart, DateTime tmEnd)
         {
-            PageCriteria criteria = new PageCriteria() { Condition = $"`Time` <= '{tmEnd.ToString("yyyy-MM-dd HH:mm:ss")}' and `Time` >= '{tmStart.ToString("yyyy-MM-dd HH:mm:ss")}'" };
+            PageCriteria criteria = new PageCriteria() { Condition = $"[Time] <= '{tmEnd}' and [Time] >= '{tmStart}'" };
 
             if (!string.IsNullOrEmpty(Address))
-                criteria.Condition += $" and `Address` = '{Address}'";
+                criteria.Condition += $" and [Address] = '{Address}'";
 
             if (!string.IsNullOrEmpty(Param))
-                criteria.Condition += $" and `Details` like '%{Param}%'";
+                criteria.Condition += $" and [Details] like '%{Param}%'";
 
             criteria.CurrentPage = page;
             criteria.PageSize = pageSize;

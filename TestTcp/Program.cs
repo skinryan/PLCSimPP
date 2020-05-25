@@ -2,11 +2,11 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Communication;
-using PLCSimPP.Communication.EventArguments;
-using PLCSimPP.Communication.Models;
-using PLCSimPP.Communication.Support;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Communication;
+using BCI.PLCSimPP.Communication.EventArguments;
+using BCI.PLCSimPP.Communication.Models;
+using BCI.PLCSimPP.Communication.Support;
 
 namespace TestTcp
 {

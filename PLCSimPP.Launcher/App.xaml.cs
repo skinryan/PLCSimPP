@@ -9,7 +9,7 @@ using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Unity;
 
-namespace PLCSimPP.Launcher
+namespace BCI.PLCSimPP.Launcher
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -33,16 +33,16 @@ namespace PLCSimPP.Launcher
         protected override Window CreateShell()
         {
 
-            return Container.Resolve<PLCSimPP.Launcher.Views.MainWindow>();
+            return Container.Resolve<BCI.PLCSimPP.Launcher.Views.MainWindow>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            moduleCatalog.AddModule<PLCSimPP.Service.ServicesModule>();
-            moduleCatalog.AddModule<PLCSimPP.MainWindow.MainWindowModule>();
-            moduleCatalog.AddModule<PLCSimPP.Layout.LayoutModule>();
-            moduleCatalog.AddModule<PLCSimPP.Log.LogModule>();
-            moduleCatalog.AddModule<PLCSimPP.Config.ConfigModule>();
+            moduleCatalog.AddModule<BCI.PLCSimPP.Service.ServicesModule>();
+            moduleCatalog.AddModule<BCI.PLCSimPP.MainWindow.MainWindowModule>();
+            moduleCatalog.AddModule<BCI.PLCSimPP.Layout.LayoutModule>();
+            moduleCatalog.AddModule<BCI.PLCSimPP.Log.LogModule>();
+            moduleCatalog.AddModule<BCI.PLCSimPP.Config.ConfigModule>();
         }
 
 

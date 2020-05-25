@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 
-namespace PLCSimPP.Comm.Configuration
+namespace BCI.PLCSimPP.Comm.Configuration
 {
     public class AppConfig
     {

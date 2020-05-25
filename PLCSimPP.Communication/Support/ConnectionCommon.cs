@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PLCSimPP.Communication.Support
+namespace BCI.PLCSimPP.Communication.Support
 {
     /// <summary>
     /// Connection States

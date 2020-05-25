@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using Prism.Mvvm;
 
-namespace PLCSimPP.Config.ViewModels
+namespace BCI.PLCSimPP.Config.ViewModels
 {
     public class AboutViewModel : BindableBase
     {

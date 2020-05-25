@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <AssemblyName>BCI.PLCSimPP.Test</AssemblyName>
+
+    <RootNamespace>BCI.PLCSimPP.Test</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,6 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BCI.PLCSimPP.Communication\BCI.PLCSimPP.Communication.csproj" />
+    <ProjectReference Include="..\BCI.PLCSimPP.Service\BCI.PLCSimPP.Service.csproj" />
     <ProjectReference Include="..\PLCSimPP.Communication\PLCSimPP.Communication.csproj" />
     <ProjectReference Include="..\PLCSimPP.Service\PLCSimPP.Service.csproj" />
   </ItemGroup>

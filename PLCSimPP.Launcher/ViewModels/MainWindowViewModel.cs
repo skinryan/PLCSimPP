@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using PLCSimPP.Comm.Events;
-using PLCSimPP.Service.DB;
+using BCI.PLCSimPP.Comm.Events;
+using BCI.PLCSimPP.Service.DB;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 
-namespace PLCSimPP.Launcher.ViewModels
+namespace BCI.PLCSimPP.Launcher.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
@@ -41,27 +41,10 @@ namespace PLCSimPP.Launcher.ViewModels
 
             NavigateCommand = new DelegateCommand<string>(Navigate);
 
-            InitDB();
+            
         }
 
-        private void InitDB()
-        {
-            var directory = "./DB/";
-            var dbName = "PLCSimPP.db3";
-
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
-
-            if (!File.Exists(directory + dbName))
-            {
-                SQLiteHelper.NewDbFile(directory + dbName);
-
-                FileInfo file = new FileInfo(directory + dbName);
-                SQLiteHelper.NewTable(file.FullName);
-            }
-        }
+        
 
         private void Navigate(string viewName)
         {

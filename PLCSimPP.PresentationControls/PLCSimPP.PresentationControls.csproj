@@ -4,6 +4,8 @@
     <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>BCI.PLCSimPP.PresentationControls</AssemblyName>
+    <RootNamespace>BCI.PLCSimPP.PresentationControls</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net472' ">

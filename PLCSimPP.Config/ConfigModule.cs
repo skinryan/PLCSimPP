@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PLCSimPP.Comm.Constant;
-using PLCSimPP.Config.Views;
+using BCI.PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.Config.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 
-namespace PLCSimPP.Config
+namespace BCI.PLCSimPP.Config
 {
     public class ConfigModule : IModule
 

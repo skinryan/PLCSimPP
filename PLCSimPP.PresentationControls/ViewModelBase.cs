@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using static PLCSimPP.PresentationControls.Annotations;
+using static BCI.PLCSimPP.PresentationControls.Annotations;
 using System.Windows.Input;
 using Prism.Commands;
 
-namespace PLCSimPP.PresentationControls
+namespace BCI.PLCSimPP.PresentationControls
 {
     /// <summary>
     /// This abstract class act as a base class for all view model classes

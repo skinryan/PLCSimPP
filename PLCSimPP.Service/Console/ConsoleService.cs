@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PLCSimPP.Comm.Events;
-using PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Comm.Events;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
 using Prism.Events;
 
-namespace PLCSimPP.Service.Console
+namespace BCI.PLCSimPP.Service.Console
 {
     public class ConsoleService : IConsoleService
     {

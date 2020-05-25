@@ -3,13 +3,13 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using CommonServiceLocator;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Interfaces.Services;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Communication.Models;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Communication.Models;
 using Prism.Events;
 
-namespace PLCSimPP.Service.Services
+namespace BCI.PLCSimPP.Service.Services
 {
     public class PortService : IPortService
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace PLCSimPP.Comm
+namespace BCI.PLCSimPP.Comm
 {
     public enum SortingOrder
     {

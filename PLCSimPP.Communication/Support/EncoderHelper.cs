@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Communication.Execption;
-using PLCSimPP.Communication.Models;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Communication.Execption;
+using BCI.PLCSimPP.Communication.Models;
 
-namespace PLCSimPP.Communication.Support
+namespace BCI.PLCSimPP.Communication.Support
 {
     public static class EncoderHelper
     {

@@ -2,9 +2,9 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
-using PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Comm.Models;
 
-namespace PLCSimPP.Comm.Interfaces.Services
+namespace BCI.PLCSimPP.Comm.Interfaces.Services
 {
     public interface IMsgService
     {

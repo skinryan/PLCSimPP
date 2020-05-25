@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using PLCSimPP.Comm;
-using PLCSimPP.Comm.Helper;
+using BCI.PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Helper;
 
-namespace PLCSimPP.Layout.Converter
+namespace BCI.PLCSimPP.Layout.Converter
 {
     public class RackToStrConverter : IValueConverter
     {

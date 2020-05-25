@@ -1,4 +1,4 @@
-﻿using PLCSimPP.Service.Devicies;
+﻿using BCI.PLCSimPP.Service.Devicies;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace PLCSimPP.Layout.Converter
+namespace BCI.PLCSimPP.Layout.Converter
 {
     public class UnitType2VisibilityConverter : IValueConverter
     {

@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <AssemblyName>BCI.PLCSimPP.Service</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -10,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DB\SQLiteHelper.cs" />
     <Compile Remove="Log\MsgLogLayout.cs" />
   </ItemGroup>
 
@@ -24,7 +26,6 @@
     <PackageReference Include="MicroKnights.Log4NetAdoNetAppender" Version="2.0.1" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="1.1.0" />
     <PackageReference Include="Prism.Unity" Version="7.2.0.1422" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.112.2" />
   </ItemGroup>
 
   <ItemGroup>

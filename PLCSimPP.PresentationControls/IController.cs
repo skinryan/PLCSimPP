@@ -1,6 +1,6 @@
-﻿using PLCSimPP.PresentationControls.ViewData;
+﻿using BCI.PLCSimPP.PresentationControls.ViewData;
 
-namespace PLCSimPP.PresentationControls
+namespace BCI.PLCSimPP.PresentationControls
 {
     /// <summary>
     /// Handle setup configuration save event

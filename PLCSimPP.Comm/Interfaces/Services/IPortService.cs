@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PLCSimPP.Comm.Interfaces.Services
+namespace BCI.PLCSimPP.Comm.Interfaces.Services
 {
     public interface IPortService
     {

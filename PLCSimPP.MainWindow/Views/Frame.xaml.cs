@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Controls;
 
-namespace PLCSimPP.MainWindow.Views
+namespace BCI.PLCSimPP.MainWindow.Views
 {
     public partial class Frame : UserControl
     {

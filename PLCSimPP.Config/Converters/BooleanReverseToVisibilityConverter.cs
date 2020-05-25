@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace PLCSimPP.Config.Converters
+namespace BCI.PLCSimPP.Config.Converters
 {
     public class BooleanReverseToVisibilityConverter : IValueConverter
     {

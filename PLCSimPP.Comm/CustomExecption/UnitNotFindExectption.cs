@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PLCSimPP.Comm.CustomExecption
+namespace BCI.PLCSimPP.Comm.CustomExecption
 {
     public class UnitNotFindExectption : Exception
     {

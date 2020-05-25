@@ -6,12 +6,12 @@ using System.Text;
 using System.Xml;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using PLCSimPP.Comm.Configuration;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Interfaces.Services;
-using PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Comm.Configuration;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Comm.Models;
 
-namespace PLCSimPP.Service.Config
+namespace BCI.PLCSimPP.Service.Config
 {
     public class ConifgService : IConfigService
     {

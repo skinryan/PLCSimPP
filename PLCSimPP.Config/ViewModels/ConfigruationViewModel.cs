@@ -1,21 +1,21 @@
 ﻿using System.Windows.Input;
-using PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Comm.Models;
 using Prism.Mvvm;
 using Prism.Commands;
 using System.Windows.Forms;
-using PLCSimPP.Config.Controllers;
-using PLCSimPP.PresentationControls;
+using BCI.PLCSimPP.Config.Controllers;
+using BCI.PLCSimPP.PresentationControls;
 using Prism.Regions;
-using PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.Comm.Constant;
 using Prism.Events;
-using PLCSimPP.Comm.Events;
+using BCI.PLCSimPP.Comm.Events;
 using System;
-using PLCSimPP.Config.ViewDatas;
+using BCI.PLCSimPP.Config.ViewDatas;
 using CommonServiceLocator;
-using PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
 using System.Threading;
 
-namespace PLCSimPP.Config.ViewModels
+namespace BCI.PLCSimPP.Config.ViewModels
 {
     public class ConfigruationViewModel : ViewModelBase
     {

@@ -10,11 +10,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using PLCSimPP.Config.ViewModels;
+using BCI.PLCSimPP.Config.ViewModels;
 using Prism.Unity;
 using Unity;
 
-namespace PLCSimPP.Config.Views
+namespace BCI.PLCSimPP.Config.Views
 {
     /// <summary>
     /// Interaction logic for ConfigruationView.xaml

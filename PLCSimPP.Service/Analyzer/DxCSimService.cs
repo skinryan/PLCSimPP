@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using DcSimCom;
 using DxCSimCom;
 using DxCSimCom.ToDxCSimMessage;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Interfaces.Services;
-using PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Comm.Models;
 
-namespace PLCSimPP.Service.Analyzer
+namespace BCI.PLCSimPP.Service.Analyzer
 {
     public class DxCSimService : IAnalyzerSimService
     {

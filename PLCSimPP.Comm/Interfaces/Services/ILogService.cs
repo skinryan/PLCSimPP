@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Comm.Models;
 using Prism.Logging;
 
-namespace PLCSimPP.Comm.Interfaces.Services
+namespace BCI.PLCSimPP.Comm.Interfaces.Services
 {
     public interface ILogService
     {

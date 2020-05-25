@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Interfaces;
 
-namespace PLCSimPP.Service.Devicies.StandardResponds
+namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
 {
     public class ReplyEmpty : IResponds
     {

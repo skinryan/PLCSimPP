@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using PLCSimPP.Comm;
-using PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Models;
 using Prism.Mvvm;
 
-namespace PLCSimPP.PresentationControls.Controls
+namespace BCI.PLCSimPP.PresentationControls.Controls
 {
     [TemplatePart(Name = TEMPLATE_PART_COMBOBOX, Type = typeof(ComboBox))]
     [TemplatePart(Name = TEMPLATE_PART_LISTBOX, Type = typeof(ListBox))]

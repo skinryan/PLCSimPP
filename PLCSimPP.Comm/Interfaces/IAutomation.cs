@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using PLCSimPP.Comm.Interfaces.Services;
-using PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Comm.Models;
 
-namespace PLCSimPP.Comm.Interfaces
+namespace BCI.PLCSimPP.Comm.Interfaces
 {
     public interface IAutomation
     {

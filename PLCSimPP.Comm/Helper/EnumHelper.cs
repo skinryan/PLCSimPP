@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PLCSimPP.Comm.Helper
+namespace BCI.PLCSimPP.Comm.Helper
 {
     public class EnumHelper
     {

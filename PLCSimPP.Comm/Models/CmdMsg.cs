@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Interfaces;
 
-namespace PLCSimPP.Comm.Models
+namespace BCI.PLCSimPP.Comm.Models
 {
     public class MsgCmd : IMessage
     {

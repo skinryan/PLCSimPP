@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Text;
 using System.Windows.Data;
 
-namespace PLCSimPP.Log.Converter
+namespace BCI.PLCSimPP.Log.Converter
 {
     public class DateTimeToStringConverter : IValueConverter
     {

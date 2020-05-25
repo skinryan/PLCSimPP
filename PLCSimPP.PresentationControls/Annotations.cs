@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PLCSimPP.PresentationControls
+namespace BCI.PLCSimPP.PresentationControls
 {
     public class Annotations
     {

@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Resources;
 using System.Threading;
-using PLCSimPP.PresentationControls.ValidationAttributes;
+using BCI.PLCSimPP.PresentationControls.ValidationAttributes;
 
-namespace PLCSimPP.PresentationControls.ViewData
+namespace BCI.PLCSimPP.PresentationControls.ViewData
 {
     /// <summary>
     /// Edit Object attributes

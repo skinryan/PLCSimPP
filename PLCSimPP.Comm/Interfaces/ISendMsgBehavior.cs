@@ -1,4 +1,4 @@
-﻿namespace PLCSimPP.Comm.Interfaces
+﻿namespace BCI.PLCSimPP.Comm.Interfaces
 {
     public interface ISendMsgBehavior
     {

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using PLCSimPP.Comm.Constants;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Communication.Models;
+using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Communication.Models;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace PLCSimPP.Communication.Support
+namespace BCI.PLCSimPP.Communication.Support
 {
     public class DataHelper
     {
@@ -26,8 +26,7 @@ namespace PLCSimPP.Communication.Support
             /* Ingore first 2 bytes,it is header 
                next 2 bytes convert to int as data length
                next 5 bytes convert to hex string as unit address
-               next 2 bytes convert to hex string as command
-            */
+               next 2 bytes convert to hex string as command */
             byte[] lenBuffer = new byte[2];
             Array.Copy(rawData, 2, lenBuffer, 0, 2);
             Array.Reverse(lenBuffer);
@@ -49,7 +48,6 @@ namespace PLCSimPP.Communication.Support
                 result.ActualLength = rawData.Length - 4;
                 return result;
             }
-
 
             byte[] contentBuffer = new byte[length];
             Array.Copy(rawData, 4, contentBuffer, 0, length);
@@ -108,156 +106,6 @@ namespace PLCSimPP.Communication.Support
             return result;
         }
 
-        //public static string ConvertToString(Stream source)
-        //{
-        //    if (source == null)
-        //    {
-        //        throw (new ArgumentNullException("source"));
-        //    }
-
-        //    byte[] Buffer = new byte[System.Convert.ToInt32(source.Length - 1) + 1];
-
-        //    source.Read(Buffer, 0, Buffer.Length);
-        //    return System.Text.Encoding.ASCII.GetString(Buffer);
-        //}
-
-        //public static void Copy(Stream source, Stream target)
-        //{
-        //    byte[] Buffer = new byte[4096];
-        //    int cnt;
-
-        //    if (source == null)
-        //    {
-        //        throw (new ArgumentNullException("source"));
-        //    }
-
-        //    if (target == null)
-        //    {
-        //        throw (new ArgumentNullException("target"));
-        //    }
-
-        //    cnt = source.Read(Buffer, 0, Buffer.Length);
-        //    while (cnt > 0)
-        //    {
-        //        target.Write(Buffer, 0, cnt);
-        //        cnt = source.Read(Buffer, 0, Buffer.Length);
-        //    }
-        //}
-
-
-        //public static string ConvertToCodePage437String(Stream source)
-        //{
-        //    if (source == null)
-        //    {
-        //        throw (new ArgumentNullException("source"));
-        //    }
-
-        //    byte[] Buffer = new byte[System.Convert.ToInt32(source.Length - 1) + 1];
-
-        //    source.Read(Buffer, 0, Buffer.Length);
-        //    return EncoderService.GetString(Buffer, 0, Buffer.Length);
-        //}
-
-
-
-
-        //public static void WriteLong(long data, Stream target)
-        //{
-        //    byte[] Buffer = new byte[8];
-
-        //    if (target == null)
-        //    {
-        //        throw (new ArgumentNullException("target"));
-        //    }
-
-        //    Buffer[0] = System.Convert.ToByte((data & 0xFF) / Math.Pow(256, 0));
-        //    Buffer[1] = System.Convert.ToByte((data & 0xFF00) / Math.Pow(256, 1));
-        //    Buffer[2] = System.Convert.ToByte((data & 0xFF0000) / Math.Pow(256, 2));
-        //    Buffer[3] = System.Convert.ToByte((data & 0xFF000000) / Math.Pow(256, 3));
-        //    Buffer[4] = System.Convert.ToByte((data & 0xFF00000000) / Math.Pow(256, 4));
-        //    Buffer[5] = System.Convert.ToByte((data & 0xFF0000000000) / Math.Pow(256, 5));
-        //    Buffer[6] = System.Convert.ToByte((data & 0xFF000000000000) / Math.Pow(256, 6));
-        //    Buffer[7] = System.Convert.ToByte(((System.Convert.ToUInt64(data)) & 0xFF00000000000000) / Math.Pow(256, 7));  // converted data to ulong// RT
-        //    target.Write(Buffer, 0, 8);
-        //}
-
-        //public static long ReadLong(Stream source)
-        //{
-        //    if (source == null)
-        //    {
-        //        throw (new ArgumentNullException("source"));
-        //    }
-
-        //    byte[] Buffer = new byte[8];
-        //    source.Read(Buffer, 0, 8);
-
-        //    long Data = 0;
-        //    Data += System.Convert.ToInt32(Buffer[0] * Math.Pow(256, 0));
-        //    Data += System.Convert.ToInt32(Buffer[1] * Math.Pow(256, 1));
-        //    Data += System.Convert.ToInt32(Buffer[2] * Math.Pow(256, 2));
-        //    Data += System.Convert.ToInt32(Buffer[3] * Math.Pow(256, 3));
-        //    Data += System.Convert.ToInt32(Buffer[4] * Math.Pow(256, 4));
-        //    Data += System.Convert.ToInt32(Buffer[5] * Math.Pow(256, 5));
-        //    Data += System.Convert.ToInt32(Buffer[6] * Math.Pow(256, 6));
-        //    Data += System.Convert.ToInt32(Buffer[7] * Math.Pow(256, 7));
-        //    return Data;
-        //}
-
-        //public static void WriteObject(object obj, Stream target)
-        //{
-        //    MemoryStream buffer = null;
-
-        //    try
-        //    {
-        //        buffer = new MemoryStream();
-        //        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-        //        formatter.Serialize(buffer, obj);
-        //        buffer.Position = 0;
-
-        //        long cnt = buffer.Length;
-        //        WriteLong(cnt, target);
-        //        buffer.WriteTo(target);
-        //    }
-        //    finally
-        //    {
-        //        if (buffer != null)
-        //        {
-        //            buffer.Close();
-        //        }
-        //    }
-        //}
-
-        //public static object ReadObject(Stream source)
-        //{
-        //    if (source == null)
-        //    {
-        //        throw (new ArgumentNullException("source"));
-        //    }
-
-        //    MemoryStream memStream = null;
-        //    object @out = null;
-
-        //    try
-        //    {
-        //        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter Formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-        //        long cnt = ReadLong(source);
-        //        byte[] Buffer = new byte[System.Convert.ToInt32(cnt - 1) + 1];
-
-        //        source.Read(Buffer, 0, (int)cnt);
-        //        memStream = new MemoryStream(Buffer);
-        //        @out = Formatter.Deserialize(memStream);
-
-        //    }
-        //    finally
-        //    {
-        //        if (memStream != null)
-        //        {
-        //            memStream.Close();
-        //        }
-        //    }
-
-        //    return @out;
-        //}
-
+        
     }
 }

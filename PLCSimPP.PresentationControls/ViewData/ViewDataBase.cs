@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using static PLCSimPP.PresentationControls.Annotations;
+using static BCI.PLCSimPP.PresentationControls.Annotations;
 
-namespace PLCSimPP.PresentationControls.ViewData
+namespace BCI.PLCSimPP.PresentationControls.ViewData
 {
     /// <summary>
     /// Base class of view data

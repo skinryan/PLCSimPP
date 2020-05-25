@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="PLCSimPP.Service.Router.PipeLineService">
+  <Class Name="BCI.PLCSimPP.Service.Router.PipeLineService">
     <Position X="8" Y="1" Width="1.5" />
-    <AssociationLine Name="MsgService" Type="PLCSimPP.Comm.Interfaces.Services.IMsgService">
+    <AssociationLine Name="MsgService" Type="BCI.PLCSimPP.Comm.Interfaces.Services.IMsgService">
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.164" Y="0.152" />
       </MemberNameLabel>
     </AssociationLine>
-    <AssociationLine Name="AnalyzerSim" Type="PLCSimPP.Comm.Interfaces.IAnalyzerSimBehavior" FixedFromPoint="true" FixedToPoint="true">
+    <AssociationLine Name="AnalyzerSim" Type="BCI.PLCSimPP.Comm.Interfaces.IAnalyzerSimBehavior" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="8.375" Y="3.517" />
         <Point X="8.375" Y="4.312" />
@@ -26,7 +26,7 @@
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="PLCSimPP.Comm.Models.UnitBase">
+  <Class Name="BCI.PLCSimPP.Comm.Models.UnitBase">
     <Position X="6.75" Y="10.25" Width="1.5" />
     <Compartments>
       <Compartment Name="Properties" Collapsed="true" />
@@ -34,7 +34,7 @@
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="PLCSimPP.Service.Config.ConifgService">
+  <Class Name="BCI.PLCSimPP.Service.Config.ConifgService">
     <Position X="2.25" Y="1" Width="1.5" />
     <Members>
       <Method Name="ReadFile" Hidden="true" />
@@ -49,7 +49,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="PLCSimPP.Service.Router.RouterService">
+  <Class Name="BCI.PLCSimPP.Service.Router.RouterService">
     <Position X="10.75" Y="1" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
@@ -57,9 +57,9 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="PLCSimPP.Service.Services.MsgService">
+  <Class Name="BCI.PLCSimPP.Service.Services.MsgService">
     <Position X="6.25" Y="6" Width="2" />
-    <AssociationLine Name="MsgSenderHandler" Type="PLCSimPP.Comm.Interfaces.ISendMsgBehavior" FixedFromPoint="true">
+    <AssociationLine Name="MsgSenderHandler" Type="BCI.PLCSimPP.Comm.Interfaces.ISendMsgBehavior" FixedFromPoint="true">
       <Path>
         <Point X="8.25" Y="6.562" />
         <Point X="9.75" Y="6.562" />
@@ -68,13 +68,13 @@
         <Position X="0.068" Y="0.247" />
       </MemberNameLabel>
     </AssociationLine>
-    <AssociationLine Name="MasterPort_1" Type="PLCSimPP.Service.Services.PortConnection" FixedFromPoint="true">
+    <AssociationLine Name="MasterPort_1" Type="BCI.PLCSimPP.Service.Services.PortConnection" FixedFromPoint="true">
       <Path>
         <Point X="6.25" Y="6.188" />
         <Point X="4.75" Y="6.188" />
       </Path>
     </AssociationLine>
-    <AssociationLine Name="MasterPort_2" Type="PLCSimPP.Service.Services.PortConnection" FixedFromPoint="true">
+    <AssociationLine Name="MasterPort_2" Type="BCI.PLCSimPP.Service.Services.PortConnection" FixedFromPoint="true">
       <Path>
         <Point X="6.25" Y="6.688" />
         <Point X="4.75" Y="6.688" />
@@ -93,7 +93,7 @@
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="PLCSimPP.Service.Services.PortConnection">
+  <Class Name="BCI.PLCSimPP.Service.Services.PortConnection">
     <Position X="3.25" Y="6" Width="1.5" />
     <Members>
       <Method Name="TcpReceiver_OnDataReceivedEvent" Hidden="true" />
@@ -105,44 +105,44 @@
       <FileName>Msg\PortConnection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Service.Devicies.Aliquoter" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devicies.Aliquoter" Collapsed="true">
     <Position X="4" Y="13.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAQAACEAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>Devicies\Aliquoter.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Service.Devicies.Stocker" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devicies.Stocker" Collapsed="true">
     <Position X="7.75" Y="13.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAQAACEAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>Devicies\Stocker.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Service.Devicies.Outlet" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devicies.Outlet" Collapsed="true">
     <Position X="5" Y="14.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAQAACEAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>Devicies\Outlet.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Service.Devicies.LevelDetector" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devicies.LevelDetector" Collapsed="true">
     <Position X="3.25" Y="14.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAQAACEAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>Devicies\LevelDetector.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Service.Devicies.Labeler" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devicies.Labeler" Collapsed="true">
     <Position X="6.75" Y="14.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAQAACEAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>Devicies\Labeler.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Service.Devicies.ILane" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devicies.ILane" Collapsed="true">
     <Position X="8.5" Y="14.5" Width="1.5" />
-    <InheritanceLine Type="PLCSimPP.Comm.Models.UnitBase" ManuallyRouted="true">
+    <InheritanceLine Type="BCI.PLCSimPP.Comm.Models.UnitBase" ManuallyRouted="true">
       <Path>
         <Point X="7.5" Y="12.574" />
         <Point X="7.5" Y="14.346" />
@@ -155,9 +155,9 @@
       <FileName>Devicies\ILane.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Service.Devicies.HMOutlet" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devicies.HMOutlet" Collapsed="true">
     <Position X="10.25" Y="14.5" Width="1.5" />
-    <InheritanceLine Type="PLCSimPP.Comm.Models.UnitBase" ManuallyRouted="true">
+    <InheritanceLine Type="BCI.PLCSimPP.Comm.Models.UnitBase" ManuallyRouted="true">
       <Path>
         <Point X="7.5" Y="12.574" />
         <Point X="7.5" Y="14.346" />
@@ -170,58 +170,58 @@
       <FileName>Devicies\HMOutlet.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Service.Devicies.HLane" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devicies.HLane" Collapsed="true">
     <Position X="2.25" Y="13.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAQAACEAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>Devicies\HLane.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Service.Devicies.DynamicInlet" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devicies.DynamicInlet" Collapsed="true">
     <Position X="9.5" Y="13.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAQAACEAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>Devicies\DynamicInlet.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Service.Devicies.DxC" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devicies.DxC" Collapsed="true">
     <Position X="11.25" Y="13.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAQAACEAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>Devicies\DxC.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Service.Devicies.Centrifuge" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devicies.Centrifuge" Collapsed="true">
     <Position X="5.75" Y="13.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAQAACEAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>Devicies\Centrifuge.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="PLCSimPP.Comm.Interfaces.Services.IMsgService" Collapsed="true">
+  <Interface Name="BCI.PLCSimPP.Comm.Interfaces.Services.IMsgService" Collapsed="true">
     <Position X="5" Y="3" Width="1.5" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="PLCSimPP.Comm.Interfaces.Services.IConfigService" Collapsed="true">
+  <Interface Name="BCI.PLCSimPP.Comm.Interfaces.Services.IConfigService" Collapsed="true">
     <Position X="5" Y="2" Width="1.5" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="PLCSimPP.Comm.Interfaces.Services.IRouterService" Collapsed="true">
+  <Interface Name="BCI.PLCSimPP.Comm.Interfaces.Services.IRouterService" Collapsed="true">
     <Position X="5" Y="1" Width="1.5" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="PLCSimPP.Comm.Interfaces.IAnalyzerSimBehavior" Collapsed="true">
+  <Interface Name="BCI.PLCSimPP.Comm.Interfaces.IAnalyzerSimBehavior" Collapsed="true">
     <Position X="4.75" Y="4" Width="1.75" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="PLCSimPP.Comm.Interfaces.ISendMsgBehavior">
+  <Interface Name="BCI.PLCSimPP.Comm.Interfaces.ISendMsgBehavior">
     <Position X="9.75" Y="6" Width="2" />
     <Members>
       <Property Name="IsPaused" Hidden="true" />
     </Members>
     <TypeIdentifier />
   </Interface>
-  <Interface Name="PLCSimPP.Comm.Interfaces.IRecvMsgBeheavior">
+  <Interface Name="BCI.PLCSimPP.Comm.Interfaces.IRecvMsgBeheavior">
     <Position X="9.75" Y="7.75" Width="2" />
     <Members>
       <Property Name="IsPaused" Hidden="true" />

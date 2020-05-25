@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:btn="clr-namespace:PLCSimPP.Layout.Controls">
+                    xmlns:btn="clr-namespace:BCI.PLCSimPP.Layout.Controls">
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <Style x:Key="FocusVisual">
         <Setter Property="Control.Template">

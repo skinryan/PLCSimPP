@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Communication.Models;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Communication.Models;
 
-namespace PLCSimPP.Communication.EventArguments
+namespace BCI.PLCSimPP.Communication.EventArguments
 {
     /// <summary>
     /// The event arguments used in PLCSim communication transport

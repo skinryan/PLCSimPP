@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PLCSimPP.Comm.Constant;
-using PLCSimPP.MainWindow.Views;
+using BCI.PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.MainWindow.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 
-namespace PLCSimPP.MainWindow
+namespace BCI.PLCSimPP.MainWindow
 {
     public class MainWindowModule : IModule
     {

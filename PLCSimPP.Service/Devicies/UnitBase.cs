@@ -6,20 +6,20 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using CommonServiceLocator;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Interfaces.Services;
-using PLCSimPP.Service.Devicies.StandardResponds;
-using PLCSimPP.Comm.Constants;
-using PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Service.Devicies.StandardResponds;
+using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Comm;
 using Prism.Mvvm;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using System.Threading;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Comm.Events;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Comm.Events;
 using Prism.Events;
 
-namespace PLCSimPP.Service.Devicies
+namespace BCI.PLCSimPP.Service.Devicies
 {
 
     public abstract class UnitBase : BindableBase, IUnit

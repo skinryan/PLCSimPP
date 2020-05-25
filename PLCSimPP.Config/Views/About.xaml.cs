@@ -1,4 +1,4 @@
-﻿using PLCSimPP.Config.ViewModels;
+﻿using BCI.PLCSimPP.Config.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,7 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Unity;
 
-namespace PLCSimPP.Config.Views
+namespace BCI.PLCSimPP.Config.Views
 {
     /// <summary>
     /// Interaction logic for About.xaml

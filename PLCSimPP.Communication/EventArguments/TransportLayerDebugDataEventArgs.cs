@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PLCSimPP.Communication.EventArguments
+namespace BCI.PLCSimPP.Communication.EventArguments
 {
     public class TransportLayerDebugDataEventArgs : EventArgs
     {

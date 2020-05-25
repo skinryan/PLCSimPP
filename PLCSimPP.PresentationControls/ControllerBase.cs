@@ -1,7 +1,7 @@
-﻿using PLCSimPP.PresentationControls.ViewData;
+﻿using BCI.PLCSimPP.PresentationControls.ViewData;
 using System.ComponentModel;
 using System.Windows.Forms;
-namespace PLCSimPP.PresentationControls
+namespace BCI.PLCSimPP.PresentationControls
 {
     /// <summary>
     /// Base class of setup controllers

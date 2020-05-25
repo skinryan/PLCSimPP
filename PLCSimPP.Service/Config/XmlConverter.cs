@@ -6,12 +6,12 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using PLCSimPP.Comm;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Service.Devicies;
 
-namespace PLCSimPP.Service.Config
+namespace BCI.PLCSimPP.Service.Config
 {
     public class XmlConverter
     {

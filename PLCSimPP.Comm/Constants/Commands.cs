@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PLCSimPP.Comm.Constants
+
+namespace BCI.PLCSimPP.Comm.Constants
 {
+    /// <summary>
+    /// LcCmds
+    /// </summary>
     public class LcCmds
     {
         /// <summary>
@@ -223,11 +227,7 @@ namespace PLCSimPP.Comm.Constants
         /// </summary>
         public const string _1017 = "1017";
 
-        /// <summary>
-        /// Rack Mapping Information I
-        /// Notification of Sample Storage Position
-        /// </summary>
-        public const string _1018 = "1018";
+        
 
         /// <summary>
         /// Sample Retrieval Completion
@@ -271,10 +271,6 @@ namespace PLCSimPP.Comm.Constants
         /// </summary>
         public const string _10E0 = "10E0";
 
-        /// <summary>
-        /// Illegal
-        /// Notification of the receipt of invalid message
-        /// </summary>
-        public const string _10E1 = "10E1";
+        
     }
 }

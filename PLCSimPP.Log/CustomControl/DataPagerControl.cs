@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace PLCSimPP.Log.CustomControl
+namespace BCI.PLCSimPP.Log.CustomControl
 {
     [TemplatePart(Name = TEMPLATE_PART_BTN_FIRST, Type = typeof(Button))]
     [TemplatePart(Name = TEMPLATE_PART_BTN_PREVIOUS, Type = typeof(Button))]

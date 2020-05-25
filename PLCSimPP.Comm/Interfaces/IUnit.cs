@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace PLCSimPP.Comm.Interfaces
+namespace BCI.PLCSimPP.Comm.Interfaces
 {
     public interface IUnit
     {

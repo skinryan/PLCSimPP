@@ -3,7 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace PLCSimPP.PresentationControls.MVVM
+namespace BCI.PLCSimPP.PresentationControls.MVVM
 {
     /// <summary>
     /// Input arg type

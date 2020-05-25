@@ -1,7 +1,7 @@
-using PLCSimPP.Log.ViewModels;
+using BCI.PLCSimPP.Log.ViewModels;
 using System.Windows.Controls;
 
-namespace PLCSimPP.Log.Views
+namespace BCI.PLCSimPP.Log.Views
 {
     /// <summary>
     /// Interaction logic for LogViewer.xaml

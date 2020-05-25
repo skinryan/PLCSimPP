@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PLCSimPP.Communication.Models
+namespace BCI.PLCSimPP.Communication.Models
 {
     public enum ResultType
     {

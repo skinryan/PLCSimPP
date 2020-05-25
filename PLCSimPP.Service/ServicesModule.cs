@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Interfaces.Services;
-using PLCSimPP.Service.Analyzer;
-using PLCSimPP.Service.Config;
-using PLCSimPP.Service.Console;
-using PLCSimPP.Service.Log;
-using PLCSimPP.Service.Msg;
-using PLCSimPP.Service.Router;
-using PLCSimPP.Service.Services;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Service.Analyzer;
+using BCI.PLCSimPP.Service.Config;
+using BCI.PLCSimPP.Service.Console;
+using BCI.PLCSimPP.Service.Log;
+using BCI.PLCSimPP.Service.Msg;
+using BCI.PLCSimPP.Service.Router;
+using BCI.PLCSimPP.Service.Services;
 using Prism.Ioc;
 using Prism.Modularity;
 
-namespace PLCSimPP.Service
+namespace BCI.PLCSimPP.Service
 {
     public class ServicesModule : IModule
     {

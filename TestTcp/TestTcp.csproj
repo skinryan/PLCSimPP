@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PLCSimPP.Communication\PLCSimPP.Communication.csproj" />
+    <ProjectReference Include="..\BCI.PLCSimPP.Communication\BCI.PLCSimPP.Communication.csproj" />
   </ItemGroup>
 
 </Project>

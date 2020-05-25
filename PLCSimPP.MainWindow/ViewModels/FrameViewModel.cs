@@ -5,16 +5,16 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using PLCSimPP.Comm.Constant;
-using PLCSimPP.Comm.Events;
-using PLCSimPP.Comm.Interfaces.Services;
-using PLCSimPP.Service.DB;
+using BCI.PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.Comm.Events;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Service.DB;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 
-namespace PLCSimPP.MainWindow.ViewModels
+namespace BCI.PLCSimPP.MainWindow.ViewModels
 {
     public class FrameViewModel : BindableBase
     {

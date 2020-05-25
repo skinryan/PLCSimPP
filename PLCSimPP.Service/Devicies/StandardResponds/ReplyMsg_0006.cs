@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using PLCSimPP.Comm.Constants;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Models;
 
-namespace PLCSimPP.Service.Devicies.StandardResponds
+namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
 {
     public class ReplyMsg_0006 : IResponds
     {

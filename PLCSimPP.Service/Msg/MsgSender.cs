@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using CommonServiceLocator;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
 using Prism.Events;
 
-namespace PLCSimPP.Service.Msg
+namespace BCI.PLCSimPP.Service.Msg
 {
     public class MsgSender : ISendMsgBehavior
     {

@@ -5,13 +5,13 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using PLCSimPP.Comm;
-using PLCSimPP.Comm.Constants;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Service.Devicies.StandardResponds;
+using BCI.PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Service.Devicies.StandardResponds;
 
-namespace PLCSimPP.Service.Devicies
+namespace BCI.PLCSimPP.Service.Devicies
 {
     [Serializable]
     public class Centrifuge : UnitBase

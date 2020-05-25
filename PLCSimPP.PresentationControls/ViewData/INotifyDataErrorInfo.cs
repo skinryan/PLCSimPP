@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PLCSimPP.PresentationControls.ViewData
+namespace BCI.PLCSimPP.PresentationControls.ViewData
 {
     /// <summary>
     /// Interface of data error information

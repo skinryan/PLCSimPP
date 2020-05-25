@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
-using PLCSimPP.Comm.Constant;
-using PLCSimPP.Comm.Events;
-using PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.Comm.Events;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 
-namespace PLCSimPP.Layout.ViewModels
+namespace BCI.PLCSimPP.Layout.ViewModels
 {
     public class LayoutMenuViewModel : BindableBase
     {

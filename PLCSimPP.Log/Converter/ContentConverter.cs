@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace PLCSimPP.Log.Converter
+namespace BCI.PLCSimPP.Log.Converter
 {
     public class ContentConverter : IValueConverter
     {

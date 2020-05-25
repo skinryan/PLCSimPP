@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PLCSimPP.PresentationControls.ValidationAttributes
+namespace BCI.PLCSimPP.PresentationControls.ValidationAttributes
 {
     /// <summary>
     /// Inject Self Validation interface

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="PLCSimPP.Log.ViewModels.LogMenuViewModel">
+  <Class Name="BCI.PLCSimPP.Log.ViewModels.LogMenuViewModel">
     <Position X="9" Y="4" Width="1.75" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
@@ -11,7 +11,7 @@
       <FileName>ViewModels\LogMenuViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Log.ViewModels.LogViewerViewModel">
+  <Class Name="BCI.PLCSimPP.Log.ViewModels.LogViewerViewModel">
     <Position X="13" Y="4" Width="1.75" />
     <Members>
       <Property Name="Address" Hidden="true" />
@@ -34,7 +34,7 @@
       <FileName>ViewModels\LogViewerViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Log.Views.LogMenu">
+  <Class Name="BCI.PLCSimPP.Log.Views.LogMenu">
     <Position X="7.25" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -42,7 +42,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="PLCSimPP.Log.Views.LogViewer">
+  <Class Name="BCI.PLCSimPP.Log.Views.LogViewer">
     <Position X="11.25" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -50,7 +50,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="PLCSimPP.Log.ViewModels.MonitorViewModel">
+  <Class Name="BCI.PLCSimPP.Log.ViewModels.MonitorViewModel">
     <Position X="10.25" Y="8.25" Width="2" />
     <Members>
       <Property Name="FreezeScreen" Hidden="true" />
@@ -65,7 +65,7 @@
       <FileName>ViewModels\MonitorViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PLCSimPP.Log.Views.Monitor">
+  <Class Name="BCI.PLCSimPP.Log.Views.Monitor">
     <Position X="8.25" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>

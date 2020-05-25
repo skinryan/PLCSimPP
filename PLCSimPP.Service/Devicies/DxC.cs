@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using CommonServiceLocator;
-using PLCSimPP.Comm;
-using PLCSimPP.Comm.Constants;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Service.Analyzer;
-using PLCSimPP.Service.Devicies.StandardResponds;
+using BCI.PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Service.Analyzer;
+using BCI.PLCSimPP.Service.Devicies.StandardResponds;
 
-namespace PLCSimPP.Service.Devicies
+namespace BCI.PLCSimPP.Service.Devicies
 {
     [Serializable]
     public class DxC : UnitBase
@@ -58,7 +58,10 @@ namespace PLCSimPP.Service.Devicies
 
         private void Init()
         {
-            mDxCSimService = ServiceLocator.Current.GetInstance<DxCSimService>();
+            if (ServiceLocator.IsLocationProviderSet)
+            {
+                mDxCSimService = ServiceLocator.Current.GetInstance<DxCSimService>();
+            }            
         }
     }
 }

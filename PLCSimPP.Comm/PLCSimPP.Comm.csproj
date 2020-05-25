@@ -2,7 +2,9 @@
 
   <PropertyGroup>
     <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
-    <LangVersion>latest</LangVersion>    
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>BCI.PLCSimPP.Comm</AssemblyName>
+    <RootNamespace>BCI.PLCSimPP.Comm</RootNamespace>    
   </PropertyGroup>
 
   <ItemGroup>

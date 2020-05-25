@@ -1,7 +1,7 @@
 ﻿using Prism.Mvvm;
 using System;
 
-namespace PLCSimPP.Service.Log
+namespace BCI.PLCSimPP.Service.Log
 {
     public class LogGroup : BindableBase
     {

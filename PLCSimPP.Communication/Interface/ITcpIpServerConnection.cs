@@ -1,6 +1,6 @@
-﻿using PLCSimPP.Communication.Support;
+﻿using BCI.PLCSimPP.Communication.Support;
 
-namespace PLCSimPP.Communication.Interface
+namespace BCI.PLCSimPP.Communication.Interface
 {
     public interface ITcpIpServerConnection
     {

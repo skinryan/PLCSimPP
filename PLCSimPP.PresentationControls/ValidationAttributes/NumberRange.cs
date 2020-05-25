@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace PLCSimPP.PresentationControls.ValidationAttributes
+namespace BCI.PLCSimPP.PresentationControls.ValidationAttributes
 {
     public class NumberRange : ValidationAttribute
     {

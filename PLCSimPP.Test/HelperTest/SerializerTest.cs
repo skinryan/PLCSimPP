@@ -6,12 +6,12 @@ using System.Text;
 using System.Xml.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Service.Config;
-using PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Service.Config;
+using BCI.PLCSimPP.Service.Devicies;
 
-namespace PLCSimPP.Test.HelperTest
+namespace BCI.PLCSimPP.Test.HelperTest
 {
     [TestClass]
     public class SerializerTest
@@ -26,10 +26,10 @@ namespace PLCSimPP.Test.HelperTest
                 Port = 1,
                 DisplayName = "TestDevice"
             };
+
             var UnitCollection = new ObservableCollection<IUnit>();
             UnitCollection.Add(tmp);
-
-
+            
             var xmlstring = XmlConverter.SerializeIUnit(UnitCollection);
             var list = XmlConverter.DeserializeIUnit(xmlstring);
 

@@ -6,21 +6,21 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
-using PLCSimPP.Comm;
-using PLCSimPP.Comm.Events;
-using PLCSimPP.Comm.Helper;
-using PLCSimPP.Comm.Interfaces;
-using PLCSimPP.Comm.Interfaces.Services;
-using PLCSimPP.Comm.Models;
-using PLCSimPP.Layout.Model;
-using PLCSimPP.Service.Analyzer;
-using PLCSimPP.Service.Config;
-using PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Events;
+using BCI.PLCSimPP.Comm.Helper;
+using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Layout.Model;
+using BCI.PLCSimPP.Service.Analyzer;
+using BCI.PLCSimPP.Service.Config;
+using BCI.PLCSimPP.Service.Devicies;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 
-namespace PLCSimPP.Layout.ViewModels
+namespace BCI.PLCSimPP.Layout.ViewModels
 {
     public class DeviceLayoutViewModel : BindableBase
     {

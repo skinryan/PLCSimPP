@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PLCSimPP.Layout.Views
+namespace BCI.PLCSimPP.Layout.Views
 {
     /// <summary>
     /// Interaction logic for UserControl1.xaml

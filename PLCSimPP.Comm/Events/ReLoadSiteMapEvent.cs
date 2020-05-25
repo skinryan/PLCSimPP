@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Prism.Events;
 
-namespace PLCSimPP.Comm.Events
+namespace BCI.PLCSimPP.Comm.Events
 {
     public class ReLoadSiteMapEvent : PubSubEvent<bool>
     {
