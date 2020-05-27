@@ -15,7 +15,7 @@ namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
             switch (cmd)
             {
                 case LcCmds._0004:
-                    return new ReplyMsg_1001();
+                    return new ReplyMsg_0004();
                 case LcCmds._0005:
                     return new ReplyMsg_0005();
                 case LcCmds._0006:

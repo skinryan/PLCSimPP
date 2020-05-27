@@ -1,40 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BCI.PLCSimPP.Comm.Interfaces;
+using BCI.PLCSimPP.Comm.Models;
 using BCI.PLCSimPP.Service.Devicies;
-using BCI.PLCSimPP.Service.Router;
 
-namespace BCI.PLCSimPP.Test.ServiceTest
+namespace BCI.PLCSimPP.Test
 {
-    [TestClass]
-    public class LayoutTest
+    public class TestDataSource
     {
-        [TestMethod]
-        public void TestUnitFind()
-        {
-            ObservableCollection<IUnit> layout = new ObservableCollection<IUnit>(GetLayout());
-
-            RouterService serv = new RouterService();
-            serv.SetSiteMap(layout);
-
-            IUnit unit1 = serv.FindNextDestination(layout.First());
-            Assert.IsTrue(unit1.Address == "0000000001");
-
-            IUnit unit2 = serv.FindNextDestination(layout.First().Children.Last());
-            Assert.IsTrue(unit2.Address == "0000000100");
-
-            IUnit unit3 = serv.FindNextDestination(layout[1].Children.Last());
-            Assert.IsTrue(unit3.Address == "0000200000");
-
-            var units = serv.FindTargetUnit("000000007F");
-            Assert.IsTrue(units.Count == 7);
-        }
-
-        public List<IUnit> GetLayout()
+        public static List<IUnit> GetLayout()
         {
             List<IUnit> UnitCollection = new List<IUnit>();
 
@@ -105,5 +80,17 @@ namespace BCI.PLCSimPP.Test.ServiceTest
             return UnitCollection;
         }
 
+
+        public static List<ISample> GetSample()
+        {
+            List<ISample> SampleCollection = new List<ISample>();
+
+            for (int i = 0; i < 20; i++)
+            {
+                SampleCollection.Add(new Sample { SampleID = "TEST_" + i, Rack = Comm.RackType.Remap, DcToken = i.ToString(), DxCToken = i.ToString() });
+            }
+
+            return SampleCollection;
+        }
     }
 }

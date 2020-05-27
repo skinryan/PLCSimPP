@@ -78,7 +78,7 @@ namespace BCI.PLCSimPP.Communication.Support
 
         public SmartConnection()
         {
-           
+
         }
 
         private void LogBytesData(string msg, byte[] content)
@@ -171,7 +171,6 @@ namespace BCI.PLCSimPP.Communication.Support
             }
 
             //unpackage data 
-
             byte[] buffer = new byte[System.Convert.ToInt32(mBufferStream.Length - 1) + 1];
             mBufferStream.Read(buffer, 0, buffer.Length);
 
@@ -184,13 +183,11 @@ namespace BCI.PLCSimPP.Communication.Support
             {
                 case ResultType.InvalidLength:
                     LogBytesData(string.Format("{0} Received Data:", this.mClient.Client.LocalEndPoint), buffer);
-
                     //replay 0x50:Invalid Command
                     DoSend(new byte[2] { 0xE0, 0x50 });
                     break;
                 case ResultType.InvalidCmd:
                     LogBytesData(string.Format("{0} Received Data:", this.mClient.Client.LocalEndPoint), buffer);
-
                     //replay 0x52: Invalid data length
                     DoSend(new byte[2] { 0xE0, 0x52 });
                     break;
@@ -200,7 +197,6 @@ namespace BCI.PLCSimPP.Communication.Support
                 case ResultType.RawData:
                     //replay E000：correct
                     LogBytesData(string.Format("{0} Received Data:", this.mClient.Client.LocalEndPoint), buffer);
-
                     DoSend(new byte[2] { 0xE0, 0x00 });
                     break;
                 default:
@@ -216,7 +212,6 @@ namespace BCI.PLCSimPP.Communication.Support
                 OnMessageReceived(msg);
             }
         }
-
 
         private bool mClientClosedAndDisposed;
         private bool mClientStreamClosedAndDisposed;
@@ -333,7 +328,5 @@ namespace BCI.PLCSimPP.Communication.Support
         }
 
         #endregion
-
-
     }
 }

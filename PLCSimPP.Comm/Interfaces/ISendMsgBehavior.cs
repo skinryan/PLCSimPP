@@ -2,8 +2,6 @@
 {
     public interface ISendMsgBehavior
     {
-        
-
         /// <summary>
         /// Add a message to the send queue
         /// </summary>

@@ -193,7 +193,6 @@ namespace BCI.PLCSimPP.Service.Devicies
 
         public UnitBase()
         {
-
             mChildren = new ObservableCollection<IUnit>();
             mPendingQueue = new ConcurrentQueue<ISample>();
 

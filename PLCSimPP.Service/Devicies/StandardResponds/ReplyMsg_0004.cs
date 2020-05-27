@@ -5,8 +5,14 @@ using BCI.PLCSimPP.Comm.Models;
 
 namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
 {
-    internal class ReplyMsg_1001 : IResponds
+    public class ReplyMsg_0004 : IResponds
     {
+        /// <summary>
+        /// Get Responds Msg 
+        /// </summary>
+        /// <param name="unit">the unit responsible for processing the message</param>
+        /// <param name="recvParam">command param</param>
+        /// <returns></returns>
         public List<IMessage> GetRespondsMsg(IUnit unit, string recvParam)
         {
             List<IMessage> result = new List<IMessage>();
@@ -14,7 +20,7 @@ namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
             IMessage cmd = new MsgCmd()
             {
                 Command = UnitCmds._1001,
-                Param = "A",
+                Param = "A",//'A': under AUTO Operation
                 UnitAddr = unit.Address,
                 Port = unit.Port
             };

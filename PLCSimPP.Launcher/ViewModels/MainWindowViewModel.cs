@@ -39,12 +39,8 @@ namespace BCI.PLCSimPP.Launcher.ViewModels
                 TitleText = $"{APPTITLE} - [{title}]";
             });
 
-            NavigateCommand = new DelegateCommand<string>(Navigate);
-
-            
+            NavigateCommand = new DelegateCommand<string>(Navigate);              
         }
-
-        
 
         private void Navigate(string viewName)
         {

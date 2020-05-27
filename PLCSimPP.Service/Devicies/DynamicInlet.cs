@@ -26,9 +26,7 @@ namespace BCI.PLCSimPP.Service.Devicies
                 base.MoveSample();
             }
         }
-
-
-
+               
         protected override void OnSampleArrived()
         {
             var msg = SendMsg.GetMsg_1024(this);

@@ -11,7 +11,7 @@ using BCI.PLCSimPP.Service.Log;
 namespace BCI.PLCSimPP.Test.ServiceTest
 {
     [TestClass]
-    public class LogServiceTest
+    public class LogServiceTests
     {
         [TestMethod]
         public void TestMsgLogSave()

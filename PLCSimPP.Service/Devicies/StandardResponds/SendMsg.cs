@@ -16,13 +16,13 @@ namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
-        public static IMessage GetMsg_1002(IUnit unit, string operation, string sid)
+        public static IMessage GetMsg_1002(IUnit unit, string activePanel, string operation, string sid)
         {
             MsgCmd msg = new MsgCmd();
             msg.Command = UnitCmds._1002;
             msg.Port = unit.Port;
             msg.UnitAddr = unit.Address;
-            msg.Param = operation + sid.PadRight(15);
+            msg.Param = activePanel + operation + sid.PadRight(15);
             return msg;
         }
 
@@ -59,7 +59,7 @@ namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
         /// <param name="unit"></param>
         /// <param name="condition">'0': Holder Shortage cleared, '1': Holder Shortage occurred</param>
         /// <returns></returns>
-        public static IMessage GetMsg_1026(IUnit unit,string condition)
+        public static IMessage GetMsg_1026(IUnit unit, string condition)
         {
             MsgCmd msg = new MsgCmd();
             msg.Command = UnitCmds._1026;
@@ -121,16 +121,16 @@ namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
         /// 1015 for stockyard
         /// </summary>
         /// <param name="unit"></param>
-        /// <param name="recvParamFrom1017"></param>
+        /// <param name="recvParamFrom0017"></param>
         /// <returns></returns>
-        public static IMessage GetMsg_1015(IUnit unit, string recvParamFrom1017)
+        public static IMessage GetMsg_1015(IUnit unit, string recvParamFrom0017)
         {
-            string sid = recvParamFrom1017.Substring(1, 15).Trim();
-            string floor = recvParamFrom1017.Substring(16, 1);
-            string rack = recvParamFrom1017.Substring(17, 1);
-            string position = recvParamFrom1017.Substring(18, 3);
-            string rackType = recvParamFrom1017.Substring(21, 2);
-            string cassette = recvParamFrom1017.Substring(23, 1);
+            string sid = recvParamFrom0017.Substring(1, 15).Trim();
+            string floor = recvParamFrom0017.Substring(16, 1);
+            string rack = recvParamFrom0017.Substring(17, 1);
+            string position = recvParamFrom0017.Substring(18, 3);
+            string rackType = recvParamFrom0017.Substring(21, 2);
+            string cassette = recvParamFrom0017.Substring(23, 1);
 
             string param = sid.PadRight(15) + floor + rack + position + (int)Flag.Normal + cassette;
             return new MsgCmd()
