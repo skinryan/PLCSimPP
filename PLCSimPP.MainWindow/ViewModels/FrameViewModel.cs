@@ -24,7 +24,17 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
         private BackgroundWorker mBgWorker;
         private string mFilePath;
 
-        #region status
+        #region properties
+
+        //private int mCount;
+
+        //public int Count
+        //{
+        //    get { return mCount; }
+        //    set { SetProperty(ref mCount, value); }
+        //}
+
+
         private string mBackWorkerStatus;
 
         public string BackWorkerStatus
@@ -83,7 +93,13 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
             mEventAggr.GetEvent<ExportEvent>().Subscribe(OnExport);
             mEventAggr.GetEvent<ConnectionStatusEvent>().Subscribe(OnConnectionStatusChanged);
             mEventAggr.GetEvent<NotifyPortCountEvent>().Subscribe(OnPortCountChanged);
+            //mEventAggr.GetEvent<NotifyOnlineSampleEvent>().Subscribe(OnSampleCountChanged);
         }
+
+        //private void OnSampleCountChanged(int param)
+        //{
+        //    Count += param;
+        //}
 
         private void OnPortCountChanged(int count)
         {

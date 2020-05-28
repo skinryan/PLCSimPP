@@ -9,12 +9,15 @@ using DxCSimCom.ToDxCSimMessage;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
 using BCI.PLCSimPP.Comm.Models;
+using Prism.Events;
+using BCI.PLCSimPP.Comm.Events;
 
 namespace BCI.PLCSimPP.Service.Analyzer
 {
     public class DxCSimService : IAnalyzerSimService
     {
         private readonly IConfigService mConfigService;
+        private readonly IEventAggregator mEventAggr;
         private SystemInfo mConfig;
 
         public bool Connected
@@ -25,9 +28,16 @@ namespace BCI.PLCSimPP.Service.Analyzer
             }
         }
 
-        public DxCSimService(IConfigService config)
+        public DxCSimService(IConfigService config, IEventAggregator eventAggr)
         {
             mConfigService = config;
+            mEventAggr = eventAggr;
+            mConfig = mConfigService.ReadSysConfig();
+            mEventAggr.GetEvent<ReLoadSiteMapEvent>().Subscribe(OnReload);
+        }
+
+        private void OnReload(bool obj)
+        {
             mConfig = mConfigService.ReadSysConfig();
         }
 
@@ -44,6 +54,11 @@ namespace BCI.PLCSimPP.Service.Analyzer
 
         public void ShutDown()
         {
+            var dxcSimPath = mConfig.DxCSimLocation;
+            if (string.IsNullOrEmpty(dxcSimPath))
+            {
+                return;
+            }
             DxCSimExeLauncher.Stop();
             CommServerForDxCSim.Instance.ShutDown();
         }

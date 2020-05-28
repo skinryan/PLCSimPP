@@ -9,7 +9,7 @@ namespace BCI.PLCSimPP.Comm.Interfaces
 {
     public interface IAutomation
     {
-        int OnlineSampleCount { get; }
+        int OnlineSampleCount { get; set; }
 
         /// <summary>
         /// Connect to Line controller flag

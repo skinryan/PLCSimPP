@@ -14,6 +14,7 @@ using BCI.PLCSimPP.Config.ViewDatas;
 using CommonServiceLocator;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
 using System.Threading;
+using BCI.PLCSimPP.Comm.Interfaces;
 
 namespace BCI.PLCSimPP.Config.ViewModels
 {
@@ -24,6 +25,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
         const string FILETYPE_XML = "xml";
         private ClientConfigInfo mConfigInfo;
         private readonly IEventAggregator mEventAggr;
+        private readonly IAutomation mAutomation;
 
         public ICommand EditSiteMapCommand { get; set; }
         public ICommand SelectFilePathCommand { get; set; }
@@ -41,10 +43,11 @@ namespace BCI.PLCSimPP.Config.ViewModels
             private set;
         }
 
-        public ConfigruationViewModel(ConfigurationController configurationController, IEventAggregator eventAggr)
+        public ConfigruationViewModel(ConfigurationController configurationController, IEventAggregator eventAggr, IAutomation automation)
         {
             mEventAggr = eventAggr;
             ConfigurationController = configurationController;
+            mAutomation = automation;
 
             CancelCommand = new DelegateCommand(DoCancel);
             SelectFilePathCommand = new DelegateCommand<string>((fileType) =>
@@ -111,7 +114,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
                                  //The index value of the first filter entry is 1.
                                  //RestoreDirectory = true //Gets or sets a value indicating whether the dialog box restores the current directory before closing.
             };
-           
+
             var path = dialog.ShowDialog() == DialogResult.OK ? dialog.FileName.Trim() : string.Empty;
             return path;
         }
@@ -143,6 +146,11 @@ namespace BCI.PLCSimPP.Config.ViewModels
         /// </summary>
         protected override void Save()
         {
+            if (mAutomation.IsConnected)
+            {
+                MessageBox.Show("The settings cannot be modified while the system is connected.");
+                return;
+            }
             var data = (ConfigruationViewData)ConfigurationController.Data;
 
             var config = ServiceLocator.Current.GetInstance<IConfigService>();

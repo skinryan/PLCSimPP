@@ -27,9 +27,34 @@ namespace BCI.PLCSimPP.Config.Views
             get { return DataContext as ConfigruationViewModel; }
             set { DataContext = value; }
         }
+
         public Configuration()
         {
             InitializeComponent();
+        }
+
+        
+
+        private void TextBox_KeyUp_dxc(object sender, KeyEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+
+            if (e.Key == Key.Delete || e.Key == Key.Back)
+            {
+                tb.Text = string.Empty;
+                dxcControl.Clear();
+            }
+        }
+
+        private void TextBox_KeyUp_dc(object sender, KeyEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+
+            if (e.Key == Key.Delete || e.Key == Key.Back)
+            {
+                tb.Text = string.Empty;
+                dcControl.Clear();
+            }
         }
     }
 }

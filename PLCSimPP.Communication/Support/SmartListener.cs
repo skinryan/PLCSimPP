@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Models;
 using BCI.PLCSimPP.Communication.EventArguments;
@@ -21,6 +22,7 @@ namespace BCI.PLCSimPP.Communication.Support
 
         public SmartListener()
         {
+            //mCancellationTokenSource = new CancellationTokenSource();
         }
 
         #endregion // Constructor
@@ -29,8 +31,10 @@ namespace BCI.PLCSimPP.Communication.Support
 
         private int m_Port;
         private TcpListener m_Listener;
-        private Thread m_ListenThread;
+        private Task m_ListenThread;
         private IServer m_IServer;
+        private CancellationTokenSource mCancellationTokenSource;
+
         public delegate void DataReceivedEventHandler(object sender, TransportLayerDataReceivedEventArgs e);  //Added correct delegate arguments// RT
         private DataReceivedEventHandler DataReceivedEvent;
 
@@ -84,11 +88,13 @@ namespace BCI.PLCSimPP.Communication.Support
             }
             else
             {
+                mCancellationTokenSource = new CancellationTokenSource();
                 m_Listener = new TcpListener(localAddr, m_Port);
 
-                m_ListenThread = new Thread(new System.Threading.ThreadStart(DoListen));
-                m_ListenThread.Name = "SmartListener_Port_" + m_Port;
-                m_ListenThread.IsBackground = true;
+                //m_ListenThread = new Thread(new System.Threading.ThreadStart(DoListen));
+                //m_ListenThread.Name = "SmartListener_Port_" + m_Port;
+                //m_ListenThread.IsBackground = true;
+                m_ListenThread = new Task(DoListen, mCancellationTokenSource.Token);
 
                 m_Listener.Start();
                 m_ListenThread.Start();
@@ -96,11 +102,13 @@ namespace BCI.PLCSimPP.Communication.Support
 
         }  //Removed extra curly brace// RT
 
-        private void DoListen()
+        private void DoListen(object obj)
         {
+            CancellationToken token = (CancellationToken)obj;
+
             try
             {
-                while (true)
+                while (!token.IsCancellationRequested)
                 {
                     //Accepts a pending connection request.  This is a blocking method.
                     TcpClient client = m_Listener.AcceptTcpClient();
@@ -119,7 +127,6 @@ namespace BCI.PLCSimPP.Communication.Support
                     {
                         client.Close();
                     }
-
                 }
             }
             catch (ThreadAbortException)
@@ -139,8 +146,10 @@ namespace BCI.PLCSimPP.Communication.Support
 
             if (m_ListenThread != null)
             {
-                m_ListenThread.Abort();
+                mCancellationTokenSource.Cancel();
+                //m_ListenThread.Abort();
                 m_ListenThread = null;
+                mCancellationTokenSource.Dispose();
             }
 
             if (m_Listener != null)

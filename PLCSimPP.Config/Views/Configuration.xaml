@@ -95,7 +95,7 @@
                              Margin="10,0"
                              VerticalAlignment="Center"
                              VerticalContentAlignment="Center"
-                             IsReadOnly="True"
+                             IsReadOnly="True" KeyUp="TextBox_KeyUp_dc"
                              Text="{Binding ConfigurationController.Data.DcSimLocation}"
                              TextAlignment="Left" />
                     <Button Width="50"
@@ -106,7 +106,7 @@
                             Content="Browse" />
                 </StackPanel>
 
-                <control:AnalyzerConfigControl VerticalAlignment="Center"
+                <control:AnalyzerConfigControl VerticalAlignment="Center" x:Name="dcControl"
                                                AnalyzerItems="{Binding ConfigurationController.Data.AnalyzerItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                MaxInstruments="16" />
 
@@ -123,7 +123,7 @@
                              Margin="10,0"
                              VerticalAlignment="Center"
                              VerticalContentAlignment="Center"
-                             IsReadOnly="True"
+                             IsReadOnly="True" KeyUp="TextBox_KeyUp_dxc"
                              Text="{Binding ConfigurationController.Data.DxCSimLocation}"
                              TextAlignment="Left" />
                     <Button Width="50"
@@ -134,7 +134,7 @@
                             Content="Browse" />
                 </StackPanel>
 
-                <control:AnalyzerConfigControl VerticalAlignment="Center"
+                <control:AnalyzerConfigControl VerticalAlignment="Center" x:Name="dxcControl"
                                                AnalyzerItems="{Binding ConfigurationController.Data.DxCAnalyzerItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                IsDcSim="False"
                                                MaxInstruments="4" />

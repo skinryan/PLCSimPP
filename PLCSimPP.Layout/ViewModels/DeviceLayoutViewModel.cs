@@ -135,6 +135,7 @@ namespace BCI.PLCSimPP.Layout.ViewModels
 
         private void StopInstrumentSim()
         {
+           
             mDCSimService.ShutDown();
             mDxCSimService.ShutDown();
         }

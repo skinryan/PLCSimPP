@@ -42,11 +42,11 @@
                 <ItemsPanelTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="15*" />
                             <ColumnDefinition Width="auto" />
-                            <!--<ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="100" />-->
+                            <ColumnDefinition Width="50*" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="15*" />
                         </Grid.ColumnDefinitions>
                     </Grid>
                 </ItemsPanelTemplate>
@@ -55,17 +55,20 @@
                 <TextBlock Text="{Binding BackWorkerStatus}" />
             </StatusBarItem>
             <Separator Grid.Column="1" />
-            <StatusBarItem Grid.Column="2">
-                <StackPanel Orientation="Horizontal">
+            <StatusBarItem Grid.Column="2" HorizontalContentAlignment="Right">
+                <!--<StackPanel Orientation="Horizontal">
+                    <TextBlock Text="SamleOnlineCount:" />
+                    <TextBlock Text="{Binding Count}" />
+                </StackPanel>-->
+            </StatusBarItem>
+            <Separator Grid.Column="3" />
+            <StatusBarItem Grid.Column="4" >
+                <StackPanel Orientation="Horizontal" >
                     <Ellipse Width="12" Height="12" Fill="{Binding Port1Status,Converter={StaticResource Bool2ColorConverter}}"  Margin="8,0,0,0" ToolTip="Port 1 connected status"></Ellipse>
                     <Ellipse Width="12" Height="12" Fill="{Binding Port2Status,Converter={StaticResource Bool2ColorConverter}}"  Margin="8,0" ToolTip="Port 2 connected status"></Ellipse>
                     <Ellipse Width="12" Height="12" Fill="{Binding Port3Status,Converter={StaticResource Bool2ColorConverter}}" Visibility="{Binding Port3Enabled,Converter={StaticResource BooleanToVisibilityConverter}}"  Margin="0,0,8,0" ToolTip="Port 3 connected status"></Ellipse>
                 </StackPanel>
             </StatusBarItem>
-            <!--<Separator Grid.Column="3" />
-            <StatusBarItem Grid.Column="4">
-                <ProgressBar Value="50" Width="90" Height="16" />
-            </StatusBarItem>-->
         </StatusBar>
     </Grid>
 </UserControl>

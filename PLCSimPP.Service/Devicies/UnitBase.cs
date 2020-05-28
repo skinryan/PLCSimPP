@@ -141,7 +141,7 @@ namespace BCI.PLCSimPP.Service.Devicies
             var eventAggr = ServiceLocator.Current.GetInstance<IEventAggregator>();
             if (eventAggr != null)
             {
-                eventAggr.GetEvent<NotifyOffLineEvent>().Publish(true);
+                eventAggr.GetEvent<NotifyOnlineSampleEvent>().Publish(0);
             }
 
             //mPendingQueue = new ConcurrentQueue<ISample>();

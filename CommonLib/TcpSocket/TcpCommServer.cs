@@ -32,10 +32,17 @@ namespace CommonLib.TcpSocket
             mTcpServer.Start();
             Task.Factory.StartNew(() =>
             {
-                mTcpClient = mTcpServer.AcceptTcpClient();
-                NetStreamComm = mTcpClient.GetStream();
-                StartReceivingThread();
-                onClientConnectedCallbackArg();
+                try
+                {
+                    mTcpClient = mTcpServer.AcceptTcpClient();
+                    NetStreamComm = mTcpClient.GetStream();
+                    StartReceivingThread();
+                    onClientConnectedCallbackArg();
+                }
+                catch (Exception)
+                {
+                    return;
+                }
             });
         }
 
@@ -48,7 +55,7 @@ namespace CommonLib.TcpSocket
                 mTcpServer = null;
             }
         }
-      
+
         #region IDisposable
 
         private bool mDisposed;

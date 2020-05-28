@@ -6,7 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:prism="http://prismlibrary.com/"
-            xmlns:libBinding="clr-namespace:BCI.PLCSimPP.Layout.Model"
+             xmlns:libBinding="clr-namespace:BCI.PLCSimPP.Layout.Model"
              d:DesignHeight="450"
              d:DesignWidth="1000"
              Name="uc"
@@ -92,7 +92,7 @@
                                                 CornerRadius="0,4,4,0">
                                             <StackPanel>
                                                 <TextBlock Width="30"
-                                                       Padding="15,0"
+                                                       Padding="3,0"
                                                        VerticalAlignment="Center"
                                                        TextAlignment="Right"
                                                        TextWrapping="Wrap" >
@@ -100,7 +100,7 @@
                                                     <Run Text="{Binding PendingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                                                 </TextBlock>
                                                 <TextBlock Width="30"
-                                                       Padding="15,0"
+                                                       Padding="3,0"
                                                        VerticalAlignment="Center"
                                                        TextAlignment="Right"
                                                        TextWrapping="Wrap"
@@ -171,7 +171,7 @@
                                                         BorderThickness="0,1,1,1"
                                                         CornerRadius="0,4,4,0">
                                                     <TextBlock Width="30"
-                                                               Padding="15,0"
+                                                               Padding="3,0"
                                                                VerticalAlignment="Center"
                                                                Text="{Binding PendingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                                TextAlignment="Right"
@@ -361,7 +361,7 @@
                                       CharacterCasing="Upper"
                                       Text="{Binding SampleRangeInfo.DxCToken}"
                                       TextAlignment="Left"/>
-                            
+
                             <DockPanel Grid.Row="5"
                                        Grid.ColumnSpan="4"
                                        LastChildFill="False">
@@ -403,6 +403,10 @@
                             </DockPanel>
 
                         </Grid>
+                        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+                            <TextBlock Text="Online Sample Count : "></TextBlock>
+                            <TextBlock Text="{Binding AutomationService.OnlineSampleCount}"></TextBlock>
+                        </StackPanel>
                         <DataGrid Margin="2"
                                   HorizontalAlignment="Stretch"
                                   AutoGenerateColumns="False"

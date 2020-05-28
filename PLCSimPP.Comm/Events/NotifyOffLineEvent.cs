@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace BCI.PLCSimPP.Comm.Events
 {
-    public class NotifyOffLineEvent : PubSubEvent<bool>
+    /// <summary>
+    /// sample on/of line notification 
+    /// param 1:online, -1:offline, 0:reset
+    /// </summary>
+    public class NotifyOnlineSampleEvent : PubSubEvent<int>
     {
     }
 }

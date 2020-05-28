@@ -7,17 +7,27 @@ using DcSimCom;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
 using BCI.PLCSimPP.Comm.Models;
+using Prism.Events;
+using BCI.PLCSimPP.Comm.Events;
 
 namespace BCI.PLCSimPP.Service.Analyzer
 {
     public class DCSimService : IAnalyzerSimService
     {
         private readonly IConfigService mConfigService;
+        private readonly IEventAggregator mEventAggr;
         private SystemInfo mConfig;
 
-        public DCSimService(IConfigService config)
+        public DCSimService(IConfigService config, IEventAggregator eventAggr)
         {
             mConfigService = config;
+            mEventAggr = eventAggr;
+            mConfig = mConfigService.ReadSysConfig();
+            mEventAggr.GetEvent<ReLoadSiteMapEvent>().Subscribe(OnReload);
+        }
+
+        private void OnReload(bool obj)
+        {
             mConfig = mConfigService.ReadSysConfig();
         }
 
@@ -34,6 +44,12 @@ namespace BCI.PLCSimPP.Service.Analyzer
 
         public void ShutDown()
         {
+            var dcSimPath = mConfig.DcSimLocation;
+            if (string.IsNullOrEmpty(dcSimPath))
+            {
+                return;
+            }
+
             DcSimExeLauncher.Stop();
             CommServerForDcSim.Instance.ShutDown();
         }

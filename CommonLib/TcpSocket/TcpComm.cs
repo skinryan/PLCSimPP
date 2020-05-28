@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
 using CommonLib.CommandDispatching.Dispatcher;
 
 namespace CommonLib.TcpSocket
@@ -65,7 +66,8 @@ namespace CommonLib.TcpSocket
         /// This thread is used to receive the raw bytes and convert them to messages.
         /// Once a message is created, it is given to mReceiveQueueCommandDispatcher.
         /// </summary>
-        private Thread mReceiveThread;
+        private Task mReceiveThread;
+        private CancellationTokenSource mCancellationTokenSource;
 
         /// <summary>
         /// List of converter objects used to convert raw bytes into messages.
@@ -133,8 +135,9 @@ namespace CommonLib.TcpSocket
             {
                 throw new InvalidOperationException(NOT_CONNECTED_MESSAGE);
             }
-
-            mReceiveThread = new Thread(ReceiveLoop) { Name = RECEIVER_NAME, IsBackground = true };
+            mCancellationTokenSource = new CancellationTokenSource();
+            // mReceiveThread = new Thread(ReceiveLoop) { Name = RECEIVER_NAME, IsBackground = true };
+            mReceiveThread = new Task(ReceiveLoop, mCancellationTokenSource.Token);
             mReceiveThread.Start();
         }
 
@@ -142,8 +145,10 @@ namespace CommonLib.TcpSocket
         {
             if (mReceiveThread != null)
             {
-                mReceiveThread.Abort();
+                //mReceiveThread.Abort();
+                mCancellationTokenSource.Cancel();
                 mReceiveThread = null;
+                mCancellationTokenSource.Dispose();
             }
         }
 
@@ -153,9 +158,10 @@ namespace CommonLib.TcpSocket
         /// Continuously read bytes from the socket.  
         /// This is executed in its own thread.
         /// </summary>
-        private void ReceiveLoop()
+        private void ReceiveLoop(object obj)
         {
-            for (; ; )
+            CancellationToken token = (CancellationToken)obj;
+            while (!token.IsCancellationRequested)
             {
                 int numBytesReceived = Receive();
                 if (numBytesReceived == 0)
@@ -179,6 +185,11 @@ namespace CommonLib.TcpSocket
         /// <returns></returns>
         private int Receive()
         {
+            if (NetStreamComm == null)
+            {
+                return 0;
+            }
+
             int numberBytesRead = NetStreamComm.Read(mTempReceiveBuffer, 0, mTempReceiveBuffer.Length);
             if (numberBytesRead != 0)
             {

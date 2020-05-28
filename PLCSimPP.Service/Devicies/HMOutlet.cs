@@ -77,7 +77,7 @@ namespace BCI.PLCSimPP.Service.Devicies
             mShelfList[shelf].RackList[rack].SampleList[position] = sample;
             RaisePropertyChanged("StoredCount");
             RaisePropertyChanged("PendingCount");
-            mEvent.GetEvent<NotifyOffLineEvent>().Publish(true);
+            mEvent.GetEvent<NotifyOnlineSampleEvent>().Publish(-1);
         }
 
         public HMOutlet() : base()

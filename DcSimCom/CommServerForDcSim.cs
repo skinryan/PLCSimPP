@@ -38,7 +38,7 @@ namespace DcSimCom
         /// </summary>
         public bool HasConnectedClient { get; set; }
 
-        private readonly TcpCommServer mTcpCommServer = new TcpCommServer();
+        private TcpCommServer mTcpCommServer;
 
         /// <summary>
         /// 
@@ -63,6 +63,7 @@ namespace DcSimCom
         /// </summary>
         public void StartUp()
         {
+            mTcpCommServer = new TcpCommServer();
             var freePortFinder = new FreePortFinder();
             ServerPortNumber = freePortFinder.GetAnAvailablePort();
             mTcpCommServer.ListenForClient(ServerPortNumber, ClientConnectedCallback);

@@ -43,17 +43,12 @@ namespace BCI.PLCSimPP.Service.Router
             UnitCollection = new ObservableCollection<IUnit>(ConfigService.ReadSiteMap());
             mSampleOnlineQueue = new ConcurrentQueue<ISample>();
 
-            mEventAggr.GetEvent<NotifyOffLineEvent>().Subscribe(SampleOffLine);
+            mEventAggr.GetEvent<NotifyOnlineSampleEvent>().Subscribe(OnSampleCountChanged);
         }
 
         public bool IsConnected { get; set; }
 
-        private ObservableCollection<IUnit> mUnitCollection;
-        public ObservableCollection<IUnit> UnitCollection
-        {
-            get { return mUnitCollection; }
-            set { SetProperty(ref mUnitCollection, value); }
-        }
+
 
         public IPortService PortService { get; set; }
 
@@ -65,7 +60,25 @@ namespace BCI.PLCSimPP.Service.Router
 
         public IConfigService ConfigService { get; set; }
 
-        public int OnlineSampleCount { get; set; }
+        #region Bindable properties
+
+        private ObservableCollection<IUnit> mUnitCollection;
+        public ObservableCollection<IUnit> UnitCollection
+        {
+            get { return mUnitCollection; }
+            set { SetProperty(ref mUnitCollection, value); }
+        }
+
+        private int mOnlineSampleCount;
+        public int OnlineSampleCount
+        {
+            get { return mOnlineSampleCount; }
+            set { SetProperty(ref mOnlineSampleCount, value); }
+        }
+
+        #endregion
+
+
 
         public void Connect()
         {
@@ -137,13 +150,13 @@ namespace BCI.PLCSimPP.Service.Router
             {
                 if (OnlineSampleCount <= MAX_ONLINE_COUNT)
                 {
-
                     bool deqflag = mSampleOnlineQueue.TryDequeue(out var sample);
                     if (deqflag)
                     {
                         inlet.EnqueueSample(sample);
                         sample.IsLoaded = true;
-                        OnlineSampleCount += 1;
+
+                        mEventAggr.GetEvent<NotifyOnlineSampleEvent>().Publish(1);
                     }
                 }
 
@@ -157,13 +170,25 @@ namespace BCI.PLCSimPP.Service.Router
             MsgSender.PushMsg(msg);
         }
 
-        private void SampleOffLine(bool off)
+        /// <summary>
+        /// OnSampleCountChanged
+        /// </summary>
+        /// <param name="flag"> 1:online, -1:offline, 0:reset</param>
+        private void OnSampleCountChanged(int flag)
         {
             lock (mCountLocker)
             {
-                if (off)
+                if (flag < 0)
+                {
+                    OnlineSampleCount -= 1;
+                }
+                else if (flag > 0)
                 {
                     OnlineSampleCount += 1;
+                }
+                else
+                {
+                    OnlineSampleCount = 0;
                 }
             }
         }

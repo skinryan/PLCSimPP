@@ -100,6 +100,11 @@ namespace BCI.PLCSimPP.PresentationControls.Controls
             }
         }
 
+        public void Clear()
+        {
+            BtnComboBox.SelectedIndex = -1;
+        }
+
         /// <summary>
         /// combobox selection changed event
         /// </summary>
