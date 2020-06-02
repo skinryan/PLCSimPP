@@ -22,8 +22,7 @@ namespace BCI.PLCSimPP.Service.Devicies
 
         public ErrorLane()
         {
+
         }
-
-
     }
 }

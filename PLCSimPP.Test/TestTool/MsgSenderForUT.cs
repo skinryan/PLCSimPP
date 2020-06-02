@@ -5,6 +5,7 @@ using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
 using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Test.TestTool.Templates;
 using CommonServiceLocator;
 
 namespace BCI.PLCSimPP.Test.TestTool
@@ -13,7 +14,7 @@ namespace BCI.PLCSimPP.Test.TestTool
     {
         private IRouterService mRouterService;
 
-        public string MyProperty { get; set; }
+        public List<IMessage> MessageList = new List<IMessage>();
 
         public MsgSenderForUT()
         {
@@ -27,24 +28,15 @@ namespace BCI.PLCSimPP.Test.TestTool
 
         public void PushMsg(IMessage msg)
         {
-            if (msg.Command == UnitCmds._1024)
-            {
-                MsgCmd reply = new MsgCmd();
-                reply.Command = LcCmds._0012;
-                reply.Port = msg.Port;
-                reply.UnitAddr = msg.UnitAddr;
+            MessageList.Add(msg);
+            var temp = MsgTemplate.GetTemplate(msg.UnitAddr);
 
-                var bcr = msg.Param.Substring(0, 1);
-                var sampleId = msg.Param.Substring(1, 15);
+            temp.HandleMsg(msg, mRouterService);
+        }
 
-                reply.Param = bcr + sampleId + "1";
-
-                var units = mRouterService.FindTargetUnit(reply.UnitAddr);
-                foreach (var unit in units)
-                {
-                    unit.OnReceivedMsg(reply.Command, reply.Param);
-                }
-            }
+        private void Reply0011(IMessage msg)
+        {
+           
         }
 
         public void StopSendTask()
@@ -52,4 +44,10 @@ namespace BCI.PLCSimPP.Test.TestTool
             //do nothing in ut
         }
     }
+
+
+
+
+
+   
 }

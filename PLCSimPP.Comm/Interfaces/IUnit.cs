@@ -61,25 +61,10 @@ namespace BCI.PLCSimPP.Comm.Interfaces
         /// <param name="sample"></param>
         void EnqueueSample(ISample sample);
 
-        ///// <summary>
-        ///// Try to get the first sample of the queue
-        ///// </summary>
-        ///// <param name="sample">first pending sample</param>
-        ///// <returns>Returns true if the sample is pending and false if not</returns>
-        //bool TryDequeueSample(out ISample sample);
-
         /// <summary>
         /// clear jammed sample
         /// </summary>
         void ResetQueue();
-
-        ///// <summary>
-        ///// Move sample to next destination
-        ///// </summary>
-        ///// <param name="order">Sorting order</param>
-        ///// <param name="bcrNo">Barcode reader number</param>
-        ///// <param name="direction">Flow direction</param>
-        //void MoveSample(SortingOrder order, string bcrNo, Direction direction = Direction.Forward);
 
         /// <summary>
         /// Processing when a message is received

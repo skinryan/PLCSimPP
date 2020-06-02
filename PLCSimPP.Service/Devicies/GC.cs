@@ -14,7 +14,7 @@ namespace BCI.PLCSimPP.Service.Devicies
     [Serializable]
     public class GC : UnitBase
     {
-        private DCSimService mDCSimService;
+        private IAnalyzerSimService mDCSimService;
         public int InstrumentUnitNum { get; set; }
 
         public override void OnReceivedMsg(string cmd, string content)
@@ -67,8 +67,9 @@ namespace BCI.PLCSimPP.Service.Devicies
         {
             if (ServiceLocator.IsLocationProviderSet)
             {
-                mDCSimService = ServiceLocator.Current.GetInstance<DCSimService>();
+                mDCSimService = ServiceLocator.Current.GetInstance<IAnalyzerSimService>("DCSimService");
             }
         }
     }
 }
+
