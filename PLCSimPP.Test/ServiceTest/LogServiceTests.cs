@@ -16,7 +16,9 @@ namespace BCI.PLCSimPP.Test.ServiceTest
         [TestMethod]
         public void TestMsgLogSave()
         {
-            LogService logServ = new LogService();
+            LogService logServ = new LogService();  
+            DBService db = new DBService("data source=.;initial catalog=PLCSimPP;integrated security=SSPI;");
+            db.TruncateTable();
 
             MsgLog testMsg = new MsgLog
             {
@@ -27,7 +29,6 @@ namespace BCI.PLCSimPP.Test.ServiceTest
             };
             logServ.LogRecvMsg(testMsg);
 
-            DBService db = new DBService("data source=.;initial catalog=PLCSimPP;integrated security=SSPI;");
             var results = db.QueryLogContents();
             var count = 0;
             foreach (var item in results)

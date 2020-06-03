@@ -27,13 +27,14 @@ namespace BCI.PLCSimPP.Test.ServiceTest
     [TestClass]
     public class MsgTests
     {
-        private IUnityContainer mTestContainer = new UnityContainer();
-        private IRouterService mRouterService;
-        private ObservableCollection<IUnit> mUnitCollection;
+        public static IUnityContainer mTestContainer;
+        private static IRouterService mRouterService;
+        private static ObservableCollection<IUnit> mUnitCollection;
 
-        public MsgTests()
+        [ClassInitialize]
+        public static void ClassInit(TestContext context)
         {
-            //var provider = new UnityServiceLocator(mTestContainer.Registrations);
+            mTestContainer = new UnityContainer().AddExtension(new Diagnostic());
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocatorAdapter(mTestContainer));
 
             mTestContainer.RegisterSingleton<IEventAggregator, EventAggregatorForUT>();
@@ -46,10 +47,15 @@ namespace BCI.PLCSimPP.Test.ServiceTest
 
             mUnitCollection = new ObservableCollection<IUnit>(TestDataSource.GetLayout());
 
-            mRouterService = mTestContainer.Resolve<IRouterService>();// ServiceLocator.Current.GetInstance<IRouterService>();
+            mRouterService = mTestContainer.Resolve<IRouterService>();
             mRouterService.SetSiteMap(mUnitCollection);
         }
 
+        [TestCleanup]
+        public void TestCleanUp()
+        {
+            mUnitCollection = new ObservableCollection<IUnit>(TestDataSource.GetLayout());
+        }
 
         [TestMethod]
         public void Msg0004Test()
@@ -94,13 +100,13 @@ namespace BCI.PLCSimPP.Test.ServiceTest
             Assert.IsTrue(msg.UnitAddr == stocker.Address);
 
             var msg2 = respMsgList[1];
-            Assert.IsTrue(msg2.Param == "104".PadRight(15));
+            Assert.IsTrue(msg2.Param == "104".PadRight(18));
             Assert.IsTrue(msg2.Command == UnitCmds._1002);
             Assert.IsTrue(msg2.Port == stocker.Port);
             Assert.IsTrue(msg2.UnitAddr == stocker.Address);
 
             var msg3 = respMsgList[2];
-            Assert.IsTrue(msg3.Param == "103".PadRight(15));
+            Assert.IsTrue(msg3.Param == "103".PadRight(18));
             Assert.IsTrue(msg3.Command == UnitCmds._1002);
             Assert.IsTrue(msg3.Port == stocker.Port);
             Assert.IsTrue(msg3.UnitAddr == stocker.Address);
@@ -160,12 +166,12 @@ namespace BCI.PLCSimPP.Test.ServiceTest
         {
             Sample testSample1 = new Sample()
             {
-                SampleID = "0001_0011",
+                SampleID = "0001",
                 Rack = Comm.RackType.Bypass
             };
             Sample testSample2 = new Sample()
             {
-                SampleID = "0001_0017",
+                SampleID = "0017",
                 Rack = Comm.RackType.Bypass
             };
 
@@ -177,28 +183,15 @@ namespace BCI.PLCSimPP.Test.ServiceTest
 
             mRouterService = ServiceLocator.Current.GetInstance<IRouterService>();
             var unit = (UnitBase)mRouterService.FindNextDestination(mhOut);
-            int pendingCount = 0;
 
-            for (int i = 0; i < 10; i++)
-            {
-                pendingCount = unit.PendingCount;
-                Thread.Sleep(1000);
-            }
-
-            Assert.IsTrue(pendingCount == 1);
+            Thread.Sleep(5000);
+            Assert.IsTrue(unit.PendingCount == 1);
 
             //----------------------------------------
 
             mhOut.EnqueueSample(testSample2);
-
-            var stored = 0;
-            for (int i = 0; i < 10; i++)
-            {
-                stored = mhOut.StoredCount;
-                Thread.Sleep(1000);
-            }
-
-            Assert.IsTrue(stored == 1);
+            Thread.Sleep(5000);
+            Assert.IsTrue(mhOut.StoredCount == 1);
         }
 
         [TestMethod]
@@ -358,7 +351,29 @@ namespace BCI.PLCSimPP.Test.ServiceTest
             Assert.IsTrue(centMsg.Count(t => t.Command == "1015") == 1);
             Assert.IsTrue(centMsg.Count(t => t.Command == "1019") == 1);
             Assert.IsTrue(unit.PendingCount == 2);
-            
+
+        }
+
+        [TestMethod]
+        public void OutletTest()
+        {
+            Sample testSample1 = new Sample() { SampleID = "0001", Rack = Comm.RackType.Bypass };
+
+            Outlet outlet = (Outlet)mRouterService.FindTargetUnit("0010000000").First();
+            //mRouterService = ServiceLocator.Current.GetInstance<IRouterService>();
+            //var unit = (UnitBase)mRouterService.FindNextDestination(stocker);
+
+            outlet.InitUnit();
+            outlet.EnqueueSample(testSample1);
+
+            Thread.Sleep(10000);
+
+            MsgSenderForUT msut = (MsgSenderForUT)mTestContainer.Resolve<ISendMsgBehavior>();
+
+            var centMsg = msut.MessageList.Where(t => t.UnitAddr == "0010000000");
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1011") == 1);
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1015") == 1);
+            Assert.IsTrue(outlet.StoredCount == 1);
         }
     }
 }
