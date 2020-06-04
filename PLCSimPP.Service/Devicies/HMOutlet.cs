@@ -80,12 +80,14 @@ namespace BCI.PLCSimPP.Service.Devicies
             mEvent.GetEvent<NotifyOnlineSampleEvent>().Publish(-1);
         }
 
+        
+
         public HMOutlet() : base()
         {
             if (ServiceLocator.IsLocationProviderSet)
             {
                 mEvent = ServiceLocator.Current.GetInstance<IEventAggregator>();
-            }            
+            }
         }
     }
 }

@@ -17,9 +17,9 @@ namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
         {
             List<IMessage> result = new List<IMessage>();
 
-            //The documentation does not explain how to fill in, this value according to the production log
+            // The documentation does not explain how to fill in, this value according to the production log
             var msg10e0 = SendMsg.GetMsg_10E0(unit, "0", "BUZZ CMD");
-            //'04': Buzzer stop
+            // '04': Buzzer stop
             var buzzStop = SendMsg.GetMsg_1002(unit, "1", "04", "".PadRight(15));
             // '03': Restart
             var restart = SendMsg.GetMsg_1002(unit, "1", "03", "".PadRight(15));

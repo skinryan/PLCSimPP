@@ -176,11 +176,6 @@ namespace BCI.PLCSimPP.Service.Devicies
             RaisePropertyChanged("StoredCount");
         }
 
-        protected override void OnSampleArrived()
-        {
-            base.OnSampleArrived();
-        }
-
         private void StoreSample(string shelf, string rack, string position, ISample sample)
         {
             if (!mShelfList.ContainsKey(shelf))
@@ -220,6 +215,28 @@ namespace BCI.PLCSimPP.Service.Devicies
                         RaisePropertyChanged("StoredCount");
                     }
                 }
+            }
+        }
+
+        protected override void OnSampleArrived()
+        {
+            if (CurrentSample.SampleID.StartsWith("ERR"))
+            {
+                //do error trigger
+                string param = ParamConst.BCR_1 + "***************";
+                var msg = new MsgCmd()
+                {
+                    Command = UnitCmds._1011,
+                    Param = param,
+                    Port = this.Port,
+                    UnitAddr = this.Address
+                };
+
+                this.mSendBehavior.PushMsg(msg);
+            }
+            else
+            {
+                base.OnSampleArrived();
             }
         }
     }
