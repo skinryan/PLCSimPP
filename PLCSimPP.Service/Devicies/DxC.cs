@@ -14,7 +14,7 @@ namespace BCI.PLCSimPP.Service.Devicies
     [Serializable]
     public class DxC : UnitBase
     {
-        private DxCSimService mDxCSimService;
+        private IAnalyzerSimService mDxCSimService;
         public int InstrumentUnitNum { get; set; }
 
         public override void OnReceivedMsg(string cmd, string content)
@@ -29,16 +29,19 @@ namespace BCI.PLCSimPP.Service.Devicies
                     var msg = SendMsg.GetMsg_1011(this, ParamConst.BCR_2);
                     this.mSendBehavior.PushMsg(msg);
                 }
-                               
+
 
                 if (bcr == ParamConst.BCR_2)
                 {
                     var msg = SendMsg.GetMsg_1015(this);
                     this.mSendBehavior.PushMsg(msg);
 
-                   
-                        mDxCSimService.SendMsg(InstrumentUnitNum, CurrentSample.DxCToken, CurrentSample.SampleID);
-                    
+                    var tubeid = CurrentSample.SampleID;
+                    if (CurrentSample.IsSubTube)
+                    {
+                        tubeid = tubeid.Substring(0, tubeid.Length - 1);
+                    }
+                    mDxCSimService.SendMsg(InstrumentUnitNum, CurrentSample.DxCToken, CurrentSample.SampleID);
 
                     base.MoveSample();
                 }
@@ -60,8 +63,8 @@ namespace BCI.PLCSimPP.Service.Devicies
         {
             if (ServiceLocator.IsLocationProviderSet)
             {
-                mDxCSimService = ServiceLocator.Current.GetInstance<DxCSimService>();
-            }            
+                mDxCSimService = ServiceLocator.Current.GetInstance<IAnalyzerSimService>("DxCSimService");
+            }
         }
     }
 }

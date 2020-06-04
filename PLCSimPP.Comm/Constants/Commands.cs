@@ -227,8 +227,6 @@ namespace BCI.PLCSimPP.Comm.Constants
         /// </summary>
         public const string _1017 = "1017";
 
-        
-
         /// <summary>
         /// Sample Retrieval Completion
         /// Send the result of sample retrieval

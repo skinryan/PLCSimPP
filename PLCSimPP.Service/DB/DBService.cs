@@ -108,6 +108,15 @@ namespace BCI.PLCSimPP.Service.DB
             return result;
         }
 
+        public bool TruncateTable()
+        {
+            string querystring = $"TRUNCATE TABLE {DbConst.MSGLOG_TABLE_NAME}";
+
+            var result = mConn.Execute(querystring);
+
+            return result > 1;
+        }
+
         public DateTime GetStartTime(string token)
         {
             string sql = $"SELECT top(1) [{DbConst.MSGLOG_COLUMN_TIME}] FROM [{DbConst.MSGLOG_TABLE_NAME}] WHERE [{DbConst.MSGLOG_COLUMN_TOKEN}]={DbConst.MSGLOG_PARAM_TOKEN} ORDER BY [{DbConst.MSGLOG_COLUMN_TIME}] ASC";

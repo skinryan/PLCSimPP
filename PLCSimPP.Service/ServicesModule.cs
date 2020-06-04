@@ -37,8 +37,8 @@ namespace BCI.PLCSimPP.Service
             containerRegistry.RegisterSingleton<IPortService, PortService>();
             containerRegistry.RegisterSingleton<ISendMsgBehavior, MsgSender>();
             containerRegistry.RegisterSingleton<IAutomation, AutomationService>();
-            containerRegistry.RegisterSingleton<DCSimService>();
-            containerRegistry.RegisterSingleton<DxCSimService>();
+            containerRegistry.RegisterSingleton<IAnalyzerSimService, DCSimService>("DCSimService");
+            containerRegistry.RegisterSingleton<IAnalyzerSimService, DxCSimService>("DxCSimService");
         }
     }
 }

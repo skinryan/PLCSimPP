@@ -16,45 +16,45 @@ using BCI.PLCSimPP.Service.Log;
 using BCI.PLCSimPP.Service.Router;
 using Prism.Events;
 using System.Collections.ObjectModel;
+using Prism.Unity;
+using BCI.PLCSimPP.Service.Analyzer;
+using BCI.PLCSimPP.Service.Config;
+using System.Threading;
+using GC = BCI.PLCSimPP.Service.Devicies.GC;
 
 namespace BCI.PLCSimPP.Test.ServiceTest
 {
     [TestClass]
     public class MsgTests
     {
-        private IUnityContainer mTestContainer = new UnityContainer();
-        private IRouterService mRouterService;
-        private ObservableCollection<IUnit> mUnitCollection;
+        public static IUnityContainer mTestContainer;
+        private static IRouterService mRouterService;
+        private static ObservableCollection<IUnit> mUnitCollection;
 
-        public MsgTests()
+        [ClassInitialize]
+        public static void ClassInit(TestContext context)
         {
-            mUnitCollection = new ObservableCollection<IUnit>(TestDataSource.GetLayout());
-            var provider = new UnityServiceLocator(mTestContainer.Registrations);
-            ServiceLocator.SetLocatorProvider(() => provider);
+            mTestContainer = new UnityContainer().AddExtension(new Diagnostic());
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocatorAdapter(mTestContainer));
 
+            mTestContainer.RegisterSingleton<IEventAggregator, EventAggregatorForUT>();
+            mTestContainer.RegisterSingleton<IRouterService, RouterServiceForUT>();
             mTestContainer.RegisterSingleton<ISendMsgBehavior, MsgSenderForUT>();
             mTestContainer.RegisterSingleton<ILogService, LogService>();
-            mTestContainer.RegisterSingleton<IRouterService, RouterService>();
-            mTestContainer.RegisterSingleton<ILogService, LogService>();
-            mTestContainer.RegisterSingleton<IEventAggregator, EventAggregatorForUT>();
+            mTestContainer.RegisterSingleton<IConfigService, ConifgService>();
+            mTestContainer.RegisterSingleton<IAnalyzerSimService, AnalyzerSimServiceForUT>("DCSimService");
+            mTestContainer.RegisterSingleton<IAnalyzerSimService, AnalyzerSimServiceForUT>("DxCSimService");
 
-            mRouterService = ServiceLocator.Current.GetInstance<IRouterService>();
+            mUnitCollection = new ObservableCollection<IUnit>(TestDataSource.GetLayout());
+
+            mRouterService = mTestContainer.Resolve<IRouterService>();
             mRouterService.SetSiteMap(mUnitCollection);
         }
 
-        [TestMethod]
-        public void Msg0017Test()
+        [TestCleanup]
+        public void TestCleanUp()
         {
-            string recev = "13678860130     11031K31 ";
-            IUnit stocker = new Stocker()
-            {
-                Port = 2,
-                Address = "0000001000",
-                DisplayName = "stocker#1"
-            };
-            var ret = SendMsg.GetMsg_1015(stocker, recev);
-
-            Assert.IsTrue(ret.Param == "3678860130     1103100");
+            mUnitCollection = new ObservableCollection<IUnit>(TestDataSource.GetLayout());
         }
 
         [TestMethod]
@@ -100,13 +100,13 @@ namespace BCI.PLCSimPP.Test.ServiceTest
             Assert.IsTrue(msg.UnitAddr == stocker.Address);
 
             var msg2 = respMsgList[1];
-            Assert.IsTrue(msg2.Param == "104".PadRight(15));
+            Assert.IsTrue(msg2.Param == "104".PadRight(18));
             Assert.IsTrue(msg2.Command == UnitCmds._1002);
             Assert.IsTrue(msg2.Port == stocker.Port);
             Assert.IsTrue(msg2.UnitAddr == stocker.Address);
 
             var msg3 = respMsgList[2];
-            Assert.IsTrue(msg3.Param == "103".PadRight(15));
+            Assert.IsTrue(msg3.Param == "103".PadRight(18));
             Assert.IsTrue(msg3.Command == UnitCmds._1002);
             Assert.IsTrue(msg3.Port == stocker.Port);
             Assert.IsTrue(msg3.UnitAddr == stocker.Address);
@@ -135,7 +135,7 @@ namespace BCI.PLCSimPP.Test.ServiceTest
         }
 
         [TestMethod]
-        public void Msg1024Test()
+        public void DynamicInletTest()
         {
             Sample testSample = new Sample()
             {
@@ -148,10 +148,232 @@ namespace BCI.PLCSimPP.Test.ServiceTest
             dynamic.InitUnit();
             dynamic.EnqueueSample(testSample);
 
+            mRouterService = ServiceLocator.Current.GetInstance<IRouterService>();
+            var unit = (UnitBase)mRouterService.FindNextDestination(dynamic);
+            int pendingCount = 0;
 
+            for (int i = 0; i < 10; i++)
+            {
+                pendingCount = unit.PendingCount;
+                Thread.Sleep(1000);
+            }
+
+            Assert.IsTrue(pendingCount == 1);
+        }
+
+        [TestMethod]
+        public void HMOutletTest()
+        {
+            Sample testSample1 = new Sample()
+            {
+                SampleID = "0001",
+                Rack = Comm.RackType.Bypass
+            };
+            Sample testSample2 = new Sample()
+            {
+                SampleID = "0017",
+                Rack = Comm.RackType.Bypass
+            };
+
+            HMOutlet mhOut = (HMOutlet)mRouterService.FindTargetUnit("0000000001").First();
+
+            mhOut.ResetQueue();
+            mhOut.InitUnit();
+            mhOut.EnqueueSample(testSample1);
 
             mRouterService = ServiceLocator.Current.GetInstance<IRouterService>();
+            var unit = (UnitBase)mRouterService.FindNextDestination(mhOut);
 
+            Thread.Sleep(5000);
+            Assert.IsTrue(unit.PendingCount == 1);
+
+            //----------------------------------------
+
+            mhOut.EnqueueSample(testSample2);
+            Thread.Sleep(5000);
+            Assert.IsTrue(mhOut.StoredCount == 1);
+        }
+
+        [TestMethod]
+        public void CentrifugeTest()
+        {
+            Sample testSample1 = new Sample()
+            {
+                SampleID = "0001_0011",
+                Rack = Comm.RackType.Bypass
+            };
+
+            Centrifuge cent = (Centrifuge)mRouterService.FindTargetUnit("0000000004").First();
+            mRouterService = ServiceLocator.Current.GetInstance<IRouterService>();
+            var unit = (UnitBase)mRouterService.FindNextDestination(cent);
+
+            cent.InitUnit();
+            cent.EnqueueSample(testSample1);
+
+            Thread.Sleep(40000);
+
+            Assert.IsTrue(unit.PendingCount == 1);
+
+            MsgSenderForUT msut = (MsgSenderForUT)mTestContainer.Resolve<ISendMsgBehavior>();
+
+            var centMsg = msut.MessageList.Where(t => t.UnitAddr == "0000000004");
+
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1022") == 3);
+            Assert.IsTrue(centMsg.Count(t => t.Command == "101A") == 1);
+
+        }
+
+        [TestMethod]
+        public void LevelDetectorTest()
+        {
+            Sample testSample1 = new Sample() { SampleID = "0001", Rack = Comm.RackType.Bypass };
+            Sample testSample2 = new Sample() { SampleID = "0002", Rack = Comm.RackType.Bypass };
+            Sample testSample3 = new Sample() { SampleID = "0003", Rack = Comm.RackType.Bypass };
+            Sample testSample4 = new Sample() { SampleID = "0004", Rack = Comm.RackType.Bypass };
+            Sample testSample5 = new Sample() { SampleID = "0005", Rack = Comm.RackType.Bypass };
+
+            LevelDetector ld = (LevelDetector)mRouterService.FindTargetUnit("0000000010").First();
+            mRouterService = ServiceLocator.Current.GetInstance<IRouterService>();
+            var unit = (UnitBase)mRouterService.FindNextDestination(ld);
+
+            ld.InitUnit();
+            ld.EnqueueSample(testSample1);
+            ld.EnqueueSample(testSample2);
+            ld.EnqueueSample(testSample3);
+            ld.EnqueueSample(testSample4);
+            ld.EnqueueSample(testSample5);
+
+            Thread.Sleep(10000);
+
+            Assert.IsTrue(unit.PendingCount == 5);
+
+            MsgSenderForUT msut = (MsgSenderForUT)mTestContainer.Resolve<ISendMsgBehavior>();
+
+            var centMsg = msut.MessageList.Where(t => t.UnitAddr == "0000000010");
+
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1012") == 1);
+
+        }
+
+        [TestMethod]
+        public void LabelerAndAliquoterTest()
+        {
+            Sample testSample1 = new Sample() { SampleID = "0001", Rack = Comm.RackType.Bypass };
+
+            Labeler lbr = (Labeler)mRouterService.FindTargetUnit("0000000020").First();
+            Aliquoter aqr = (Aliquoter)mRouterService.FindTargetUnit("0000000040").First();
+            mRouterService = ServiceLocator.Current.GetInstance<IRouterService>();
+            var unit = (UnitBase)mRouterService.FindNextDestination(aqr);
+
+            lbr.InitUnit();
+            aqr.InitUnit();
+            lbr.EnqueueSample(testSample1);
+
+            Thread.Sleep(10000);
+
+            MsgSenderForUT msut = (MsgSenderForUT)mTestContainer.Resolve<ISendMsgBehavior>();
+
+            var centMsg = msut.MessageList.Where(t => t.UnitAddr == "0000000020" || t.UnitAddr == "0000000040");
+
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1011") == 4);
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1013") == 1);
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1014") == 1);
+            Assert.IsTrue(unit.PendingCount == 2);
+        }
+
+        [TestMethod]
+        public void GCTest()
+        {
+            Sample testSample1 = new Sample() { SampleID = "00011", Rack = Comm.RackType.Bypass, DcToken = "AAA", IsSubTube = true };
+
+            GC gc = (GC)mRouterService.FindTargetUnit("0000000100").First();
+            mRouterService = ServiceLocator.Current.GetInstance<IRouterService>();
+            var unit = (UnitBase)mRouterService.FindNextDestination(gc);
+
+            gc.InitUnit();
+            gc.EnqueueSample(testSample1);
+
+            Thread.Sleep(5000);
+
+            MsgSenderForUT msut = (MsgSenderForUT)mTestContainer.Resolve<ISendMsgBehavior>();
+
+            var centMsg = msut.MessageList.Where(t => t.UnitAddr == "0000000100");
+
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1011") == 3);
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1015") == 1);
+            Assert.IsTrue(unit.PendingCount == 1);
+        }
+
+        [TestMethod]
+        public void DxCTest()
+        {
+            Sample testSample1 = new Sample() { SampleID = "00011", Rack = Comm.RackType.Bypass, DcToken = "AAA", IsSubTube = true };
+
+            DxC dxc = (DxC)mRouterService.FindTargetUnit("0000200000").First();
+            mRouterService = ServiceLocator.Current.GetInstance<IRouterService>();
+            var unit = (UnitBase)mRouterService.FindNextDestination(dxc);
+
+            dxc.InitUnit();
+            dxc.EnqueueSample(testSample1);
+
+            Thread.Sleep(5000);
+
+            MsgSenderForUT msut = (MsgSenderForUT)mTestContainer.Resolve<ISendMsgBehavior>();
+
+            var centMsg = msut.MessageList.Where(t => t.UnitAddr == "0000200000");
+
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1011") == 2);
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1015") == 1);
+            Assert.IsTrue(unit.PendingCount == 1);
+        }
+
+        [TestMethod]
+        public void StockerTest()
+        {
+            Sample testSample1 = new Sample() { SampleID = "0001", Rack = Comm.RackType.Bypass };
+            Sample testSample2 = new Sample() { SampleID = "0002", Rack = Comm.RackType.Bypass };
+
+            Stocker stocker = (Stocker)mRouterService.FindTargetUnit("0002000000").First();
+            mRouterService = ServiceLocator.Current.GetInstance<IRouterService>();
+            var unit = (UnitBase)mRouterService.FindNextDestination(stocker);
+
+            stocker.InitUnit();
+            stocker.EnqueueSample(testSample1);
+            stocker.EnqueueSample(testSample2);
+
+            Thread.Sleep(10000);
+
+            MsgSenderForUT msut = (MsgSenderForUT)mTestContainer.Resolve<ISendMsgBehavior>();
+
+            var centMsg = msut.MessageList.Where(t => t.UnitAddr == "0002000000");
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1011") == 4);
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1026") == 1);
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1015") == 1);
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1019") == 1);
+            Assert.IsTrue(unit.PendingCount == 2);
+
+        }
+
+        [TestMethod]
+        public void OutletTest()
+        {
+            Sample testSample1 = new Sample() { SampleID = "0001", Rack = Comm.RackType.Bypass };
+
+            Outlet outlet = (Outlet)mRouterService.FindTargetUnit("0010000000").First();
+            //mRouterService = ServiceLocator.Current.GetInstance<IRouterService>();
+            //var unit = (UnitBase)mRouterService.FindNextDestination(stocker);
+
+            outlet.InitUnit();
+            outlet.EnqueueSample(testSample1);
+
+            Thread.Sleep(10000);
+
+            MsgSenderForUT msut = (MsgSenderForUT)mTestContainer.Resolve<ISendMsgBehavior>();
+
+            var centMsg = msut.MessageList.Where(t => t.UnitAddr == "0010000000");
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1011") == 1);
+            Assert.IsTrue(centMsg.Count(t => t.Command == "1015") == 1);
+            Assert.IsTrue(outlet.StoredCount == 1);
         }
     }
 }

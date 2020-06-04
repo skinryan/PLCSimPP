@@ -37,6 +37,7 @@ namespace BCI.PLCSimPP.Service.Devicies
                 if (mClotedSamples.Count == 5)
                 {
                     Reply_1012();
+                    mClotTime = 0;
                 }
             }
 

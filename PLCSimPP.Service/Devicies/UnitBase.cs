@@ -32,6 +32,8 @@ namespace BCI.PLCSimPP.Service.Devicies
         protected Task mWaitArrivalTask;
         protected int mArrivalInterval = 1000;
 
+        #region properties
+
         private string mDisplayName;
 
         public string DisplayName
@@ -61,15 +63,9 @@ namespace BCI.PLCSimPP.Service.Devicies
             get { return mChildren; }
         }
 
-
         public int PendingCount
         {
             get { return GetPendingCount(); }
-        }
-
-        protected virtual int GetPendingCount()
-        {
-            return mPendingQueue.Count;
         }
 
         public bool HasChild
@@ -97,6 +93,13 @@ namespace BCI.PLCSimPP.Service.Devicies
         {
             get { return mIsMaster; }
             set { this.SetProperty(ref mIsMaster, value); }
+        }
+
+        #endregion
+
+        protected virtual int GetPendingCount()
+        {
+            return mPendingQueue.Count;
         }
 
         public virtual void EnqueueSample(ISample sample)

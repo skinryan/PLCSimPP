@@ -19,13 +19,11 @@ namespace BCI.PLCSimPP.Service.Devicies
     public class Aliquoter : UnitBase
     {
         private const string SERUM = "0041";
-        private const string LASTORDER = "FF";
-        
+        private const string LASTORDER = "FF";       
 
         private ISample mSecTube = null;
         private ConcurrentQueue<ISample> mSecQueue;
         private Task mSecTask;
-
 
         public override void OnReceivedMsg(string cmd, string content)
         {
@@ -83,9 +81,7 @@ namespace BCI.PLCSimPP.Service.Devicies
                 };
                 msg.Param = CurrentSample.SampleID.PadRight(15) + " ";
 
-                mSendBehavior.PushMsg(msg);
-
-                
+                mSendBehavior.PushMsg(msg);                
             }
 
             if (cmd == LcCmds._0015)
@@ -159,8 +155,7 @@ namespace BCI.PLCSimPP.Service.Devicies
         }
 
         public Aliquoter() : base()
-        {
-            
+        {            
             mSecQueue = new ConcurrentQueue<ISample>();
         }
 
@@ -179,7 +174,6 @@ namespace BCI.PLCSimPP.Service.Devicies
             };
 
             mSecQueue.Enqueue(subSample);
-
         }
     }
 }
