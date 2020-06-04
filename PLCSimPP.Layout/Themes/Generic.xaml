@@ -64,11 +64,11 @@
                         <Trigger Property="IsDefaulted" Value="true">
                             <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true">
+                        <!--<Trigger Property="IsMouseOver" Value="true">
                             <Setter TargetName="border" Property="Background" Value="{StaticResource Button.MouseOver.Background}" />
                             <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource Button.MouseOver.Border}" />
                             <Setter TargetName="icon" Property="Fill" Value="{Binding IconMouseOverBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-                        </Trigger>
+                        </Trigger>-->
                         <Trigger Property="IsPressed" Value="true">
                             <Setter TargetName="border" Property="Background" Value="{StaticResource Button.Pressed.Background}" />
                             <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource Button.Pressed.Border}" />

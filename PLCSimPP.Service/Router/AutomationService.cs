@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -167,6 +168,13 @@ namespace BCI.PLCSimPP.Service.Router
         public void RackExchange(IUnit storckyard, string shelf, string rack)
         {
             var msg = SendMsg.GetMsg_1016(storckyard, shelf, rack);
+
+            this.mEventAggr.GetEvent<NotifyRackExchangeEvent>().Publish(new RackExchangeParam()
+            {
+                Address = storckyard.Address,
+                Rack = rack,
+                Shelf = shelf
+            });
             MsgSender.PushMsg(msg);
         }
 

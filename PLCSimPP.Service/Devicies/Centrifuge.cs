@@ -53,6 +53,19 @@ namespace BCI.PLCSimPP.Service.Devicies
         {
             base.OnReceivedMsg(cmd, content);
 
+            if (cmd == LcCmds._0001)
+            {
+                //simu 1017               
+                var msg101A = new MsgCmd()
+                {
+                    Port = this.Port,
+                    UnitAddr = this.Address,
+                    Command = UnitCmds._101A,
+                    Param = "1"
+                };
+                base.mSendBehavior.PushMsg(msg101A);
+            }
+
             if (cmd == LcCmds._0011)
             {
                 StoreSample();
@@ -160,7 +173,6 @@ namespace BCI.PLCSimPP.Service.Devicies
             }
         }
 
-
         private void DoSpin()
         {
             lock (mlocker)
@@ -201,13 +213,11 @@ namespace BCI.PLCSimPP.Service.Devicies
             }
         }
 
-
         public Centrifuge() : base()
         {
             mlocker = new object();
             StoredSamples = new List<ISample>();
             mSpinningTimer = new Timer(ProcessSpinning, null, 1000, 1000);
-
         }
     }
 

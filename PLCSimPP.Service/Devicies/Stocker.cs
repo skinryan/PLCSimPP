@@ -138,8 +138,6 @@ namespace BCI.PLCSimPP.Service.Devicies
         private void RetriveSample(string sid)//string floor, string rack, string position
         {
             bool isfind = false;
-            //string pos = string.Empty;
-            //Dictionary<string, ISample> dict;
             foreach (var shelf in mShelfList.Values)
             {
                 if (isfind) break;
@@ -162,17 +160,6 @@ namespace BCI.PLCSimPP.Service.Devicies
                 }
             }
 
-
-            //if (!mShelfList.ContainsKey(floor)) return;
-            //if (!mShelfList[floor].RackList.ContainsKey(rack)) return;
-            //if (!mShelfList[floor].RackList[rack].SampleList.ContainsKey(position)) return;
-
-            //var sample = mShelfList[floor].RackList[rack].SampleList[position];
-            //sample.Retrieving = true;
-            //this.RetrievingSample = sample;
-            //this.EnqueueSample(sample);
-
-            //mShelfList[floor].RackList[rack].SampleList.Remove(position);
             RaisePropertyChanged("StoredCount");
         }
 
@@ -217,6 +204,22 @@ namespace BCI.PLCSimPP.Service.Devicies
             if (ServiceLocator.IsLocationProviderSet)
             {
                 mEvent = ServiceLocator.Current.GetInstance<IEventAggregator>();
+                mEvent.GetEvent<NotifyRackExchangeEvent>().Subscribe(OnRackExchange);
+            }
+        }
+
+        private void OnRackExchange(RackExchangeParam rep)
+        {
+            if (rep.Address == this.Address)
+            {
+                if (mShelfList.ContainsKey(rep.Shelf))
+                {
+                    if (mShelfList[rep.Shelf].RackList.ContainsKey(rep.Rack))
+                    {
+                        mShelfList[rep.Shelf].RackList[rep.Rack].SampleList.Clear();
+                        RaisePropertyChanged("StoredCount");
+                    }
+                }
             }
         }
     }

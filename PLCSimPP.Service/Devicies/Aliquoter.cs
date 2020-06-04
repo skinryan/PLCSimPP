@@ -31,6 +31,19 @@ namespace BCI.PLCSimPP.Service.Devicies
         {
             base.OnReceivedMsg(cmd, content);
 
+            if (cmd == LcCmds._0001)
+            {               
+                //simu 1017               
+                var msg1017 = new MsgCmd()
+                {
+                    Port = this.Port,
+                    UnitAddr = this.Address,
+                    Command = UnitCmds._1017,
+                    Param = "10"
+                };
+                base.mSendBehavior.PushMsg(msg1017);
+            }
+
             if (cmd == LcCmds._0011)
             {
                 var bcrNum = content.Substring(0, 1);
