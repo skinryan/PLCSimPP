@@ -24,22 +24,6 @@ namespace BCI.PLCSimPP.Comm.Models
             set { SetProperty(ref mRack, value); }
         }
 
-
-        //private int mWidth;
-        //public int Width
-        //{
-        //    get { return mWidth; }
-        //    set { SetProperty(ref mWidth, value); }
-        //}
-
-
-        //private int mHeight;
-        //public int Height
-        //{
-        //    get { return mHeight; }
-        //    set { SetProperty(ref mHeight, value); }
-        //}
-
         private bool mIsLoaded;
 
         public bool IsLoaded

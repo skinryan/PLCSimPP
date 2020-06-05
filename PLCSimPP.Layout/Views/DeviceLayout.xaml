@@ -18,18 +18,17 @@
                 <ResourceDictionary Source="../Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <libBinding:BindingProxy x:Key="BindingProxy" Data="{Binding}"/>
+            <libBinding:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
             <Geometry x:Key="geometry_exchange">M213.546667 384.853333l136.533333-136.533333L401.493333 299.946667 316.586667 384.853333H896v85.333334H128l85.333333-85.333334h0.213334z m597.12 298.666667l-136.234667 136.192L622.933333 768.426667l84.821334-84.906667H128v-85.333333h768l-85.333333 85.333333z</Geometry>
             <cvt:RackToStrConverter x:Key="RackToStrConverter" />
             <cvt:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
             <cvt:TypeToVisibilityConverter x:Key="TypeToVisibilityConverter" />
             <cvt:RackExchangeParamConverter x:Key="RackExchangeParamConverter" />
-            <cvt:UnitType2VisibilityConverter x:Key="UnitType2VisibilityConverter"/>
+            <cvt:UnitType2VisibilityConverter x:Key="UnitType2VisibilityConverter" />
 
             <ItemsPanelTemplate x:Key="HorizontalPanel">
                 <StackPanel Orientation="Vertical" />
             </ItemsPanelTemplate>
-
 
             <Style x:Key="SubItem" TargetType="{x:Type ListBoxItem}">
                 <Setter Property="Template">
@@ -92,22 +91,21 @@
                                                 CornerRadius="0,4,4,0">
                                             <StackPanel>
                                                 <TextBlock Width="30"
-                                                       Padding="3,0"
-                                                       VerticalAlignment="Center"
-                                                       TextAlignment="Right"
-                                                       TextWrapping="Wrap" >
+                                                           Padding="3,0"
+                                                           VerticalAlignment="Center"
+                                                           TextAlignment="Right"
+                                                           TextWrapping="Wrap">
                                                     <!--<Run Text="Panding:"/>-->
-                                                    <Run Text="{Binding PendingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <Run Text="{Binding PendingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                                 </TextBlock>
                                                 <TextBlock Width="30"
-                                                       Padding="3,0"
-                                                       VerticalAlignment="Center"
-                                                       TextAlignment="Right"
-                                                       TextWrapping="Wrap"
-                                                        Visibility="{Binding .,Converter={StaticResource UnitType2VisibilityConverter}}">
+                                                           Padding="3,0"
+                                                           VerticalAlignment="Center"
+                                                           TextAlignment="Right"
+                                                           TextWrapping="Wrap"
+                                                           Visibility="{Binding ., Converter={StaticResource UnitType2VisibilityConverter}}">
                                                     <!--<Run Text="Stored:"/>-->
-                                                    <Run Text="{Binding StoredCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                                       />
+                                                    <Run Text="{Binding StoredCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                                 </TextBlock>
                                             </StackPanel>
                                         </Border>
@@ -145,8 +143,10 @@
                                                         VerticalAlignment="Top"
                                                         Orientation="Horizontal">
                                                 <StackPanel.ContextMenu>
-                                                    <ContextMenu  >
-                                                        <MenuItem Header="Clear Current Sample" Command="{Binding Data.ClearJammedCommand,Source={StaticResource BindingProxy}}" CommandParameter="{Binding .}" ></MenuItem>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="Clear Current Sample"
+                                                                  Command="{Binding Data.ClearJammedCommand, Source={StaticResource BindingProxy}}"
+                                                                  CommandParameter="{Binding .}" />
                                                     </ContextMenu>
                                                 </StackPanel.ContextMenu>
                                                 <Border Background="SkyBlue"
@@ -253,11 +253,11 @@
                                 <ColumnDefinition Width="30*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0"
                                        Style="{StaticResource TextStyle}"
@@ -305,7 +305,8 @@
                                      Style="{StaticResource TextBoxStyle}"
                                      Text="{Binding SampleRangeInfo.StopNum}"
                                      TextAlignment="Right"
-                                     TextChanged="TextBox_TextChanged" />
+                                     TextChanged="TextBox_TextChanged"
+                                     LostFocus="tb_endNum_LostFocus" />
 
                             <TextBlock Grid.Row="2"
                                        Grid.Column="0"
@@ -320,8 +321,8 @@
                                      Style="{StaticResource TextBoxStyle}"
                                      Text="{Binding SampleRangeInfo.Quantity}"
                                      TextAlignment="Right"
-                                     TextChanged="TextBox_TextChanged" />
-
+                                     TextChanged="TextBox_TextChanged"
+                                     LostFocus="tb_endNum_LostFocus" />
 
                             <TextBlock Grid.Row="2"
                                        Grid.Column="2"
@@ -340,27 +341,26 @@
                             <TextBlock Grid.Row="3"
                                        Grid.Column="0"
                                        Style="{StaticResource TextStyle}"
-                                       Text="DcToken:" />
+                                       Text="DCToken:" />
                             <TextBox x:Name="tb_ss"
                                      Grid.Row="3"
-                                     Grid.Column="1"                                     
+                                     Grid.Column="1"
                                      Style="{StaticResource TextBoxStyle}"
                                      CharacterCasing="Upper"
                                      Text="{Binding SampleRangeInfo.DcToken}"
-                                     TextAlignment="Left"
-                                     />
+                                     TextAlignment="Left" />
 
                             <TextBlock Grid.Row="3"
                                        Grid.Column="2"
                                        Style="{StaticResource TextStyle}"
-                                       Text="DcToken:" />
+                                       Text="DxCToken:" />
                             <TextBox Grid.Row="3"
-                                      Grid.Column="3"
-                                      Margin="3"
-                                      Style="{StaticResource TextBoxStyle}"
-                                      CharacterCasing="Upper"
-                                      Text="{Binding SampleRangeInfo.DxCToken}"
-                                      TextAlignment="Left"/>
+                                     Grid.Column="3"
+                                     Margin="3"
+                                     Style="{StaticResource TextBoxStyle}"
+                                     CharacterCasing="Upper"
+                                     Text="{Binding SampleRangeInfo.DxCToken}"
+                                     TextAlignment="Left" />
 
                             <DockPanel Grid.Row="5"
                                        Grid.ColumnSpan="4"
@@ -404,8 +404,8 @@
 
                         </Grid>
                         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
-                            <TextBlock Text="Online Sample Count : "></TextBlock>
-                            <TextBlock Text="{Binding AutomationService.OnlineSampleCount}"></TextBlock>
+                            <TextBlock Text="Online Sample Count : " />
+                            <TextBlock Text="{Binding AutomationService.OnlineSampleCount}" />
                         </StackPanel>
                         <DataGrid Margin="2"
                                   HorizontalAlignment="Stretch"
@@ -419,10 +419,8 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding IsLoaded}" Header="Is Loaded" />
                                 <DataGridTextColumn Binding="{Binding SampleID}" Header="Sample ID" />
-                                <!--<DataGridTextColumn Binding="{Binding Diameter}" Header="Tube Diameter" />
-                        <DataGridTextColumn Binding="{Binding Height}" Header="Tube Height" />-->
                                 <DataGridTextColumn Binding="{Binding Rack, Converter={StaticResource RackToStrConverter}}" Header="Rack Type" />
-                                <DataGridTextColumn Binding="{Binding DcToken}" Header="DcToken" />
+                                <DataGridTextColumn Binding="{Binding DcToken}" Header="DCToken" />
                                 <DataGridTextColumn Binding="{Binding DxCToken}" Header="DxCToken" />
                             </DataGrid.Columns>
                             <DataGrid.ContextMenu>

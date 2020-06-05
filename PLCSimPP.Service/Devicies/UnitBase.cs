@@ -147,7 +147,6 @@ namespace BCI.PLCSimPP.Service.Devicies
                 eventAggr.GetEvent<NotifyOnlineSampleEvent>().Publish(0);
             }
 
-            //mPendingQueue = new ConcurrentQueue<ISample>();
         }
 
         protected virtual bool TryDequeueSample(out ISample sample)

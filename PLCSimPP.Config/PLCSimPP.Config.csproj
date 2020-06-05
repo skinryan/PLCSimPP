@@ -17,11 +17,6 @@
   <ItemGroup>
     <Compile Remove="Views\Configuration.xaml - Copy.cs" />
   </ItemGroup>
-  
-  
-  <ItemGroup>
-    <None Remove="SiteMapEditer.png" />
-  </ItemGroup>
 
   <ItemGroup>
     <Page Remove="Views\configuration - Copy.xaml" />
@@ -37,9 +32,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Content Include="SiteMapEditer.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>

@@ -17,16 +17,14 @@ namespace BCI.PLCSimPP.Log.ViewModels
 {
     public class LogMenuViewModel : BindableBase
     {
-        private readonly ILogService mLogServ;
         private readonly IEventAggregator mEventAggregator;
 
         public ICommand NavigateCommand { get; set; }
         public ICommand ExportCommand { get; set; }
 
-        public LogMenuViewModel(IEventAggregator eventAggr, ILogService logServ)
+        public LogMenuViewModel(IEventAggregator eventAggr)
         {
             mEventAggregator = eventAggr;
-            mLogServ = logServ;
             NavigateCommand = new DelegateCommand<string>(Navigate);
             ExportCommand = new DelegateCommand(DoExport);
         }
@@ -40,10 +38,8 @@ namespace BCI.PLCSimPP.Log.ViewModels
             sfd.DefaultExt = "csv";
             sfd.RestoreDirectory = true;
             sfd.ShowDialog();
-
-            //var path = sfd.FileName.Substring(0, sfd.FileName.LastIndexOf('\\'));
-            //var name = sfd.FileName.Substring(sfd.FileName.LastIndexOf('\\') + 1);
-            //LogDB.Current.BackupDb(path, name);
+            
+            //notify a export event
             if (!string.IsNullOrEmpty(sfd.FileName))
             {
                 mEventAggregator.GetEvent<ExportEvent>().Publish(sfd.FileName);
@@ -52,9 +48,7 @@ namespace BCI.PLCSimPP.Log.ViewModels
 
         private void Navigate(string viewName)
         {
-
             mEventAggregator.GetEvent<NavigateEvent>().Publish(viewName);
-
         }
     }
 }

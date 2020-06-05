@@ -11,6 +11,7 @@ namespace BCI.PLCSimPP.MainWindow.Converter
 {
     public class Bool2ColorConverter : IValueConverter
     {
+        /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
@@ -28,9 +29,11 @@ namespace BCI.PLCSimPP.MainWindow.Converter
             return Brushes.Red;
         }
 
+        /// <inheritdoc />
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return false;
+            //The one-way binding used here does not require a ConvertBack
+            throw new NotImplementedException();
         }
     }
 }

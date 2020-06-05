@@ -185,7 +185,9 @@ namespace BCI.PLCSimPP.Log.ViewModels
             return result;
         }
 
-
+        /// <summary>
+        /// init address drop down list
+        /// </summary>
         public void GetAddresses()
         {
             mAddresses.Clear();
@@ -253,8 +255,7 @@ namespace BCI.PLCSimPP.Log.ViewModels
             }
             catch (Exception ex)
             {
-
-                MessageBox.Show("File Save Expection");
+                MessageBox.Show("File Save Exception");
             }
 
         }

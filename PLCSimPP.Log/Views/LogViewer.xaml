@@ -119,6 +119,7 @@
                 <DataGridTextColumn Binding="{Binding Command}" Header="Command" />
                 <DataGridTextColumn Binding="{Binding Parameter}" Header="Parameter" />
             </DataGrid.Columns>
+
         </DataGrid>
         <ButtonControl:DataPagerControl Grid.Row="2"
                                         Height="25"

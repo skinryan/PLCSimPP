@@ -18,12 +18,10 @@ using BCI.PLCSimPP.Comm.Interfaces;
 
 namespace BCI.PLCSimPP.Config.ViewModels
 {
-    public class ConfigruationViewModel : ViewModelBase
+    public class ConfigurationViewModel : ViewModelBase
     {
-
-        const string FILETYPE_EXE = "exe";
-        const string FILETYPE_XML = "xml";
-        private ClientConfigInfo mConfigInfo;
+        private const string FILE_TYPE_EXE = "exe";
+        private const string FILE_TYPE_XML = "xml";
         private readonly IEventAggregator mEventAggr;
         private readonly IAutomation mAutomation;
 
@@ -43,7 +41,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
             private set;
         }
 
-        public ConfigruationViewModel(ConfigurationController configurationController, IEventAggregator eventAggr, IAutomation automation)
+        public ConfigurationViewModel(ConfigurationController configurationController, IEventAggregator eventAggr, IAutomation automation)
         {
             mEventAggr = eventAggr;
             ConfigurationController = configurationController;
@@ -52,20 +50,18 @@ namespace BCI.PLCSimPP.Config.ViewModels
             CancelCommand = new DelegateCommand(DoCancel);
             SelectFilePathCommand = new DelegateCommand<string>((fileType) =>
             {
-                var data = ConfigurationController.Data as ViewDatas.ConfigruationViewData;
-                if (data != null)
+                if (ConfigurationController.Data is ConfigurationViewData data)
                 {
                     var path = DoSelectPath(fileType);
                     if (!string.IsNullOrEmpty(path))
-                        data.SitemapFilePath = path;
+                        data.SiteMapFilePath = path;
 
                 }
             });
 
             SelectDCSimPathCommand = new DelegateCommand<string>((fileType) =>
             {
-                var data = ConfigurationController.Data as ViewDatas.ConfigruationViewData;
-                if (data != null)
+                if (ConfigurationController.Data is ConfigurationViewData data)
                 {
                     var path = DoSelectPath(fileType);
                     if (!string.IsNullOrEmpty(path))
@@ -76,8 +72,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
             SelectDxCSimPathCommand = new DelegateCommand<string>((fileType) =>
             {
-                var data = ConfigurationController.Data as ViewDatas.ConfigruationViewData;
-                if (data != null)
+                if (ConfigurationController.Data is ConfigurationViewData data)
                 {
                     var path = DoSelectPath(fileType);
                     if (!string.IsNullOrEmpty(path))
@@ -96,11 +91,11 @@ namespace BCI.PLCSimPP.Config.ViewModels
         private string DoSelectPath(string fileType)
         {
             string filterStr = string.Empty;
-            if (fileType == FILETYPE_EXE)
+            if (fileType == FILE_TYPE_EXE)
             {
                 filterStr = "exe files (*.exe)|*.exe";
             }
-            if (fileType == FILETYPE_XML)
+            if (fileType == FILE_TYPE_XML)
             {
                 filterStr = "XML files (*.xml)|*.xml";
             }
@@ -151,25 +146,14 @@ namespace BCI.PLCSimPP.Config.ViewModels
                 MessageBox.Show("The settings cannot be modified while the system is connected.");
                 return;
             }
-            var data = (ConfigruationViewData)ConfigurationController.Data;
-
-            var config = ServiceLocator.Current.GetInstance<IConfigService>();
-            var oldpath = config.ReadSysConfig().SiteMapPath;
-
+           
             if (ConfigurationController.Save())
             {
                 Thread.Sleep(500);
                 mEventAggr.GetEvent<ReLoadSiteMapEvent>().Publish(true);
 
-                MessageBox.Show("Save Sucess");
+                MessageBox.Show("Save Success.");
             }
-        }
-        /// <summary>
-        /// Load data
-        /// </summary>
-        protected override void LoadInitializedData()
-        {
-            //ConfigurationController.LoadViewDatas();
         }
 
     }

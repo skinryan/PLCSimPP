@@ -60,20 +60,17 @@ namespace BCI.PLCSimPP.Service.Services
             }
 
             mTcpSender = new TcpIpServerConnection();
-            //mTcpSender.TransportLayerDataReceivedEvent += TcpSender_OnDataReceivedEvent;
             mTcpSender.TransportLayerStateChangedEvent += TcpSender_OnStateChangedEvent;
 
             mTcpReceiver = new TcpIpServerConnection();
             mTcpReceiver.TransportLayerDataReceivedEvent += TcpReceiver_OnDataReceivedEvent;
             mTcpReceiver.TransportLayerStateChangedEvent += TcpReceiver_OnStateChangedEvent;
-
-            // tcp/ip servier started
         }
 
         public void OpenConnect()
         {
-            mTcpSender.Open(string.Format("Master Port {0} Sender", MasterPortNumber), IpAddress, SernderPort);
-            mTcpReceiver.Open(string.Format("Master Port {0} Receiver", MasterPortNumber), IpAddress, ReceiverPort);
+            mTcpSender.Open($"Master Port {MasterPortNumber} Sender", IpAddress, SernderPort);
+            mTcpReceiver.Open($"Master Port {MasterPortNumber} Receiver", IpAddress, ReceiverPort);
         }
 
         public void CloseConnect()
@@ -84,20 +81,18 @@ namespace BCI.PLCSimPP.Service.Services
 
         private void TcpSender_OnStateChangedEvent(object sender, TransportLayerStateChangedEventArgs e)
         {
-            //mlogger.LogSys(string.Format("{0}:{1} {2}", IpAddress, SernderPort, e.State));
-
+            mlogger.LogSys($"{IpAddress}:{SernderPort} {e.State}");
         }
 
         private void TcpReceiver_OnStateChangedEvent(object sender, TransportLayerStateChangedEventArgs e)
         {
-            //mlogger.LogSys(string.Format("{0}:{1} {2}", IpAddress, ReceiverPort, e.State));
+            mlogger.LogSys($"{IpAddress}:{ReceiverPort} {e.State}");
             ConnInfo cs = new ConnInfo() { IsConnected = e.State == ConnectionState.Open, Port = MasterPortNumber };
             mEventAggr.GetEvent<ConnectionStatusEvent>().Publish(cs);
         }
 
         private void TcpReceiver_OnDataReceivedEvent(object sender, TransportLayerDataReceivedEventArgs e)
         {
-            //mlogger.LogSys($"Port {e.ReceivedMsg.Port} received msg {e.ReceivedMsg}");
             OnMsgReceived(sender, e);
         }
 

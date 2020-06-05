@@ -13,9 +13,5 @@ namespace BCI.PLCSimPP.Log.Views
             InitializeComponent();
         }
 
-        //private void DataPagerControl_PageChangingEvent(object sender, CustomControl.DatePageRoutedEventArgs e)
-        //{
-
-        //}
     }
 }

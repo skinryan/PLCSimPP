@@ -10,6 +10,7 @@ namespace BCI.PLCSimPP.Log.Converter
 {
     public class ContentConverter : IValueConverter
     {
+        /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
@@ -26,8 +27,10 @@ namespace BCI.PLCSimPP.Log.Converter
             return "Freeze";
         }
 
+        /// <inheritdoc />
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            //The one-way binding used here does not require a ConvertBack
             throw new NotImplementedException();
         }
     }

@@ -131,7 +131,7 @@ namespace BCI.PLCSimPP.Service.Log
 
         public void LogRawData(string addrAndPort, byte[] dataContent)
         {
-            mRawDataLogger.Debug(string.Format("{0} {1}", addrAndPort, EncoderHelper.ToHexString(dataContent)));
+            mRawDataLogger.Debug($"{addrAndPort} {EncoderHelper.ToHexString(dataContent)}");
         }
     }
 }

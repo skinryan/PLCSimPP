@@ -11,9 +11,4 @@
           Command="{Binding NavigateCommand}"
           CommandParameter="DeviceLayout"
           Header="Layout"
-          mc:Ignorable="d">
-    <!--<MenuItem Command="{Binding NavigateCommand}"
-              CommandParameter="DeviceLayout"
-              Header="Layout Viewer" />-->
-
-</MenuItem>
+          mc:Ignorable="d" />

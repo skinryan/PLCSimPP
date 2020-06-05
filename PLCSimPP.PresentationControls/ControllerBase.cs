@@ -99,6 +99,7 @@ namespace BCI.PLCSimPP.PresentationControls
         /// <returns></returns>
         public bool CheckOut()
         {
+            //TODO: yes no cancel prompt
             var result = true;
             if (Data.IsValueChanged)
             {

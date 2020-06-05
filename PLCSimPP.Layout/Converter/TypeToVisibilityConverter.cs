@@ -14,6 +14,7 @@ namespace BCI.PLCSimPP.Layout.Converter
 {
     public class TypeToVisibilityConverter : IValueConverter
     {
+        /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
@@ -26,22 +27,13 @@ namespace BCI.PLCSimPP.Layout.Converter
                 return Visibility.Visible;
             }
 
-            return Visibility.Collapsed;
-            //DisplayType param = (DisplayType)parameter;
-
-            //switch (param)
-            //{
-            //    case DisplayType.Nomal:
-            //        return GetNormalVisibility(type);
-            //    case DisplayType.Storage:
-            //        return GetStorageVisibility(type);
-            //    default:
-            //        return Visibility.Collapsed;
-            //}
+            return Visibility.Collapsed;            
         }
 
+        /// <inheritdoc/>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            //The one-way binding used here does not require a ConvertBack
             throw new NotImplementedException();
         }
     }

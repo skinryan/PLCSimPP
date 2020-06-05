@@ -28,8 +28,6 @@ namespace BCI.PLCSimPP.Config.Views
             InitializeComponent();
         }
 
-
-
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var textBox = sender as TextBox;
@@ -84,7 +82,6 @@ namespace BCI.PLCSimPP.Config.Views
                 return;
             }
 
-            //mViewModel.SelectedUnit = (IUnit)e.AddedItems[0];
             var unit = (IUnit)e.AddedItems[0];
             ls_port2.SelectedItem = null;
             ls_port1.SelectedItem = null;

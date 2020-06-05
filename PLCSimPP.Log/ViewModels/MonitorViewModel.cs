@@ -35,6 +35,10 @@ namespace BCI.PLCSimPP.Log.ViewModels
 
         public ICommand CancelCommand { get; set; }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="eventAggr">auto inject</param>
         public MonitorViewModel(IEventAggregator eventAggr)
         {
             mEventAggr = eventAggr;

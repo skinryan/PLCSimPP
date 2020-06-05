@@ -10,7 +10,6 @@ using Prism.Regions;
 namespace BCI.PLCSimPP.Config
 {
     public class ConfigModule : IModule
-
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
@@ -24,7 +23,7 @@ namespace BCI.PLCSimPP.Config
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //throw new NotImplementedException();
+
         }
     }
 }

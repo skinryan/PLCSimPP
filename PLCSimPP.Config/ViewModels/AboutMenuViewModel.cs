@@ -14,23 +14,19 @@ namespace BCI.PLCSimPP.Config.ViewModels
 {
     public class AboutMenuViewModel : BindableBase
     {
-        private readonly ILogService mLogServ;
-        private readonly IEventAggregator mEventAggr;
+       private readonly IEventAggregator mEventAggr;
 
         public ICommand NavigateCommand { get; set; }
-
-
-        public AboutMenuViewModel(IEventAggregator eventAggr, ILogService logServ)
+        
+        public AboutMenuViewModel(IEventAggregator eventAggr)
         {
             mEventAggr = eventAggr;
-            mLogServ = logServ;
             NavigateCommand = new DelegateCommand<string>(Navigate);
         }
 
         private void Navigate(string viewName)
         {
             mEventAggr.GetEvent<NavigateEvent>().Publish(viewName);
-            //mRegionManager.RequestNavigate(RegionName.LAYOUTREGION, viewName);
         }
     }
 }

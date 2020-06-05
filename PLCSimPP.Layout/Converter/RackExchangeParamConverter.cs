@@ -10,6 +10,7 @@ namespace BCI.PLCSimPP.Layout.Converter
 {
     public class RackExchangeParamConverter : IMultiValueConverter
     {
+        /// <inheritdoc/>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             List<object> result = new List<object>();
@@ -23,8 +24,10 @@ namespace BCI.PLCSimPP.Layout.Converter
             return result;
         }
 
+        /// <inheritdoc/>
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
+            //The one-way binding used here does not require a ConvertBack
             throw new NotImplementedException();
         }
     }

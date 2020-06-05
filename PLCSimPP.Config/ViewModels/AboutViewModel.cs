@@ -36,15 +36,18 @@ namespace BCI.PLCSimPP.Config.ViewModels
                 mCopyRight = value;
                 SetProperty(ref mCopyRight, value);
             }
-        }        
+        }
 
         public AboutViewModel()
         {
-            var versionInfo = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location);
-
-            mVersion = string.Format("PLC Simulator {0}", versionInfo.ProductVersion);
-            mCopyRight = versionInfo.LegalCopyright;
+            var entry = Assembly.GetEntryAssembly();
+            if (entry != null)
+            {
+                var versionInfo = FileVersionInfo.GetVersionInfo(entry.Location);
+                mVersion = $"PLC Simulator {versionInfo.ProductVersion}";
+                mCopyRight = versionInfo.LegalCopyright;
+            }
         }
-        
+
     }
 }

@@ -54,5 +54,15 @@ namespace BCI.PLCSimPP.Layout.Views
             var textBox = sender as TextBox;
             textBox.SelectAll();
         }
+
+        private void tb_endNum_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if(string.IsNullOrEmpty(textBox.Text))
+            {
+                textBox.Text = "0";
+            }
+            
+        }
     }
 }

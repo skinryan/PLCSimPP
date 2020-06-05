@@ -17,14 +17,14 @@ using Unity;
 namespace BCI.PLCSimPP.Config.Views
 {
     /// <summary>
-    /// Interaction logic for ConfigruationView.xaml
+    /// Interaction logic for ConfigurationView.xaml
     /// </summary>
     public partial class Configuration : UserControl
     {
         [Dependency]
-        public ConfigruationViewModel ViewModel
+        public ConfigurationViewModel ViewModel
         {
-            get { return DataContext as ConfigruationViewModel; }
+            get { return DataContext as ConfigurationViewModel; }
             set { DataContext = value; }
         }
 
@@ -32,10 +32,8 @@ namespace BCI.PLCSimPP.Config.Views
         {
             InitializeComponent();
         }
-
         
-
-        private void TextBox_KeyUp_dxc(object sender, KeyEventArgs e)
+        private void TextBoxKeyUpDxC(object sender, KeyEventArgs e)
         {
             TextBox tb = sender as TextBox;
 
@@ -46,7 +44,7 @@ namespace BCI.PLCSimPP.Config.Views
             }
         }
 
-        private void TextBox_KeyUp_dc(object sender, KeyEventArgs e)
+        private void TextBoxKeyUpDc(object sender, KeyEventArgs e)
         {
             TextBox tb = sender as TextBox;
 

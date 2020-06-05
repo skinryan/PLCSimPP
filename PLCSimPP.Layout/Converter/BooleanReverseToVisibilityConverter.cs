@@ -11,6 +11,7 @@ namespace BCI.PLCSimPP.Layout.Converter
 {
     public class BooleanReverseToVisibilityConverter : IValueConverter
     {
+        /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null)
@@ -24,6 +25,7 @@ namespace BCI.PLCSimPP.Layout.Converter
             return false;
         }
 
+        /// <inheritdoc/>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null)

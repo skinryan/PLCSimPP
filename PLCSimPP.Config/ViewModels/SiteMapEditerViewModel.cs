@@ -2,23 +2,20 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Microsoft.Win32;
 using BCI.PLCSimPP.Comm;
-using BCI.PLCSimPP.Comm.Constant;
 using BCI.PLCSimPP.Comm.Events;
 using BCI.PLCSimPP.Comm.Helper;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
 using BCI.PLCSimPP.Config.ViewDatas;
 using BCI.PLCSimPP.Service.Devicies;
+using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using Prism.Regions;
+using GC = BCI.PLCSimPP.Service.Devicies.GC;
 
 namespace BCI.PLCSimPP.Config.ViewModels
 {
@@ -27,6 +24,9 @@ namespace BCI.PLCSimPP.Config.ViewModels
         private readonly IEventAggregator mEventAggregator;
         private readonly IConfigService mConfigService;
 
+        #region properites
+
+
         private bool mIsInEdit;
         public bool IsInEdit
         {
@@ -34,14 +34,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
             set
             {
                 SetProperty(ref mIsInEdit, value);
-                if (mIsInEdit)
-                {
-                    mSaveBtnText = "Save";
-                }
-                else
-                {
-                    mSaveBtnText = "Add";
-                }
+                mSaveBtnText = mIsInEdit ? "Save" : "Add";
                 RaisePropertyChanged("SaveBtnText");
             }
         }
@@ -106,6 +99,9 @@ namespace BCI.PLCSimPP.Config.ViewModels
         public ObservableCollection<IUnit> Port3 { get; set; }
         public List<UnitTypeInfo> UnitTypeList { get; set; }
         public List<int> PortList { get; set; }
+
+        #endregion
+
         public ICommand RemoveCommand { get; set; }
         public ICommand AddCommand { get; set; }
         public ICommand SaveCommand { get; set; }
@@ -127,14 +123,14 @@ namespace BCI.PLCSimPP.Config.ViewModels
             InitUnitType();
 
             RemoveCommand = new DelegateCommand<IUnit>(DoRemove);
+            MoveUpCommand = new DelegateCommand<IUnit>(DoMoveUp);
+            MoveDownCommand = new DelegateCommand<IUnit>(DoMoveDown);
             AddCommand = new DelegateCommand(DoAdd);
             ClearAllCommand = new DelegateCommand(DoClearAll);
             SaveCommand = new DelegateCommand(DoSave);
             CancelCommand = new DelegateCommand(DoCancel);
             CancelEditCommand = new DelegateCommand(DoCancelEdit);
             SelectUnitCommand = new DelegateCommand(DoSelectUnit);
-            MoveUpCommand = new DelegateCommand<IUnit>(DoMoveUp);
-            MoveDownCommand = new DelegateCommand<IUnit>(DoMoveDown);
 
             mEventAggregator.GetEvent<LoadDataEvent>().Subscribe(OnLoad);
         }
@@ -149,13 +145,11 @@ namespace BCI.PLCSimPP.Config.ViewModels
                 {
                     SetPortCollection(item, Port1);
                 }
-
-                if (item.Port == 2)
+                else if (item.Port == 2)
                 {
                     SetPortCollection(item, Port2);
                 }
-
-                if (item.Port == 3)
+                else if (item.Port == 3)
                 {
                     SetPortCollection(item, Port3);
                 }
@@ -164,23 +158,20 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
         private void SetPortCollection(IUnit item, ObservableCollection<IUnit> portCollection)
         {
-
             portCollection.Add(item);
 
             if (item.HasChild)
             {
                 item.IsMaster = true;
-                foreach (var subitem in item.Children)
+                foreach (var subItem in item.Children)
                 {
-                    portCollection.Add(subitem);
+                    portCollection.Add(subItem);
                 }
             }
-
         }
 
         private void DoMoveDown(IUnit unit)
         {
-
             if (unit.Port == 1)
             {
                 MoveDown(Port1, unit);
@@ -241,7 +232,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
                 return;
             }
 
-            this.IsInEdit = true;
+            IsInEdit = true;
 
             Port = SelectedUnit.Port;
             Type = GetUnitType(SelectedUnit.GetType());
@@ -253,36 +244,35 @@ namespace BCI.PLCSimPP.Config.ViewModels
         {
             if (type == typeof(Aliquoter))
                 return UnitType.Aliquoter;
-            else if (type == typeof(Centrifuge))
+            if (type == typeof(Centrifuge))
                 return UnitType.Centrifuge;
-            else if (type == typeof(DxC))
+            if (type == typeof(DxC))
                 return UnitType.DxC;
-            else if (type == typeof(DynamicInlet))
+            if (type == typeof(DynamicInlet))
                 return UnitType.DynamicInlet;
-            else if (type == typeof(Service.Devicies.GC))
+            if (type == typeof(GC))
                 return UnitType.GC;
-            else if (type == typeof(HLane))
+            if (type == typeof(HLane))
                 return UnitType.HLane;
-            else if (type == typeof(HMOutlet))
+            if (type == typeof(HMOutlet))
                 return UnitType.HMOutlet;
-            else if (type == typeof(ILane))
+            if (type == typeof(ILane))
                 return UnitType.ILane;
-            else if (type == typeof(Labeler))
+            if (type == typeof(Labeler))
                 return UnitType.Labeler;
-            else if (type == typeof(LevelDetector))
+            if (type == typeof(LevelDetector))
                 return UnitType.LevelDetector;
-            else if (type == typeof(Outlet))
+            if (type == typeof(Outlet))
                 return UnitType.Outlet;
-            else if (type == typeof(ErrorLane))
+            if (type == typeof(ErrorLane))
                 return UnitType.ErrorLane;
-            else
-                return UnitType.Stocker;
+            return UnitType.Stocker;
         }
 
         private void DoCancelEdit()
         {
-            this.IsInEdit = false;
-            this.SelectedUnit = null;
+            IsInEdit = false;
+            SelectedUnit = null;
         }
 
         private void DoCancel()
@@ -346,7 +336,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
         private void DoClearAll()
         {
             //double check
-            var result = MessageBox.Show($"Confirm to remove All?", "Confirm", MessageBoxButton.YesNo);
+            var result = MessageBox.Show("Confirm to remove All?", "Confirm", MessageBoxButton.YesNo);
             if (result != MessageBoxResult.Yes)
             {
                 return;
@@ -359,14 +349,14 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
         private void InitUnitType()
         {
-            PortList = new List<int>() { 1, 2, 3 };
+            PortList = new List<int> { 1, 2, 3 };
             Port = 1;
 
             UnitTypeList = new List<UnitTypeInfo>();
             var array = Enum.GetValues(typeof(UnitType));
             foreach (UnitType value in array)
             {
-                UnitTypeList.Add(new UnitTypeInfo() { Name = EnumHelper.GetEnumDescription(value), Value = value });
+                UnitTypeList.Add(new UnitTypeInfo { Name = EnumHelper.GetEnumDescription(value), Value = value });
             }
         }
 
@@ -374,7 +364,6 @@ namespace BCI.PLCSimPP.Config.ViewModels
         /// CheckPortDuplication
         /// </summary>
         /// <param name="address"></param>
-        /// <param name="port"></param>
         /// <returns>return true if is duplicate</returns>
         private bool CheckDuplication(string address)
         {
@@ -472,7 +461,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
                 case UnitType.DynamicInlet:
                     return new DynamicInlet();
                 case UnitType.GC:
-                    return new Service.Devicies.GC();
+                    return new GC();
                 case UnitType.HLane:
                     return new HLane();
                 case UnitType.HMOutlet:
@@ -490,10 +479,14 @@ namespace BCI.PLCSimPP.Config.ViewModels
                 case UnitType.ErrorLane:
                     return new ErrorLane();
                 default:
-                    return new Service.Devicies.GC();
+                    return new GC();
             }
         }
 
+        /// <summary>
+        /// remove unit
+        /// </summary>
+        /// <param name="unit">unit</param>
         private void DoRemove(IUnit unit)
         {
             if (unit.Port == 1)
@@ -510,6 +503,11 @@ namespace BCI.PLCSimPP.Config.ViewModels
             }
         }
 
+        /// <summary>
+        /// remove unit from port
+        /// </summary>
+        /// <param name="port">port number</param>
+        /// <param name="unit">unit</param>
         private void RemoveFromPort(ObservableCollection<IUnit> port, IUnit unit)
         {
             if (unit.IsMaster)

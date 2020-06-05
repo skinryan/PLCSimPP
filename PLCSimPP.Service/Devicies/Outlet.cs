@@ -56,6 +56,28 @@ namespace BCI.PLCSimPP.Service.Devicies
 
                 CurrentSample = null;
             }
+
+            if (cmd == LcCmds._0018)
+            {
+                string floor = content.Substring(0, 1);
+                string rack = content.Substring(1, 1);
+                var msg = SendMsg.GetMsg_1016(this, floor, rack);
+                mSendBehavior.PushMsg(msg);
+
+                EmptyTargetRack(floor, rack);
+            }
+        }
+        private void EmptyTargetRack(string floor, string rack)
+        {
+            if (mShelfList.ContainsKey(floor))
+            {
+                if (mShelfList[floor].RackList.ContainsKey(rack))
+                {
+                    mShelfList[floor].RackList.Remove(rack);
+                }
+            }
+
+            RaisePropertyChanged("StoredCount");
         }
 
         private void StoreSample(string shelf, string rack, string position, ISample sample)

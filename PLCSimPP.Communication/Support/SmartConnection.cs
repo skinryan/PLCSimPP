@@ -182,12 +182,12 @@ namespace BCI.PLCSimPP.Communication.Support
             switch (checkResult.Result)
             {
                 case ResultType.InvalidLength:
-                    LogBytesData(string.Format("{0} Received Data:", this.mClient.Client.LocalEndPoint), buffer);
+                    LogBytesData($"{this.mClient.Client.LocalEndPoint} Received Data:", buffer);
                     //replay 0x50:Invalid Command
                     DoSend(new byte[2] { 0xE0, 0x50 });
                     break;
                 case ResultType.InvalidCmd:
-                    LogBytesData(string.Format("{0} Received Data:", this.mClient.Client.LocalEndPoint), buffer);
+                    LogBytesData($"{this.mClient.Client.LocalEndPoint} Received Data:", buffer);
                     //replay 0x52: Invalid data length
                     DoSend(new byte[2] { 0xE0, 0x52 });
                     break;
@@ -196,7 +196,7 @@ namespace BCI.PLCSimPP.Communication.Support
                     break;
                 case ResultType.RawData:
                     //replay E000：correct
-                    LogBytesData(string.Format("{0} Received Data:", this.mClient.Client.LocalEndPoint), buffer);
+                    LogBytesData($"{this.mClient.Client.LocalEndPoint} Received Data:", buffer);
                     DoSend(new byte[2] { 0xE0, 0x00 });
                     break;
                 default:
@@ -274,7 +274,7 @@ namespace BCI.PLCSimPP.Communication.Support
             //Console.WriteLine("Send Data: {0}", EncoderHelper.ToHexString(dataBytes));
             if (dataBytes.Length > 2)
             {
-                LogBytesData(string.Format("{0} Send Data: ", this.mClient.Client.LocalEndPoint), dataBytes);
+                LogBytesData($"{this.mClient.Client.LocalEndPoint} Send Data: ", dataBytes);
             }
 
             using (var buffer = new MemoryStream())

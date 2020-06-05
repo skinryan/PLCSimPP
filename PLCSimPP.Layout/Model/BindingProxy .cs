@@ -7,6 +7,9 @@ using System.Windows;
 
 namespace BCI.PLCSimPP.Layout.Model
 {
+    /// <summary>
+    /// This class helps bind commands
+    /// </summary>
     public class BindingProxy : Freezable
     {
         #region Overrides of Freezable

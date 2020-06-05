@@ -14,16 +14,14 @@ namespace BCI.PLCSimPP.Config.ViewModels
 {
     public class ConfigMenuViewModel : BindableBase
     {
-        private readonly ILogService mLogServ;
         private readonly IEventAggregator mEventAggr;
 
         public ICommand NavigateCommand { get; set; }
 
 
-        public ConfigMenuViewModel(IEventAggregator eventAggr, ILogService logServ)
+        public ConfigMenuViewModel(IEventAggregator eventAggr)
         {
             mEventAggr = eventAggr;
-            mLogServ = logServ;
             NavigateCommand = new DelegateCommand<string>(Navigate);
         }
 

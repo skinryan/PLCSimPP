@@ -15,59 +15,56 @@ namespace BCI.PLCSimPP.Config.Controllers
 {
     public class ConfigurationController : ControllerBase
     {
-        private const int MIN_SEND_INTERVAL = 0;
-        private const int MAX_SEND_INTERVAL = 10000;
+        private readonly ILogService mLogger;
 
         /// <summary>
         /// The data of controller
         /// </summary>     
-        public ConfigurationController()
+        public ConfigurationController(ILogService logService)
         {
-            Data = new ConfigruationViewData();
+            mLogger = logService;
+            Data = new ConfigurationViewData();
             Saving += ConfigurationControllerSaving;
             LoadViewDatasing += ConfigurationControllerViewDataLoading;
             LoadViewDatas();
         }
-        void ConfigurationControllerSaving()
-        {
 
+        private void ConfigurationControllerSaving()
+        {
             try
             {
-                var data = Data as ConfigruationViewData;
-                if (data == null)
+                if (!(Data is ConfigurationViewData data))
                     return;
+
                 var configService = ServiceLocator.Current.GetInstance<IConfigService>();
-                var configInfo = new Comm.Models.SystemInfo();
+                var configInfo = new Comm.Models.SystemInfo
+                {
+                    SiteMapPath = data.SiteMapFilePath,
+                    DcSimLocation = data.DcSimLocation,
+                    DcInstruments = data.AnalyzerItems,
+                    DxCSimLocation = data.DxCSimLocation,
+                    DxCInstruments = data.DxCAnalyzerItems,
+                    SendInterval = data.SendInterval
+                };
 
-                configInfo.SiteMapPath = data.SitemapFilePath;
-                configInfo.DcSimLocation = data.DcSimLocation;
-                configInfo.DcInstruments = data.AnalyzerItems;
-                configInfo.DxCSimLocation = data.DxCSimLocation;
-                configInfo.DxCInstruments = data.DxCAnalyzerItems;
-                configInfo.SendInterval = data.SendInterval;
-
-                //if (NumberRange.IsValid(data.SendInterval, MIN_SEND_INTERVAL, MAX_SEND_INTERVAL))
-                //{
-                //    configInfo.MsgReceiveInterval = data.SendInterval;
-                //}
                 configService.SaveSysConfig(configInfo);
             }
             catch (Exception ex)
             {
-
-                //mLog.Error("Exception : ConfigurationController.ConfigurationControllerSaving - " + ex);
+                mLogger.LogSys("Exception : ConfigurationController.ConfigurationControllerSaving - " + ex);
             }
         }
-        void ConfigurationControllerViewDataLoading()
+
+        private void ConfigurationControllerViewDataLoading()
         {
             try
             {
-                var data = Data as ConfigruationViewData;
-                if (data == null)
+                if (!(Data is ConfigurationViewData data))
                     return;
+
                 var configService = ServiceLocator.Current.GetInstance<IConfigService>();
                 var config = configService.ReadSysConfig();
-                data.SitemapFilePath = config.SiteMapPath;
+                data.SiteMapFilePath = config.SiteMapPath;
                 data.SendInterval = config.SendInterval;
                 data.DxCSimLocation = config.DxCSimLocation;
                 data.DxCAnalyzerItems = config.DxCInstruments;
@@ -76,7 +73,7 @@ namespace BCI.PLCSimPP.Config.Controllers
             }
             catch (Exception ex)
             {
-                //mLog.Error("Exception : ConfigurationController.ConfigurationControllerViewDataLoading - " + ex);
+                mLogger.LogSys("Exception : ConfigurationController.ConfigurationControllerViewDataLoading - " + ex);
             }
         }
     }

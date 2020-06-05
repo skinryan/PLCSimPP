@@ -24,7 +24,6 @@ namespace BCI.PLCSimPP.Layout.ViewModels
 {
     public class DeviceLayoutViewModel : BindableBase
     {
-        private readonly IConfigService mConfigServ;
         private readonly IEventAggregator mEventAggr;
         private readonly DCSimService mDCSimService;
         private readonly DxCSimService mDxCSimService;
@@ -82,12 +81,11 @@ namespace BCI.PLCSimPP.Layout.ViewModels
 
         public IAutomation AutomationService { get; private set; }
 
-        public DeviceLayoutViewModel(IAutomation automation, IConfigService config, IEventAggregator eventAggr, DCSimService dcsim, DxCSimService dxcSim)
+        public DeviceLayoutViewModel(IAutomation automation, IEventAggregator eventAggr, DCSimService dcSim, DxCSimService dxcSim)
         {
             mEventAggr = eventAggr;
             AutomationService = automation;
-            mConfigServ = config;
-            mDCSimService = dcsim;
+            mDCSimService = dcSim;
             mDxCSimService = dxcSim;
             InitRackType();
             AutomationService.Init();
@@ -105,19 +103,27 @@ namespace BCI.PLCSimPP.Layout.ViewModels
             LoadSampleSetCmd = new DelegateCommand(DoLoadSampleSet);
             RackExchangeCmd = new DelegateCommand<object>(DoRackExchange);
             ClearJammedCommand = new DelegateCommand<IUnit>(DoClearJammedSample);
-           
+
             mEventAggr.GetEvent<ReLoadSiteMapEvent>().Subscribe(OnSiteMapPathChanged, ThreadOption.UIThread);
         }
 
+        /// <summary>
+        /// clear current sample
+        /// </summary>
+        /// <param name="unit"></param>
         private void DoClearJammedSample(IUnit unit)
         {
-
+            //clear pending queue
             if (unit.CurrentSample != null)
             {
                 unit.ResetQueue();
             }
         }
 
+        /// <summary>
+        /// reload layout
+        /// </summary>
+        /// <param name="needReload"></param>
         private void OnSiteMapPathChanged(bool needReload)
         {
             if (!needReload)
@@ -127,21 +133,27 @@ namespace BCI.PLCSimPP.Layout.ViewModels
             AutomationService.Init();
         }
 
+        /// <summary>
+        /// open dc/dxc Sim
+        /// </summary>
         private void StartInstrumentSim()
         {
             mDCSimService.StartUp();
             mDxCSimService.StartUp();
         }
 
+        /// <summary>
+        /// close dc/dxc Sim
+        /// </summary>
         private void StopInstrumentSim()
         {
-           
             mDCSimService.ShutDown();
             mDxCSimService.ShutDown();
         }
 
         private void DoRackExchange(object param)
         {
+            //split rack change param 
             List<object> list = (List<object>)param;
             string floor = list[0].ToString();
             string rack = list[1].ToString();
@@ -150,31 +162,16 @@ namespace BCI.PLCSimPP.Layout.ViewModels
             AutomationService.RackExchange(unit, floor, rack);
         }
 
-        //private void DoTest()
-        //{
-        //    DynamicInlet inlet = null;
-
-        //    foreach (IUnit unit in PipeLineService.UnitCollection)
-        //    {
-        //        if (unit.GetType() == typeof(DynamicInlet))
-        //        {
-        //            inlet = (DynamicInlet)unit;
-        //            break;
-        //        }
-        //    }
-
-        //    inlet.EnqueueSample(new Sample() { SampleID = "11111", Rack = RackType.Remap });
-        //}
-
         private void DoLoadSample()
         {
+            //find unload samples
             var unloadedSamples = from p in SampleCollection where !p.IsLoaded select p;
             AutomationService.LoadSample(unloadedSamples.ToList());
         }
 
         private void DoClearSample()
         {
-            var result = MessageBox.Show("Confim to clear all sample.", "Warning", MessageBoxButton.YesNo);
+            var result = MessageBox.Show("Confirm to clear all sample.", "Warning", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes)
             {
@@ -184,14 +181,18 @@ namespace BCI.PLCSimPP.Layout.ViewModels
 
         private void DoSaveSampleSet()
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Title = "Select the save path for the sample set";
-            sfd.Filter = "XML File(*.xml)|*.xml";
-            sfd.CheckPathExists = true;
-            sfd.DefaultExt = "xml";
-            sfd.RestoreDirectory = true;
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Title = "Select the save path for the sample set",
+                Filter = "XML File(*.xml)|*.xml",
+                CheckPathExists = true,
+                DefaultExt = "xml",
+                RestoreDirectory = true
+            };
+
             sfd.ShowDialog();
 
+            //check selected file is not null
             if (string.IsNullOrEmpty(sfd.FileName))
             {
                 return;
@@ -212,20 +213,23 @@ namespace BCI.PLCSimPP.Layout.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("File Save Expection");
+                MessageBox.Show("File Save Exception");
             }
         }
 
         private void DoLoadSampleSet()
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "Select the open path for the sample set";
-            ofd.Filter = "XML File(*.xml)|*.xml";
-            ofd.CheckPathExists = true;
-            ofd.DefaultExt = "xml";
-            ofd.RestoreDirectory = true;
-            ofd.ShowDialog();
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Title = "Select the open path for the sample set",
+                Filter = "XML File(*.xml)|*.xml",
+                CheckPathExists = true,
+                DefaultExt = "xml",
+                RestoreDirectory = true
+            };
 
+            ofd.ShowDialog();
+            //check selected file is not null
             if (string.IsNullOrEmpty(ofd.FileName))
             {
                 return;
@@ -245,6 +249,9 @@ namespace BCI.PLCSimPP.Layout.ViewModels
             }
         }
 
+        /// <summary>
+        /// Init rack type drop down list sources
+        /// </summary>
         private void InitRackType()
         {
             RackTypeList = new List<RackTypeInfo>();
@@ -277,12 +284,6 @@ namespace BCI.PLCSimPP.Layout.ViewModels
             }
         }
 
-
-        private void DisConnect()
-        {
-            AutomationService.Disconnect();
-        }
-
         private void DoAddSample()
         {
             int length = 0;
@@ -298,8 +299,10 @@ namespace BCI.PLCSimPP.Layout.ViewModels
 
             for (int i = 0; i < length; i++)
             {
-                Sample sample = new Sample();
-                sample.SampleID = SampleRangeInfo.Characters + (SampleRangeInfo.StartNum + i).ToString().PadLeft(SampleRangeInfo.Append, '0');
+                Sample sample = new Sample
+                {
+                    SampleID = SampleRangeInfo.Characters + (SampleRangeInfo.StartNum + i).ToString().PadLeft(SampleRangeInfo.Append, '0')
+                };
 
                 //Check for duplications
                 if (SampleCollection.Count(t => t.SampleID == sample.SampleID) > 0)
@@ -315,74 +318,5 @@ namespace BCI.PLCSimPP.Layout.ViewModels
                 SampleCollection.Add(sample);
             }
         }
-
-        //public void GetLayout()
-        //{
-        //    UnitCollection.Clear();
-        //    HMOutlet hmoutlet = new HMOutlet() { Address = "0000000001", Port = 1, DisplayName = "HMOutlet" };
-        //    DynamicInlet di = new DynamicInlet() { Address = "0000000002", Port = 1, DisplayName = "InletErrLane" };
-        //    Centrifuge cent1 = new Centrifuge() { Address = "0000000004", Port = 1, DisplayName = "Centrifuge#1" };
-        //    Centrifuge cent2 = new Centrifuge() { Address = "0000000008", Port = 1, DisplayName = "Centrifuge#2" };
-        //    LevelDetector ld = new LevelDetector() { Address = "0000000010", Port = 1, DisplayName = "SerumLevel" };
-        //    Labeler laber = new Labeler() { Address = "0000000020", Port = 1, DisplayName = "Labeler" };
-        //    Aliquoter ali = new Aliquoter() { Address = "0000000040", Port = 1, DisplayName = "Aliquoter" };
-
-        //    UnitCollection.Add(hmoutlet);
-        //    hmoutlet.Children.Add(di);
-        //    hmoutlet.Children.Add(cent1);
-        //    hmoutlet.Children.Add(cent2);
-        //    hmoutlet.Children.Add(ld);
-        //    hmoutlet.Children.Add(laber);
-        //    hmoutlet.Children.Add(ali);
-
-        //    HLane HLane = new HLane() { Address = "0000000080", Port = 2, DisplayName = "HLane" };
-        //    Service.Devicies.GC gc1 = new Service.Devicies.GC() { Address = "0000000100", Port = 2, DisplayName = "Generic #1" };
-        //    Service.Devicies.GC gc2 = new Service.Devicies.GC() { Address = "0000000200", Port = 2, DisplayName = "Generic #2" };
-        //    Service.Devicies.GC gc3 = new Service.Devicies.GC() { Address = "0000000400", Port = 2, DisplayName = "Generic #3" };
-        //    Service.Devicies.GC gc4 = new Service.Devicies.GC() { Address = "0000000800", Port = 2, DisplayName = "Generic #4" };
-        //    Service.Devicies.GC gc5 = new Service.Devicies.GC() { Address = "0000001000", Port = 2, DisplayName = "Generic #5" };
-        //    Service.Devicies.GC gc6 = new Service.Devicies.GC() { Address = "0000002000", Port = 2, DisplayName = "Generic #6" };
-        //    Service.Devicies.GC gc7 = new Service.Devicies.GC() { Address = "0000004000", Port = 2, DisplayName = "Generic #7" };
-        //    Service.Devicies.GC gc8 = new Service.Devicies.GC() { Address = "0000008000", Port = 2, DisplayName = "Generic #8" };
-        //    Service.Devicies.GC gc9 = new Service.Devicies.GC() { Address = "0000010000", Port = 2, DisplayName = "Generic #9" };
-        //    Service.Devicies.GC gc10 = new Service.Devicies.GC() { Address = "0000020000", Port = 2, DisplayName = "Generic #10" };
-        //    Service.Devicies.GC gc11 = new Service.Devicies.GC() { Address = "0000040000", Port = 2, DisplayName = "Generic #11" };
-        //    Service.Devicies.GC gc12 = new Service.Devicies.GC() { Address = "0000080000", Port = 2, DisplayName = "Generic #12" };
-        //    UnitCollection.Add(HLane);
-        //    HLane.Children.Add(gc1);
-        //    HLane.Children.Add(gc2);
-        //    HLane.Children.Add(gc3);
-        //    HLane.Children.Add(gc4);
-        //    HLane.Children.Add(gc5);
-        //    HLane.Children.Add(gc6);
-        //    HLane.Children.Add(gc7);
-        //    HLane.Children.Add(gc8);
-        //    HLane.Children.Add(gc9);
-        //    HLane.Children.Add(gc10);
-        //    HLane.Children.Add(gc11);
-        //    HLane.Children.Add(gc12);
-
-        //    ILane ilane = new ILane() { Address = "0000100000", Port = 3, DisplayName = "ILane" };
-        //    DxC dxc1 = new DxC() { Address = "0000200000", Port = 3, DisplayName = "DxC#1" };
-        //    DxC dxc2 = new DxC() { Address = "0000400000", Port = 3, DisplayName = "DxC#2" };
-        //    DxC dxc3 = new DxC() { Address = "0000800000", Port = 3, DisplayName = "DxC#3" };
-        //    DxC dxc4 = new DxC() { Address = "0001000000", Port = 3, DisplayName = "DxC#4" };
-        //    Stocker stockyard1 = new Stocker() { Address = "0002000000", Port = 3, DisplayName = "Stockyard#1" };
-        //    Stocker stockyard2 = new Stocker() { Address = "0004000000", Port = 3, DisplayName = "Stockyard#2" };
-        //    Stocker stockyard3 = new Stocker() { Address = "0008000000", Port = 3, DisplayName = "Stockyard#3" };
-        //    Outlet outlet1 = new Outlet() { Address = "0010000000", Port = 3, DisplayName = "SigleOutlet#1" };
-        //    Outlet outlet2 = new Outlet() { Address = "0020000000", Port = 3, DisplayName = "SigleOutlet#2" };
-        //    UnitCollection.Add(ilane);
-        //    ilane.Children.Add(dxc1);
-        //    ilane.Children.Add(dxc2);
-        //    ilane.Children.Add(dxc3);
-        //    ilane.Children.Add(dxc4);
-        //    ilane.Children.Add(stockyard1);
-        //    ilane.Children.Add(stockyard2);
-        //    ilane.Children.Add(stockyard3);
-        //    ilane.Children.Add(outlet1);
-        //    ilane.Children.Add(outlet2);
-        //}
-
     }
 }

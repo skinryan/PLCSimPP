@@ -11,27 +11,29 @@ namespace BCI.PLCSimPP.Config.Converters
 {
     public class BooleanReverseToVisibilityConverter : IValueConverter
     {
+        /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value != null)
+            if (value == null)
+                return false;
+
+            if (bool.TryParse(value.ToString(), out var result))
             {
-                if (Boolean.TryParse(value.ToString(), out bool result))
-                {
-                    return !result;
-                }
+                return !result;
             }
 
             return false;
         }
 
+        /// <inheritdoc />
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value != null)
+            if (value == null)
+                return true;
+
+            if (bool.TryParse(value.ToString(), out var result))
             {
-                if (Boolean.TryParse(value.ToString(), out bool result))
-                {
-                    return !result;
-                }
+                return !result;
             }
 
             return true;

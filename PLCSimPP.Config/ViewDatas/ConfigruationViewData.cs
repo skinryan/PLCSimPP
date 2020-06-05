@@ -6,22 +6,23 @@ using BCI.PLCSimPP.Comm.Models;
 
 namespace BCI.PLCSimPP.Config.ViewDatas
 {
-    public class ConfigruationViewData : EditViewDataBase
+    public class ConfigurationViewData : EditViewDataBase
     {
-        private string mSitemapFilePath;
+        private string mSiteMapFilePath;
+
         /// <summary>
-        /// Gets or sets sitemap file path
+        /// Gets or sets site map file path
         /// </summary>
-        public string SitemapFilePath
+        public string SiteMapFilePath
         {
-            get { return mSitemapFilePath; }
+            get { return mSiteMapFilePath; }
             set
             {
-                if (value != mSitemapFilePath)
+                if (value != mSiteMapFilePath)
                 {
-                    var temp = mSitemapFilePath;
-                    mSitemapFilePath = value;
-                    NotifyPropertyChanged(this, "SitemapFilePath", temp, value);
+                    var temp = mSiteMapFilePath;
+                    mSiteMapFilePath = value;
+                    NotifyPropertyChanged(this, "SiteMapFilePath", temp, value);
                 }
             }
         }
@@ -140,7 +141,7 @@ namespace BCI.PLCSimPP.Config.ViewDatas
             }
         }
 
-        public ConfigruationViewData()
+        public ConfigurationViewData()
         {
             AnalyzerItems = new ObservableCollection<AnalyzerItem>();
             DxCAnalyzerItems = new ObservableCollection<AnalyzerItem>();

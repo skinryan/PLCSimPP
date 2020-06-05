@@ -20,11 +20,7 @@ namespace BCI.PLCSimPP.PresentationControls.Controls
         public const string TEMPLATE_PART_COMBOBOX = "Part_ComboBox";
         public const string TEMPLATE_PART_LISTBOX = "Part_ListBox";
 
-        /// <summary>
-        /// The instrument can support up to 16 sets
-        /// </summary>
-        //public int[] CollSource = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
-
+       
         #region property
 
         /// <summary>

@@ -18,22 +18,12 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
 {
     public class FrameViewModel : BindableBase
     {
-        private ILogService mLogger;
         private IRegionManager mRegionManager;
         private IEventAggregator mEventAggr;
         private BackgroundWorker mBgWorker;
         private string mFilePath;
 
         #region properties
-
-        //private int mCount;
-
-        //public int Count
-        //{
-        //    get { return mCount; }
-        //    set { SetProperty(ref mCount, value); }
-        //}
-
 
         private string mBackWorkerStatus;
 
@@ -77,12 +67,13 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
 
         #endregion
 
-        public DelegateCommand ChangeTitleCommand { get; private set; }
-
-        public FrameViewModel(ILogService LoggerService, IRegionManager region, IEventAggregator eventAggr)
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="region">RegionManager</param>
+        /// <param name="eventAggr">EventAggregator</param>
+        public FrameViewModel(IRegionManager region, IEventAggregator eventAggr)
         {
-            mLogger = LoggerService;
-
             mRegionManager = region;
             mEventAggr = eventAggr;
 
@@ -93,14 +84,8 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
             mEventAggr.GetEvent<ExportEvent>().Subscribe(OnExport);
             mEventAggr.GetEvent<ConnectionStatusEvent>().Subscribe(OnConnectionStatusChanged);
             mEventAggr.GetEvent<NotifyPortCountEvent>().Subscribe(OnPortCountChanged);
-            //mEventAggr.GetEvent<NotifyOnlineSampleEvent>().Subscribe(OnSampleCountChanged);
         }
-
-        //private void OnSampleCountChanged(int param)
-        //{
-        //    Count += param;
-        //}
-
+        
         private void OnPortCountChanged(int count)
         {
             if (count > 2)
@@ -130,9 +115,10 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
                 Port3Status = connInfo.IsConnected;
             }
         }
-
+        
         private void MBgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            //do export csv file
             var logs = DBService.Current.QueryLogContents();
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Time,Direction,Address,Command,Details");
@@ -160,7 +146,7 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
         {
             mFilePath = exportPath;
             BackWorkerStatus = "Exporting...";
-
+            //invoked asynchronously
             mBgWorker.RunWorkerAsync();
         }
 
