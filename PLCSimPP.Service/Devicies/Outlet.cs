@@ -55,6 +55,7 @@ namespace BCI.PLCSimPP.Service.Devicies
                 StoreSample(floor, rack, position, CurrentSample);
 
                 CurrentSample = null;
+                
             }
 
             if (cmd == LcCmds._0018)
@@ -94,6 +95,7 @@ namespace BCI.PLCSimPP.Service.Devicies
 
             mShelfList[shelf].RackList[rack].SampleList[position] = sample;
             RaisePropertyChanged("StoredCount");
+            RaisePropertyChanged("PendingCount");
             mEvent.GetEvent<NotifyOnlineSampleEvent>().Publish(-1);
         }
 
