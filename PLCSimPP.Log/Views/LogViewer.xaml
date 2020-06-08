@@ -8,6 +8,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:prism="http://prismlibrary.com/"
              d:DesignHeight="450"
              d:DesignWidth="800"
@@ -24,6 +25,9 @@
                 <Setter Property="Height" Value="30" />
                 <Setter Property="Margin" Value="10,0" />
             </Style>
+            <CollectionViewSource x:Key="cvsLogs" Source="{Binding CurrentPage.Items}">
+               
+            </CollectionViewSource>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Margin="10">
@@ -111,7 +115,8 @@
                   CanUserAddRows="False"
                   FontFamily="Courier New"
                   IsReadOnly="True"
-                  ItemsSource="{Binding CurrentPage.Items}">
+                  Sorting="dg_Sorting"
+                  ItemsSource="{Binding Source={StaticResource cvsLogs}}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Time, Converter={StaticResource DateTimeToStringConverter}}" Header="Date/Time" />
                 <DataGridTextColumn Binding="{Binding Direction}" Header="Direction" />

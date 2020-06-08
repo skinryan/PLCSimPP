@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using BCI.PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Events;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
+using BCI.PLCSimPP.Config.ViewModels;
+using BCI.PLCSimPP.Config.Views;
 using BCI.PLCSimPP.Service.DB;
+using CommonServiceLocator;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -85,7 +90,7 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
             mEventAggr.GetEvent<ConnectionStatusEvent>().Subscribe(OnConnectionStatusChanged);
             mEventAggr.GetEvent<NotifyPortCountEvent>().Subscribe(OnPortCountChanged);
         }
-        
+
         private void OnPortCountChanged(int count)
         {
             if (count > 2)
@@ -115,7 +120,7 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
                 Port3Status = connInfo.IsConnected;
             }
         }
-        
+
         private void MBgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             //do export csv file
@@ -152,12 +157,26 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
 
         private void OnNavigate(string viewName)
         {
+            var views = mRegionManager.Regions[RegionName.LAYOUTREGION].ActiveViews;
+
+            foreach (var view in views)
+            {
+                if (view is Configuration)//check config is edited
+                {
+                    var configVm = ((Configuration)view).ViewModel;
+                    var ret = configVm.CheckLeaving();
+                    if (!ret)
+                    {
+                        return;
+                    }
+                }
+            }
+
             mRegionManager.RequestNavigate(RegionName.LAYOUTREGION, viewName);
 
             if (RegionName.ViewName.ContainsKey(viewName))
             {
                 var title = RegionName.ViewName[viewName];
-
                 mEventAggr.GetEvent<SetTitleEvent>().Publish(title);
             }
         }

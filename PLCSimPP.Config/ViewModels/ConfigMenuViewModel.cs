@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
 using System.Windows.Input;
-using BCI.PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Events;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
 using Prism.Commands;
@@ -28,7 +29,6 @@ namespace BCI.PLCSimPP.Config.ViewModels
         private void Navigate(string viewName)
         {
             mEventAggr.GetEvent<NavigateEvent>().Publish(viewName);
-
         }
     }
 }

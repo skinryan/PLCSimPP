@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using BCI.PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Events;
 using BCI.PLCSimPP.Comm.Helper;
 using BCI.PLCSimPP.Comm.Interfaces;
@@ -277,7 +278,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
         private void DoCancel()
         {
-            mEventAggregator.GetEvent<NavigateEvent>().Publish("Configuration");
+            mEventAggregator.GetEvent<NavigateEvent>().Publish(ViewName.CONFIGURATION);
         }
 
         private void DoSave()

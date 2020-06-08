@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
-using BCI.PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Config.ViewModels;
 using BCI.PLCSimPP.Config.Views;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -23,7 +25,7 @@ namespace BCI.PLCSimPP.Config
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            //containerRegistry.RegisterSingleton<INotifyPropertyChanged, ConfigurationViewModel>("ConfigurationViewModel");
         }
     }
 }

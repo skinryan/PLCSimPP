@@ -180,6 +180,7 @@ namespace BCI.PLCSimPP.Log.ViewModels
             criteria.CurrentPage = page;
             criteria.PageSize = pageSize;
             criteria.TableName = DbConst.MSGLOG_TABLE_NAME;
+            criteria.Sort = "[Time]";
 
             var result = DBService.Current.GetPageData<LogContent>(criteria);
             return result;
@@ -222,7 +223,7 @@ namespace BCI.PLCSimPP.Log.ViewModels
             SaveCommand = new DelegateCommand(DoSave);
             CancelCommand = new DelegateCommand(() =>
             {
-                mEventAggr.GetEvent<NavigateEvent>().Publish("DeviceLayout");
+                mEventAggr.GetEvent<NavigateEvent>().Publish(ViewName.DEVICE_LAYOUT);
             });
         }
 

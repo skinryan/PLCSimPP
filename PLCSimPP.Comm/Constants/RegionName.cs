@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BCI.PLCSimPP.Comm.Constant
+namespace BCI.PLCSimPP.Comm.Constants
 {
     public class RegionName
     {

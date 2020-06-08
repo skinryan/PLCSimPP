@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Events;
 using BCI.PLCSimPP.Service.DB;
 using Prism.Commands;
@@ -39,7 +40,7 @@ namespace BCI.PLCSimPP.Launcher.ViewModels
                 TitleText = $"{APPTITLE} - [{title}]";
             });
 
-            NavigateCommand = new DelegateCommand<string>(Navigate);              
+            NavigateCommand = new DelegateCommand<string>(Navigate);
         }
 
         private void Navigate(string viewName)

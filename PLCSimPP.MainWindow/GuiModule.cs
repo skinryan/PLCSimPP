@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using BCI.PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.MainWindow.Views;
 using Prism.Ioc;
 using Prism.Modularity;

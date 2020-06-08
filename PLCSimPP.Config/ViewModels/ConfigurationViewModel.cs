@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using BCI.PLCSimPP.Config.Controllers;
 using BCI.PLCSimPP.PresentationControls;
 using Prism.Regions;
-using BCI.PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.Comm.Constants;
 using Prism.Events;
 using BCI.PLCSimPP.Comm.Events;
 using System;
@@ -15,6 +15,7 @@ using CommonServiceLocator;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
 using System.Threading;
 using BCI.PLCSimPP.Comm.Interfaces;
+using DcSimCom;
 
 namespace BCI.PLCSimPP.Config.ViewModels
 {
@@ -28,7 +29,6 @@ namespace BCI.PLCSimPP.Config.ViewModels
         public ICommand EditSiteMapCommand { get; set; }
         public ICommand SelectFilePathCommand { get; set; }
         public ICommand CancelCommand { get; set; }
-
         public ICommand SelectDCSimPathCommand { get; set; }
         public ICommand SelectDxCSimPathCommand { get; set; }
 
@@ -55,7 +55,6 @@ namespace BCI.PLCSimPP.Config.ViewModels
                     var path = DoSelectPath(fileType);
                     if (!string.IsNullOrEmpty(path))
                         data.SiteMapFilePath = path;
-
                 }
             });
 
@@ -67,7 +66,6 @@ namespace BCI.PLCSimPP.Config.ViewModels
                     if (!string.IsNullOrEmpty(path))
                         data.DcSimLocation = path;
                 }
-
             });
 
             SelectDxCSimPathCommand = new DelegateCommand<string>((fileType) =>
@@ -78,7 +76,6 @@ namespace BCI.PLCSimPP.Config.ViewModels
                     if (!string.IsNullOrEmpty(path))
                         data.DxCSimLocation = path;
                 }
-
             });
 
             EditSiteMapCommand = new DelegateCommand<string>((name) =>
@@ -116,24 +113,34 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
         private void DoCancel()
         {
+            if (CheckLeaving())
+            {
+                mEventAggr.GetEvent<NavigateEvent>().Publish(ViewName.DEVICE_LAYOUT);
+            }
+        }
+
+        public bool CheckLeaving()
+        {
             if (ConfigurationController.Data.IsValueChanged)
             {
                 var result = MessageBox.Show("Do you need to save the changed Settings?", "Warning", MessageBoxButtons.YesNoCancel);
                 if (result == DialogResult.Yes)
                 {
                     ConfigurationController.Save();
+                    return true;
                 }
                 else if (result == DialogResult.No)
                 {
                     ConfigurationController.LoadViewDatas();
+                    return true;
                 }
                 else
                 {
-                    return;
+                    return false;
                 }
             }
 
-            mEventAggr.GetEvent<NavigateEvent>().Publish("DeviceLayout");
+            return true;
         }
 
         /// <summary>
@@ -146,7 +153,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
                 MessageBox.Show("The settings cannot be modified while the system is connected.");
                 return;
             }
-           
+
             if (ConfigurationController.Save())
             {
                 Thread.Sleep(500);

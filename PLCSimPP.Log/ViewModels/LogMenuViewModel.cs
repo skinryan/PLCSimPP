@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Input;
-using BCI.PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Events;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
 using BCI.PLCSimPP.Comm.Models;
@@ -38,7 +38,7 @@ namespace BCI.PLCSimPP.Log.ViewModels
             sfd.DefaultExt = "csv";
             sfd.RestoreDirectory = true;
             sfd.ShowDialog();
-            
+
             //notify a export event
             if (!string.IsNullOrEmpty(sfd.FileName))
             {

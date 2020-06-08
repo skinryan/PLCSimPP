@@ -17,6 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PLCSimPP.Comm\PLCSimPP.Comm.csproj" />
+    <ProjectReference Include="..\PLCSimPP.Config\PLCSimPP.Config.csproj" />
+    <ProjectReference Include="..\PLCSimPP.PresentationControls\PLCSimPP.PresentationControls.csproj" />
     <ProjectReference Include="..\PLCSimPP.Service\PLCSimPP.Service.csproj" />
   </ItemGroup>
 

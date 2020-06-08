@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
-using BCI.PLCSimPP.Comm.Constant;
+using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Events;
 using BCI.PLCSimPP.Comm.Models;
 using Prism.Commands;
@@ -48,7 +48,7 @@ namespace BCI.PLCSimPP.Log.ViewModels
 
             CancelCommand = new DelegateCommand<string>(viewName =>
             {
-                mEventAggr.GetEvent<NavigateEvent>().Publish("DeviceLayout");
+                mEventAggr.GetEvent<NavigateEvent>().Publish(ViewName.DEVICE_LAYOUT);
             });
         }
 
