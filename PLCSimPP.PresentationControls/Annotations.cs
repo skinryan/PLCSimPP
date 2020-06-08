@@ -41,7 +41,7 @@ namespace BCI.PLCSimPP.PresentationControls
         /// </list>
         /// </example>
         [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-        public sealed class NotifyPropertyChangedInvocatorAttribute : Attribute
+        public sealed class NotifyPropertyChangedInvocatorAttribute : Attribute 
         {
             public NotifyPropertyChangedInvocatorAttribute() { }
             public NotifyPropertyChangedInvocatorAttribute(string parameterName)
