@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using BCI.PLCSimPP.Comm.Constants;
-using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Events;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
 using BCI.PLCSimPP.Config.ViewModels;
@@ -23,9 +22,12 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
 {
     public class FrameViewModel : BindableBase
     {
-        private IRegionManager mRegionManager;
-        private IEventAggregator mEventAggr;
-        private BackgroundWorker mBgWorker;
+        private const string EXPORT_COMPLETE = "Export complete.";
+        private const string EXPORTING = "Exporting...";
+        private const string CSV_HEADER = "Time,Direction,Address,Command,Details";
+        private readonly IRegionManager mRegionManager;
+        private readonly IEventAggregator mEventAggr;
+        private readonly BackgroundWorker mBgWorker;
         private string mFilePath;
 
         #region properties
@@ -83,7 +85,7 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
             mEventAggr = eventAggr;
 
             mBgWorker = new BackgroundWorker();
-            mBgWorker.DoWork += MBgWorker_DoWork;
+            mBgWorker.DoWork += BackgroundWorker_DoWork;
 
             mEventAggr.GetEvent<NavigateEvent>().Subscribe(OnNavigate);
             mEventAggr.GetEvent<ExportEvent>().Subscribe(OnExport);
@@ -91,42 +93,37 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
             mEventAggr.GetEvent<NotifyPortCountEvent>().Subscribe(OnPortCountChanged);
         }
 
+
         private void OnPortCountChanged(int count)
         {
-            if (count > 2)
-            {
-                Port3Enabled = true;
-            }
-            else
-            {
-                Port3Enabled = false;
-            }
+            //update port3 status
+            Port3Enabled = count > 2;
         }
 
         private void OnConnectionStatusChanged(ConnInfo connInfo)
         {
-            if (connInfo.Port == 1)
+            switch (connInfo.Port)
             {
-                Port1Status = connInfo.IsConnected;
-            }
-
-            if (connInfo.Port == 2)
-            {
-                Port2Status = connInfo.IsConnected;
-            }
-
-            if (connInfo.Port == 3)
-            {
-                Port3Status = connInfo.IsConnected;
+                case 1:
+                    Port1Status = connInfo.IsConnected;
+                    break;
+                case 2:
+                    Port2Status = connInfo.IsConnected;
+                    break;
+                case 3:
+                    Port3Status = connInfo.IsConnected;
+                    break;
+                default:
+                    return;
             }
         }
 
-        private void MBgWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            //do export csv file
+            // export csv file
             var logs = DBService.Current.QueryLogContents();
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Time,Direction,Address,Command,Details");
+            sb.AppendLine(CSV_HEADER);
 
             foreach (var log in logs)
             {
@@ -142,7 +139,7 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
                 }
             }
 
-            BackWorkerStatus = "Export complete";
+            BackWorkerStatus = EXPORT_COMPLETE;
             Thread.Sleep(3000);
             BackWorkerStatus = string.Empty;
         }
@@ -150,14 +147,14 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
         private void OnExport(string exportPath)
         {
             mFilePath = exportPath;
-            BackWorkerStatus = "Exporting...";
+            BackWorkerStatus = EXPORTING;
             //invoked asynchronously
             mBgWorker.RunWorkerAsync();
         }
 
         private void OnNavigate(string viewName)
         {
-            var views = mRegionManager.Regions[RegionName.LAYOUTREGION].ActiveViews;
+            var views = mRegionManager.Regions[RegionName.LAYOUT_REGION].ActiveViews;
 
             foreach (var view in views)
             {
@@ -172,7 +169,7 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
                 }
             }
 
-            mRegionManager.RequestNavigate(RegionName.LAYOUTREGION, viewName);
+            mRegionManager.RequestNavigate(RegionName.LAYOUT_REGION, viewName);
 
             if (RegionName.ViewName.ContainsKey(viewName))
             {

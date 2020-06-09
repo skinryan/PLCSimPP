@@ -6,11 +6,11 @@ namespace BCI.PLCSimPP.Comm.Constants
 {
     public class RegionName
     {
-        public const string CONTENTREGION = "ContentRegion";
+        public const string CONTENT_REGION = "ContentRegion";
 
-        public const string MENUREGION = "MenuRegion";
+        public const string MENU_REGION = "MenuRegion";
 
-        public const string LAYOUTREGION = "LayoutRegion";
+        public const string LAYOUT_REGION = "LayoutRegion";
 
         public static Dictionary<string, string> ViewName = new Dictionary<string, string>
         {

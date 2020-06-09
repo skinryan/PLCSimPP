@@ -20,6 +20,6 @@
                     CommandParameter="Monitor" />
     </Window.InputBindings>
     <Grid>
-        <ContentControl region:RegionManager.RegionName="{x:Static comm:RegionName.CONTENTREGION}" />
+        <ContentControl region:RegionManager.RegionName="{x:Static comm:RegionName.CONTENT_REGION}" />
     </Grid>
 </Window>

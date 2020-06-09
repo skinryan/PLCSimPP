@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BCI.PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Enums;
 using Prism.Mvvm;
 
 namespace BCI.PLCSimPP.Config.ViewDatas

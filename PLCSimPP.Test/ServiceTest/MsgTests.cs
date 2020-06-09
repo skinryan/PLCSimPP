@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using BCI.PLCSimPP.Comm;
 using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Comm.Enums;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
 using BCI.PLCSimPP.Comm.Models;

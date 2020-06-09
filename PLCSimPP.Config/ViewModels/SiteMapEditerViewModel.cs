@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using BCI.PLCSimPP.Comm;
 using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Comm.Enums;
 using BCI.PLCSimPP.Comm.Events;
 using BCI.PLCSimPP.Comm.Helper;
 using BCI.PLCSimPP.Comm.Interfaces;

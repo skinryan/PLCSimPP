@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using BCI.PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Enums;
 using BCI.PLCSimPP.Comm.Models;
 using Prism.Mvvm;
 

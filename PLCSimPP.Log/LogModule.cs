@@ -14,9 +14,9 @@ namespace BCI.PLCSimPP.Log
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
-            regionManager.RegisterViewWithRegion(RegionName.MENUREGION, typeof(LogMenu));
-            regionManager.RegisterViewWithRegion(RegionName.LAYOUTREGION, typeof(LogViewer));
-            regionManager.RegisterViewWithRegion(RegionName.LAYOUTREGION, typeof(Monitor));
+            regionManager.RegisterViewWithRegion(RegionName.MENU_REGION, typeof(LogMenu));
+            regionManager.RegisterViewWithRegion(RegionName.LAYOUT_REGION, typeof(LogViewer));
+            regionManager.RegisterViewWithRegion(RegionName.LAYOUT_REGION, typeof(Monitor));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

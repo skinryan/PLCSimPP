@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BCI.PLCSimPP.Comm.Enums;
 using BCI.PLCSimPP.Comm.Interfaces;
 using Prism.Mvvm;
 

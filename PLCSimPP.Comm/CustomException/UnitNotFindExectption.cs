@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BCI.PLCSimPP.Comm.CustomExecption
+namespace BCI.PLCSimPP.Comm.CustomException
 {
-    public class UnitNotFindExectption : Exception
+    public class UnitNotFindException : Exception
     {
         public string TargetAddr { get; set; }
 

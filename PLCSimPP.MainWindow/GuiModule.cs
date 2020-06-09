@@ -14,7 +14,7 @@ namespace BCI.PLCSimPP.MainWindow
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
-            regionManager.RegisterViewWithRegion(RegionName.CONTENTREGION, typeof(Frame));
+            regionManager.RegisterViewWithRegion(RegionName.CONTENT_REGION, typeof(Frame));
             
         }
 

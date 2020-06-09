@@ -1,4 +1,5 @@
 ﻿using BCI.PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Enums;
 using Prism.Mvvm;
 
 namespace BCI.PLCSimPP.Layout.Model

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using BCI.PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Enums;
 using BCI.PLCSimPP.Comm.Helper;
 
 namespace BCI.PLCSimPP.Layout.Converter

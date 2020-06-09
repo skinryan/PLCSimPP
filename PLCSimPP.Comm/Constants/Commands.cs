@@ -6,7 +6,7 @@ using System.Text;
 namespace BCI.PLCSimPP.Comm.Constants
 {
     /// <summary>
-    /// LcCmds
+    /// LC commands
     /// </summary>
     public class LcCmds
     {
@@ -171,6 +171,9 @@ namespace BCI.PLCSimPP.Comm.Constants
                                                                              _0028};
     }
 
+    /// <summary>
+    /// unit commands
+    /// </summary>
     public class UnitCmds
     {
         /// <summary>

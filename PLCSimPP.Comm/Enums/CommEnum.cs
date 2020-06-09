@@ -1,20 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace BCI.PLCSimPP.Comm
+namespace BCI.PLCSimPP.Comm.Enums
 {
-    public enum SortingOrder
-    {
-        LaneThrough,
-        Sorting,
-        SortEmptyCarriers,
-    }
-
-    public enum Direction
-    {
-        Forward,
-        Backward
-    }
-
+   
     public enum UnitType
     {
         [Description("Aliquoter")]
@@ -57,10 +45,6 @@ namespace BCI.PLCSimPP.Comm
         Bypass = 13,
         [Description("Remapping")]
         Remap = 14,
-        //[Description("RMAP(Ambient)")]
-        //A_RM,
-        //[Description("BULK")]
-        //BULK,
     }
 
     public enum DcAnalyzerType
@@ -78,25 +62,6 @@ namespace BCI.PLCSimPP.Comm
         DxC = 2
     }
 
-    ///// <summary>
-    ///// priority rack
-    ///// </summary>
-    //public const string RACK_PRIORITY = "11";
-
-    ///// <summary>
-    ///// normal rack
-    ///// </summary>
-    //public const string RACK_NORMAL = "12";
-
-    ///// <summary>
-    ///// Centrifuge Bypass Rack
-    ///// </summary>
-    //public const string RACK_CENTBYPASS = "13";
-
-    ///// <summary>
-    ///// Remapping Rack
-    ///// </summary>
-    //public const string RACK_REMAP = "14";
 }
 
 

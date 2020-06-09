@@ -13,8 +13,6 @@ namespace BCI.PLCSimPP.Comm.Constants
         /// </summary>
         public const string SPACE = " ";
 
-        
-
         /// <summary>
         /// bcr NO 1
         /// </summary>
@@ -26,8 +24,6 @@ namespace BCI.PLCSimPP.Comm.Constants
         public const string BCR_2 = "2";
 
         public const string BCR_3 = "3";
-
-        public const string BCR_4 = "4";
 
         public const string CENT_STATUS_END = "0";
         public const string CENT_STATUS_START = "1";

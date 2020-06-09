@@ -16,11 +16,11 @@ namespace BCI.PLCSimPP.Config
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
-            regionManager.RegisterViewWithRegion(RegionName.MENUREGION, typeof(ConfigMenu));
-            regionManager.RegisterViewWithRegion(RegionName.MENUREGION, typeof(AboutMenu));
-            regionManager.RegisterViewWithRegion(RegionName.LAYOUTREGION, typeof(Configuration));
-            regionManager.RegisterViewWithRegion(RegionName.LAYOUTREGION, typeof(SiteMapEditer));
-            regionManager.RegisterViewWithRegion(RegionName.LAYOUTREGION, typeof(About));
+            regionManager.RegisterViewWithRegion(RegionName.MENU_REGION, typeof(ConfigMenu));
+            regionManager.RegisterViewWithRegion(RegionName.MENU_REGION, typeof(AboutMenu));
+            regionManager.RegisterViewWithRegion(RegionName.LAYOUT_REGION, typeof(Configuration));
+            regionManager.RegisterViewWithRegion(RegionName.LAYOUT_REGION, typeof(SiteMapEditer));
+            regionManager.RegisterViewWithRegion(RegionName.LAYOUT_REGION, typeof(About));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

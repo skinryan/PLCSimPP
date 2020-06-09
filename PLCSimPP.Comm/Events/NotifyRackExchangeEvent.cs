@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace BCI.PLCSimPP.Comm.Events
 {
+    /// <inheritdoc />
     public class NotifyRackExchangeEvent : PubSubEvent<RackExchangeParam>
     {
     }

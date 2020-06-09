@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace BCI.PLCSimPP.Comm.Events
 {
+    /// <inheritdoc />
     public class ConnectionStatusEvent : PubSubEvent<ConnInfo>
     {
 

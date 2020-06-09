@@ -15,6 +15,11 @@ namespace BCI.PLCSimPP.Log.Views
             InitializeComponent();
         }
 
+        /// <summary>
+        /// sorting event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dg_Sorting(object sender, DataGridSortingEventArgs e)
         {
             ListSortDirection lsd = ListSortDirection.Ascending;

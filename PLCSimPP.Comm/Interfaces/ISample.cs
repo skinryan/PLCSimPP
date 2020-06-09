@@ -1,4 +1,6 @@
-﻿namespace BCI.PLCSimPP.Comm.Interfaces
+﻿using BCI.PLCSimPP.Comm.Enums;
+
+namespace BCI.PLCSimPP.Comm.Interfaces
 {
     public interface ISample
     {
