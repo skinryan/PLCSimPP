@@ -4,6 +4,7 @@
     <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <AssemblyName>BCI.PLCSimPP.Service</AssemblyName>
+    <RootNamespace>BCI.PLCSimPP.Service</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

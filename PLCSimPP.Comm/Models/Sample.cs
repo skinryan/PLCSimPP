@@ -7,18 +7,22 @@ using Prism.Mvvm;
 
 namespace BCI.PLCSimPP.Comm.Models
 {
+    /// <summary>
+    /// The implementation of ISample
+    /// </summary>
     public class Sample : BindableBase, ISample
     {
-        private string _sampleID;
+        private string mSampleID;
 
         /// <inheritdoc/>
         public string SampleID
         {
-            get { return _sampleID; }
-            set { SetProperty(ref _sampleID, value); }
+            get { return mSampleID; }
+            set { SetProperty(ref mSampleID, value); }
         }
 
         private RackType mRack;
+        /// <inheritdoc/>
         public RackType Rack
         {
             get { return mRack; }
@@ -26,7 +30,7 @@ namespace BCI.PLCSimPP.Comm.Models
         }
 
         private bool mIsLoaded;
-
+        /// <inheritdoc/>
         public bool IsLoaded
         {
             get { return mIsLoaded; }
@@ -34,7 +38,7 @@ namespace BCI.PLCSimPP.Comm.Models
         }
 
         private string mDcToken;
-
+        /// <inheritdoc/>
         public string DcToken
         {
             get { return mDcToken; }
@@ -42,7 +46,7 @@ namespace BCI.PLCSimPP.Comm.Models
         }
 
         private string mDxCToken;
-
+        /// <inheritdoc/>
         public string DxCToken
         {
             get { return mDxCToken; }
@@ -50,7 +54,7 @@ namespace BCI.PLCSimPP.Comm.Models
         }
 
         private bool mRetrieving;
-
+        /// <inheritdoc/>
         public bool Retrieving
         {
             get { return mRetrieving; }
@@ -58,15 +62,13 @@ namespace BCI.PLCSimPP.Comm.Models
         }
 
         private bool mIsSubTube;
+        /// <inheritdoc/>
         public bool IsSubTube
         {
             get { return mIsSubTube; }
             set { SetProperty(ref mIsSubTube, value); }
         }
 
-        public override string ToString()
-        {
-            return base.ToString();
-        }
+
     }
 }

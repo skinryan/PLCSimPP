@@ -1,4 +1,4 @@
-﻿using BCI.PLCSimPP.Service.Devicies;
+﻿using BCI.PLCSimPP.Service.Devices;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

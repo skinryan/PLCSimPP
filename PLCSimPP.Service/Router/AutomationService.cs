@@ -11,11 +11,11 @@ using BCI.PLCSimPP.Comm.Events;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
 using BCI.PLCSimPP.Comm.Models;
-using BCI.PLCSimPP.Service.Devicies;
-using BCI.PLCSimPP.Service.Devicies.StandardResponds;
+using BCI.PLCSimPP.Service.Devices;
+using BCI.PLCSimPP.Service.Devices.StandardResponds;
 using Prism.Events;
 using Prism.Mvvm;
-using GC = BCI.PLCSimPP.Service.Devicies.GC;
+using GC = BCI.PLCSimPP.Service.Devices.GC;
 
 namespace BCI.PLCSimPP.Service.Router
 {
@@ -31,7 +31,7 @@ namespace BCI.PLCSimPP.Service.Router
 
 
         public AutomationService(IPortService msgService, IRouterService router, IConfigService config, IEventAggregator eventAggregator,
-                               ILogService logger, ISendMsgBehavior sender, IRecvMsgBeheavior receiver)
+                               ILogService logger, ISendMsgBehavior sender, IRecvMsgBehavior receiver)
         {
             mLogger = logger;
             PortService = msgService;
@@ -55,7 +55,7 @@ namespace BCI.PLCSimPP.Service.Router
 
         public ISendMsgBehavior MsgSender { get; set; }
 
-        public IRecvMsgBeheavior MsgReceiver { get; set; }
+        public IRecvMsgBehavior MsgReceiver { get; set; }
 
         public IRouterService RouterService { get; set; }
 
@@ -167,7 +167,7 @@ namespace BCI.PLCSimPP.Service.Router
 
         public void RackExchange(IUnit storckyard, string shelf, string rack)
         {
-            var msg = SendMsg.GetMsg_1016(storckyard, shelf, rack);
+            var msg = SendMsg.GetMsg1016(storckyard, shelf, rack);
 
             this.mEventAggr.GetEvent<NotifyRackExchangeEvent>().Publish(new RackExchangeParam()
             {

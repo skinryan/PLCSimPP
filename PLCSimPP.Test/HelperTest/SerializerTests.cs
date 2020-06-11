@@ -9,8 +9,9 @@ using Newtonsoft.Json;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Models;
 using BCI.PLCSimPP.Service.Config;
-using BCI.PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Service.Devices;
 using System.Linq;
+using BCI.PLCSimPP.TestTool;
 
 namespace BCI.PLCSimPP.Test.HelperTest
 {

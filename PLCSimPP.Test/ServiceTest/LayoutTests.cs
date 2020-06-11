@@ -5,8 +5,9 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BCI.PLCSimPP.Comm.Interfaces;
-using BCI.PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Service.Devices;
 using BCI.PLCSimPP.Service.Router;
+using BCI.PLCSimPP.TestTool;
 
 namespace BCI.PLCSimPP.Test.ServiceTest
 {

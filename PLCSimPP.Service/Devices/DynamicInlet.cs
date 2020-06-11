@@ -5,9 +5,9 @@ using BCI.PLCSimPP.Comm;
 using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Models;
-using BCI.PLCSimPP.Service.Devicies.StandardResponds;
+using BCI.PLCSimPP.Service.Devices.StandardResponds;
 
-namespace BCI.PLCSimPP.Service.Devicies
+namespace BCI.PLCSimPP.Service.Devices
 {
     [Serializable]
     public class DynamicInlet : UnitBase
@@ -15,12 +15,7 @@ namespace BCI.PLCSimPP.Service.Devicies
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
-
-            if (cmd == LcCmds._0011)
-            {
-                //todo replay 1015
-            }
-
+            
             if (cmd == LcCmds._0012)
             {
                 base.MoveSample();
@@ -29,7 +24,7 @@ namespace BCI.PLCSimPP.Service.Devicies
                
         protected override void OnSampleArrived()
         {
-            var msg = SendMsg.GetMsg_1024(this);
+            var msg = SendMsg.GetMsg1024(this);
             this.mSendBehavior.PushMsg(msg);
         }
 

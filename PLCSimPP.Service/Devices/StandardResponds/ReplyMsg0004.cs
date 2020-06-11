@@ -3,9 +3,10 @@ using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Models;
 
-namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
+namespace BCI.PLCSimPP.Service.Devices.StandardResponds
 {
-    public class ReplyMsg_0004 : IResponds
+    /// <inheritdoc />
+    public class ReplyMsg0004 : IResponds
     {
         /// <summary>
         /// Get Responds Msg 

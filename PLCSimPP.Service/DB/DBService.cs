@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using log4net.Core;
 
 namespace BCI.PLCSimPP.Service.DB
 {
@@ -19,7 +20,7 @@ namespace BCI.PLCSimPP.Service.DB
         private IDbConnection mConn;
 
         private static DBService sCurrentDb;
-
+        
         /// <summary>
         /// Singleton
         /// </summary>
@@ -132,8 +133,7 @@ namespace BCI.PLCSimPP.Service.DB
             }
             catch (Exception ex)
             {
-                //var logger = LogManager.GetLogger(LoggerConst.LOGGER_NAME_SYS);
-                //logger.Info("GetStartTime return 0 rows");
+                
                 return new DateTime();
             }
         }
@@ -153,8 +153,6 @@ namespace BCI.PLCSimPP.Service.DB
             }
             catch (Exception ex)
             {
-                //var logger = LogManager.GetLogger(LoggerConst.LOGGER_NAME_SYS);
-                //logger.Info("GetEndTime return 0 rows");
                 return new DateTime();
             }
         }

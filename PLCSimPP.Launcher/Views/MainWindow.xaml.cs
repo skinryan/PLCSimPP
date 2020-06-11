@@ -24,8 +24,6 @@ namespace BCI.PLCSimPP.Launcher.Views
         public MainWindow()
         {
             InitializeComponent();
-
-
         }
 
 

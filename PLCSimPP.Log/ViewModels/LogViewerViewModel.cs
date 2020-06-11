@@ -195,14 +195,15 @@ namespace BCI.PLCSimPP.Log.ViewModels
             mAddresses.Add(string.Empty);
             if (mAutomation.UnitCollection.Count > 0)
             {
-                for (var i = 0; i < mAutomation.UnitCollection.Count; i++)
+                foreach (var masterUnit in mAutomation.UnitCollection)
                 {
-                    var children = mAutomation.UnitCollection[i].Children;
-                    for (var j = 0; j < children.Count; j++)
+                    mAddresses.Add(masterUnit.Address);
+
+                    foreach (var unit in masterUnit.Children)
                     {
-                        if (!mAddresses.Contains(children[j].Address))
+                        if (!mAddresses.Contains(unit.Address))
                         {
-                            mAddresses.Add(children[j].Address);
+                            mAddresses.Add(unit.Address);
                         }
                     }
                 }

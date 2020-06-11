@@ -4,7 +4,10 @@ using BCI.PLCSimPP.Comm.Models;
 
 namespace BCI.PLCSimPP.Comm.Interfaces
 {
-    public interface IRecvMsgBeheavior
+    /// <summary>
+    /// received message behavior interface
+    /// </summary>
+    public interface IRecvMsgBehavior
     {
         /// <summary>
         /// Start the receive message task

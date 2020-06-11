@@ -7,8 +7,14 @@ using BCI.PLCSimPP.Comm.Models;
 
 namespace BCI.PLCSimPP.Comm.Interfaces
 {
+    /// <summary>
+    /// Automation service interface
+    /// </summary>
     public interface IAutomation
     {
+        /// <summary>
+        /// Online sample count
+        /// </summary>
         int OnlineSampleCount { get; set; }
 
         /// <summary>
@@ -29,7 +35,7 @@ namespace BCI.PLCSimPP.Comm.Interfaces
         /// <summary>
         /// Load sample on line
         /// </summary>
-        /// <param name="sample">sample tube</param>
+        /// <param name="samples">sample tube</param>
         void LoadSample(List<ISample> samples);
 
         /// <summary>

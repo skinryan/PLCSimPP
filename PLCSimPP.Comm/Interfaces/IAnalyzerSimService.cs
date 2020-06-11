@@ -1,5 +1,8 @@
 ﻿namespace BCI.PLCSimPP.Comm.Interfaces
 {
+    /// <summary>
+    /// Analyzer Simulate Service
+    /// </summary>
     public interface IAnalyzerSimService
     {
         /// <summary>

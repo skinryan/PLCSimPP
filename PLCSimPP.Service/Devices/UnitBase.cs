@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 using CommonServiceLocator;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
-using BCI.PLCSimPP.Service.Devicies.StandardResponds;
+using BCI.PLCSimPP.Service.Devices.StandardResponds;
 using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm;
 using Prism.Mvvm;
@@ -19,7 +19,7 @@ using BCI.PLCSimPP.Comm.Models;
 using BCI.PLCSimPP.Comm.Events;
 using Prism.Events;
 
-namespace BCI.PLCSimPP.Service.Devicies
+namespace BCI.PLCSimPP.Service.Devices
 {
 
     public abstract class UnitBase : BindableBase, IUnit
@@ -189,7 +189,7 @@ namespace BCI.PLCSimPP.Service.Devicies
 
         protected virtual void OnSampleArrived()
         {
-            var msg = SendMsg.GetMsg_1011(this, ParamConst.BCR_1);
+            var msg = SendMsg.GetMsg1011(this, ParamConst.BCR_1);
             this.mSendBehavior.PushMsg(msg);
         }
 

@@ -57,10 +57,7 @@ namespace BCI.PLCSimPP.Service.Log
             mSysLogger.Debug(content);
         }
 
-        public void LogSys(Exception ex, string content, params string[] strs)
-        {
-            mSysLogger.Debug(string.Format(content, strs), ex);
-        }
+     
 
         /// <summary>
         /// Write the message log to database

@@ -3,9 +3,9 @@ using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Models;
 
-namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
+namespace BCI.PLCSimPP.Service.Devices.StandardResponds
 {
-    public class ReplyMsg_0005 : IResponds
+    public class ReplyMsg0005 : IResponds
     {
         /// <summary>
         /// build responds msg
@@ -20,13 +20,13 @@ namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
             if (recvParam.StartsWith("11411"))
             {
                 // The documentation does not explain how to fill in, this value according to the production log
-                var msg10e0 = SendMsg.GetMsg_10E0(unit, "0", "BUZZ CMD");
+                var msg10E0 = SendMsg.GetMsg10E0(unit, "0", "BUZZ CMD");
                 // '04': Buzzer stop
-                var buzzStop = SendMsg.GetMsg_1002(unit, "1", "04", "".PadRight(15));
+                var buzzStop = SendMsg.GetMsg1002(unit, "1", "04", "".PadRight(15));
                 // '03': Restart
-                var restart = SendMsg.GetMsg_1002(unit, "1", "03", "".PadRight(15));
+                var restart = SendMsg.GetMsg1002(unit, "1", "03", "".PadRight(15));
 
-                result.Add(msg10e0);
+                result.Add(msg10E0);
                 result.Add(buzzStop);
                 result.Add(restart);
             }
@@ -34,9 +34,9 @@ namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
             if (recvParam.StartsWith("10010"))
             {
                 // The documentation does not explain how to fill in, this value according to the production log
-                var msg10e0 = SendMsg.GetMsg_10E0(unit, "1", "SN10 OFF");
+                var msg10e0 = SendMsg.GetMsg10E0(unit, "1", "SN10 OFF");
                 // '04': Buzzer stop
-                var buzzStop = SendMsg.GetMsg_1002(unit, "1", "04", "".PadRight(15));
+                var buzzStop = SendMsg.GetMsg1002(unit, "1", "04", "".PadRight(15));
 
                 result.Add(msg10e0);
                 result.Add(buzzStop);

@@ -16,7 +16,7 @@ namespace BCI.PLCSimPP.Launcher.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private const string APPTITLE = "PLCSim for PP";
+        private const string APP_TITLE = "PLCSim for PP";
 
         private readonly IEventAggregator mEventAggr;
 
@@ -33,11 +33,11 @@ namespace BCI.PLCSimPP.Launcher.ViewModels
         public MainWindowViewModel(IEventAggregator eventAggr)
         {
             mEventAggr = eventAggr;
-            TitleText = $"{APPTITLE} - [Layout]";
+            TitleText = $"{APP_TITLE} - [Layout]";
 
             mEventAggr.GetEvent<SetTitleEvent>().Subscribe(title =>
             {
-                TitleText = $"{APPTITLE} - [{title}]";
+                TitleText = $"{APP_TITLE} - [{title}]";
             });
 
             NavigateCommand = new DelegateCommand<string>(Navigate);

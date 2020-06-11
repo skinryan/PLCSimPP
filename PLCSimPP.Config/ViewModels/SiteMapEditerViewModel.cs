@@ -12,12 +12,12 @@ using BCI.PLCSimPP.Comm.Helper;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
 using BCI.PLCSimPP.Config.ViewDatas;
-using BCI.PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Service.Devices;
 using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using GC = BCI.PLCSimPP.Service.Devicies.GC;
+using GC = BCI.PLCSimPP.Service.Devices.GC;
 
 namespace BCI.PLCSimPP.Config.ViewModels
 {
@@ -141,6 +141,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
         {
             var units = mConfigService.ReadSiteMap();
 
+
             foreach (var item in units)
             {
                 if (item.Port == 1)
@@ -160,6 +161,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
         private void SetPortCollection(IUnit item, ObservableCollection<IUnit> portCollection)
         {
+            portCollection.Clear();
             portCollection.Add(item);
 
             if (item.HasChild)
@@ -330,8 +332,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
                 }
                 units.Add(master3);
             }
-
-            //MessageBox.Show("Not Implemented ");
+            
             mConfigService.SaveSiteMap(sfd.FileName, units);
         }
 

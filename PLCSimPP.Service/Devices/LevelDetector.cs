@@ -6,9 +6,9 @@ using BCI.PLCSimPP.Comm;
 using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Models;
-using BCI.PLCSimPP.Service.Devicies.StandardResponds;
+using BCI.PLCSimPP.Service.Devices.StandardResponds;
 
-namespace BCI.PLCSimPP.Service.Devicies
+namespace BCI.PLCSimPP.Service.Devices
 {
     [Serializable]
     public class LevelDetector : UnitBase

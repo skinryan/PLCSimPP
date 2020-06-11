@@ -4,9 +4,15 @@ using System.Text;
 
 namespace BCI.PLCSimPP.Comm.Models
 {
+    /// <summary>
+    /// Logging message object for log4net 
+    /// </summary>
     public class MsgLog : Prism.Mvvm.BindableBase
     {
         private long mId;
+        /// <summary>
+        /// ID
+        /// </summary>
         public long ID
         {
             get { return mId; }
@@ -68,9 +74,7 @@ namespace BCI.PLCSimPP.Comm.Models
             get { return mCommand; }
             set { SetProperty(ref mCommand, value); }
         }
-
-
-
+        
         private string mToken;
 
         /// <summary>
@@ -81,7 +85,5 @@ namespace BCI.PLCSimPP.Comm.Models
             get { return mToken; }
             set { SetProperty(ref mToken, value); }
         }
-
-
     }
 }

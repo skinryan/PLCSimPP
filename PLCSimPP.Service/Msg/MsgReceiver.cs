@@ -14,7 +14,7 @@ using Prism.Events;
 
 namespace BCI.PLCSimPP.Service.Msg
 {
-    public class MsgReceiver : IRecvMsgBeheavior
+    public class MsgReceiver : IRecvMsgBehavior
     {
         private int mReceiveInterval = 100;
 

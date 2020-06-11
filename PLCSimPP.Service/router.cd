@@ -81,81 +81,81 @@
       <FileName>Msg\PortConnection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BCI.PLCSimPP.Service.Devicies.Aliquoter" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devices.Aliquoter" Collapsed="true">
     <Position X="7.25" Y="15" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAEAAAAAAAAAAAAEAAAAAgEAAAAIA=</HashCode>
-      <FileName>Devicies\Aliquoter.cs</FileName>
+      <FileName>Devices\Aliquoter.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BCI.PLCSimPP.Service.Devicies.Stocker" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devices.Stocker" Collapsed="true">
     <Position X="11" Y="15" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgAAAIAAAAAAAAUAgABAAAEAAAABgAAAAAAAAAAAI=</HashCode>
-      <FileName>Devicies\Stocker.cs</FileName>
+      <FileName>Devices\Stocker.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BCI.PLCSimPP.Service.Devicies.Outlet" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devices.Outlet" Collapsed="true">
     <Position X="8.25" Y="16" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgAAAAAAAAAAAAEAAAAAAAEAAAABgAAAAAAAAAAAA=</HashCode>
-      <FileName>Devicies\Outlet.cs</FileName>
+      <FileName>Devices\Outlet.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BCI.PLCSimPP.Service.Devicies.LevelDetector" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devices.LevelDetector" Collapsed="true">
     <Position X="6.5" Y="16" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAKAAAAAACAAAAAAEBgAAAgAAAAAAAAIAAAAAAAAAAA=</HashCode>
-      <FileName>Devicies\LevelDetector.cs</FileName>
+      <FileName>Devices\LevelDetector.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BCI.PLCSimPP.Service.Devicies.Labeler" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devices.Labeler" Collapsed="true">
     <Position X="10" Y="16" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAgAAAAAAI=</HashCode>
-      <FileName>Devicies\Labeler.cs</FileName>
+      <FileName>Devices\Labeler.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BCI.PLCSimPP.Service.Devicies.ILane" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devices.ILane" Collapsed="true">
     <Position X="11.75" Y="16" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Devicies\ILane.cs</FileName>
+      <FileName>Devices\ILane.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BCI.PLCSimPP.Service.Devicies.HMOutlet" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devices.HMOutlet" Collapsed="true">
     <Position X="13.5" Y="16" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgAAAAAAAAAAAAEAAAAAAAEAAAABgAAAAAAAAAAAA=</HashCode>
-      <FileName>Devicies\HMOutlet.cs</FileName>
+      <FileName>Devices\HMOutlet.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BCI.PLCSimPP.Service.Devicies.HLane" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devices.HLane" Collapsed="true">
     <Position X="5.5" Y="15" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Devicies\HLane.cs</FileName>
+      <FileName>Devices\HLane.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BCI.PLCSimPP.Service.Devicies.DynamicInlet" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devices.DynamicInlet" Collapsed="true">
     <Position X="12.75" Y="15" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
-      <FileName>Devicies\DynamicInlet.cs</FileName>
+      <FileName>Devices\DynamicInlet.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BCI.PLCSimPP.Service.Devicies.DxC" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devices.DxC" Collapsed="true">
     <Position X="14.5" Y="15" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAAAAAEAAAAAAAAAAAAAAAAAACAAAAAgA=</HashCode>
-      <FileName>Devicies\DxC.cs</FileName>
+      <FileName>Devices\DxC.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BCI.PLCSimPP.Service.Devicies.Centrifuge" Collapsed="true">
+  <Class Name="BCI.PLCSimPP.Service.Devices.Centrifuge" Collapsed="true">
     <Position X="9" Y="15" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAKwAACAQCAAAAggEAIBCAEECAAAAAAEAAAAAAAAAAA=</HashCode>
-      <FileName>Devicies\Centrifuge.cs</FileName>
+      <FileName>Devices\Centrifuge.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BCI.PLCSimPP.Service.Router.AutomationService">
@@ -179,7 +179,7 @@
     </ShowAsCollectionAssociation>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="BCI.PLCSimPP.Service.Devicies.UnitBase">
+  <Class Name="BCI.PLCSimPP.Service.Devices.UnitBase">
     <Position X="9.75" Y="11" Width="2" />
     <Members>
       <Method Name="GetPendingCount" Hidden="true" />
@@ -192,7 +192,7 @@
     </Compartments>
     <TypeIdentifier>
       <HashCode>QACAEACggEJAQBAiGAAEQQYACAAABAACJAYAgAAAgAI=</HashCode>
-      <FileName>Devicies\UnitBase.cs</FileName>
+      <FileName>Devices\UnitBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

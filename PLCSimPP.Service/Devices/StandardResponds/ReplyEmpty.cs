@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using BCI.PLCSimPP.Comm.Interfaces;
 
-namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
+namespace BCI.PLCSimPP.Service.Devices.StandardResponds
 {
+    /// <inheritdoc />
     public class ReplyEmpty : IResponds
     {
         /// <summary>

@@ -12,6 +12,9 @@ using BCI.PLCSimPP.Comm.Events;
 
 namespace BCI.PLCSimPP.Service.Analyzer
 {
+    /// <summary>
+    /// DCSim Service
+    /// </summary>
     public class DCSimService : IAnalyzerSimService
     {
         private readonly IConfigService mConfigService;
@@ -70,7 +73,7 @@ namespace BCI.PLCSimPP.Service.Analyzer
                 LcSimServerPortNumber = CommServerForDcSim.Instance.ServerPortNumber
             };
 
-            foreach (var item in mConfig.DcInstruments)
+            foreach (var item in mConfig.DcInstruments)//build launch parameter
             {
                 dcl.AddInstrumentTypeToNextConnection((DcSimCommandLine.InstrumentKind)item.DcType);
             }

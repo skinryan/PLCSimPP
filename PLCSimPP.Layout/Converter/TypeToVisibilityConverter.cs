@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Data;
 using BCI.PLCSimPP.Comm;
 using BCI.PLCSimPP.Comm.Interfaces;
-using BCI.PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Service.Devices;
 
 namespace BCI.PLCSimPP.Layout.Converter
 {

@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
     <AssemblyName>BCI.PLCSimPP.Communication</AssemblyName>
+    <RootNamespace>BCI.PLCSimPP.Communication</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

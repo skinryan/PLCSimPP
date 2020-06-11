@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BCI.PLCSimPP.Comm.Enums;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Models;
-using BCI.PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Service.Devices;
 
-namespace BCI.PLCSimPP.Test
+namespace BCI.PLCSimPP.TestTool
 {
     public class TestDataSource
     {
@@ -30,18 +31,18 @@ namespace BCI.PLCSimPP.Test
             di.Children.Add(ali);
 
             HLane HLane = new HLane() { Address = "0000000080", Port = 2, DisplayName = "HLane", IsMaster = true };
-            Service.Devicies.GC gc1 = new Service.Devicies.GC() { Address = "0000000100", Port = 2, DisplayName = "Generic #1", Parent = HLane };
-            Service.Devicies.GC gc2 = new Service.Devicies.GC() { Address = "0000000200", Port = 2, DisplayName = "Generic #2", Parent = HLane };
-            Service.Devicies.GC gc3 = new Service.Devicies.GC() { Address = "0000000400", Port = 2, DisplayName = "Generic #3", Parent = HLane };
-            Service.Devicies.GC gc4 = new Service.Devicies.GC() { Address = "0000000800", Port = 2, DisplayName = "Generic #4", Parent = HLane };
-            Service.Devicies.GC gc5 = new Service.Devicies.GC() { Address = "0000001000", Port = 2, DisplayName = "Generic #5", Parent = HLane };
-            Service.Devicies.GC gc6 = new Service.Devicies.GC() { Address = "0000002000", Port = 2, DisplayName = "Generic #6", Parent = HLane };
-            Service.Devicies.GC gc7 = new Service.Devicies.GC() { Address = "0000004000", Port = 2, DisplayName = "Generic #7", Parent = HLane };
-            Service.Devicies.GC gc8 = new Service.Devicies.GC() { Address = "0000008000", Port = 2, DisplayName = "Generic #8", Parent = HLane };
-            Service.Devicies.GC gc9 = new Service.Devicies.GC() { Address = "0000010000", Port = 2, DisplayName = "Generic #9", Parent = HLane };
-            Service.Devicies.GC gc10 = new Service.Devicies.GC() { Address = "0000020000", Port = 2, DisplayName = "Generic #10", Parent = HLane };
-            Service.Devicies.GC gc11 = new Service.Devicies.GC() { Address = "0000040000", Port = 2, DisplayName = "Generic #11", Parent = HLane };
-            Service.Devicies.GC gc12 = new Service.Devicies.GC() { Address = "0000080000", Port = 2, DisplayName = "Generic #12", Parent = HLane };
+            Service.Devices.GC gc1 = new Service.Devices.GC() { Address = "0000000100", Port = 2, DisplayName = "Generic #1", Parent = HLane };
+            Service.Devices.GC gc2 = new Service.Devices.GC() { Address = "0000000200", Port = 2, DisplayName = "Generic #2", Parent = HLane };
+            Service.Devices.GC gc3 = new Service.Devices.GC() { Address = "0000000400", Port = 2, DisplayName = "Generic #3", Parent = HLane };
+            Service.Devices.GC gc4 = new Service.Devices.GC() { Address = "0000000800", Port = 2, DisplayName = "Generic #4", Parent = HLane };
+            Service.Devices.GC gc5 = new Service.Devices.GC() { Address = "0000001000", Port = 2, DisplayName = "Generic #5", Parent = HLane };
+            Service.Devices.GC gc6 = new Service.Devices.GC() { Address = "0000002000", Port = 2, DisplayName = "Generic #6", Parent = HLane };
+            Service.Devices.GC gc7 = new Service.Devices.GC() { Address = "0000004000", Port = 2, DisplayName = "Generic #7", Parent = HLane };
+            Service.Devices.GC gc8 = new Service.Devices.GC() { Address = "0000008000", Port = 2, DisplayName = "Generic #8", Parent = HLane };
+            Service.Devices.GC gc9 = new Service.Devices.GC() { Address = "0000010000", Port = 2, DisplayName = "Generic #9", Parent = HLane };
+            Service.Devices.GC gc10 = new Service.Devices.GC() { Address = "0000020000", Port = 2, DisplayName = "Generic #10", Parent = HLane };
+            Service.Devices.GC gc11 = new Service.Devices.GC() { Address = "0000040000", Port = 2, DisplayName = "Generic #11", Parent = HLane };
+            Service.Devices.GC gc12 = new Service.Devices.GC() { Address = "0000080000", Port = 2, DisplayName = "Generic #12", Parent = HLane };
             UnitCollection.Add(HLane);
             HLane.Children.Add(gc1);
             HLane.Children.Add(gc2);
@@ -87,7 +88,7 @@ namespace BCI.PLCSimPP.Test
 
             for (int i = 0; i < 20; i++)
             {
-                SampleCollection.Add(new Sample { SampleID = "TEST_" + i, Rack = Comm.RackType.Remap, DcToken = i.ToString(), DxCToken = i.ToString() });
+                SampleCollection.Add(new Sample { SampleID = "TEST_" + i, Rack = RackType.Remap, DcToken = i.ToString(), DxCToken = i.ToString() });
             }
 
             return SampleCollection;

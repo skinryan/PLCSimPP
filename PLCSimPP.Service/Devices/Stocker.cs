@@ -8,10 +8,10 @@ using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Events;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Models;
-using BCI.PLCSimPP.Service.Devicies.StandardResponds;
+using BCI.PLCSimPP.Service.Devices.StandardResponds;
 using Prism.Events;
 
-namespace BCI.PLCSimPP.Service.Devicies
+namespace BCI.PLCSimPP.Service.Devices
 {
     public class Stocker : UnitBase
     {
@@ -53,7 +53,7 @@ namespace BCI.PLCSimPP.Service.Devicies
                 string bcr = content.Substring(0, 1);
                 if (bcr == ParamConst.BCR_1)
                 {
-                    var msg = SendMsg.GetMsg_1011(this, ParamConst.BCR_2);
+                    var msg = SendMsg.GetMsg1011(this, ParamConst.BCR_2);
                     mSendBehavior.PushMsg(msg);
                 }
             }
@@ -81,7 +81,7 @@ namespace BCI.PLCSimPP.Service.Devicies
                 string rack = content.Substring(17, 1);
                 string position = content.Substring(18, 3);
 
-                var msg = SendMsg.GetMsg_1015(this, content);
+                var msg = SendMsg.GetMsg1015(this, content);
                 mSendBehavior.PushMsg(msg);
 
                 StoreSample(floor, rack, position, CurrentSample);
@@ -93,7 +93,7 @@ namespace BCI.PLCSimPP.Service.Devicies
             {
                 string floor = content.Substring(0, 1);
                 string rack = content.Substring(1, 1);
-                var msg = SendMsg.GetMsg_1016(this, floor, rack);
+                var msg = SendMsg.GetMsg1016(this, floor, rack);
                 mSendBehavior.PushMsg(msg);
 
                 EmptyTargetRack(floor, rack);
@@ -101,7 +101,7 @@ namespace BCI.PLCSimPP.Service.Devicies
 
             if (cmd == LcCmds._0019)
             {
-                var msg1026 = SendMsg.GetMsg_1026(this, "1");//'0': Holder Shortage cleared, '1': Holder Shortage occurred
+                var msg1026 = SendMsg.GetMsg1026(this, "1");//'0': Holder Shortage cleared, '1': Holder Shortage occurred
                 mSendBehavior.PushMsg(msg1026);
 
                 string sid = content.Substring(0, 15);
@@ -129,7 +129,7 @@ namespace BCI.PLCSimPP.Service.Devicies
 
             if (cmd == LcCmds._0026)
             {
-                var msg1026 = SendMsg.GetMsg_1026(this, "0");//'0': Holder Shortage cleared, '1': Holder Shortage occurred
+                var msg1026 = SendMsg.GetMsg1026(this, "0");//'0': Holder Shortage cleared, '1': Holder Shortage occurred
                 mSendBehavior.PushMsg(msg1026);
             }
         }

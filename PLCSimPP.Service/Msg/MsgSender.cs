@@ -22,7 +22,7 @@ namespace BCI.PLCSimPP.Service.Msg
 
         private readonly ConcurrentQueue<IMessage> mSendQueue;//send message queue
         private readonly ILogService mLogger;
-        private readonly IRecvMsgBeheavior mMsgReceiver;
+        private readonly IRecvMsgBehavior mMsgReceiver;
         private readonly IConfigService mConfig;
         private readonly IPortService mPortService;
         private readonly IEventAggregator mEventAggr;

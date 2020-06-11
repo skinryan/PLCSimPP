@@ -7,9 +7,9 @@ using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Models;
 using BCI.PLCSimPP.Service.Analyzer;
-using BCI.PLCSimPP.Service.Devicies.StandardResponds;
+using BCI.PLCSimPP.Service.Devices.StandardResponds;
 
-namespace BCI.PLCSimPP.Service.Devicies
+namespace BCI.PLCSimPP.Service.Devices
 {
     [Serializable]
     public class DxC : UnitBase
@@ -26,22 +26,22 @@ namespace BCI.PLCSimPP.Service.Devicies
                 string bcr = content.Substring(0, 1);
                 if (bcr == ParamConst.BCR_1)
                 {
-                    var msg = SendMsg.GetMsg_1011(this, ParamConst.BCR_2);
+                    var msg = SendMsg.GetMsg1011(this, ParamConst.BCR_2);
                     this.mSendBehavior.PushMsg(msg);
                 }
 
 
                 if (bcr == ParamConst.BCR_2)
                 {
-                    var msg = SendMsg.GetMsg_1015(this);
+                    var msg = SendMsg.GetMsg1015(this);
                     this.mSendBehavior.PushMsg(msg);
 
-                    var tubeid = CurrentSample.SampleID;
+                    var tubeId = CurrentSample.SampleID;
                     if (CurrentSample.IsSubTube)
                     {
-                        tubeid = tubeid.Substring(0, tubeid.Length - 1);
+                        tubeId = tubeId.Substring(0, tubeId.Length - 1);
                     }
-                    mDxCSimService.SendMsg(InstrumentUnitNum, CurrentSample.DxCToken, CurrentSample.SampleID);
+                    mDxCSimService.SendMsg(InstrumentUnitNum, CurrentSample.DxCToken, CurrentSample.SampleID);//send token
 
                     base.MoveSample();
                 }

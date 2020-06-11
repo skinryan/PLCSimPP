@@ -9,6 +9,9 @@ namespace BCI.PLCSimPP.Comm.Interfaces
 {
     public interface IUnit
     {
+        /// <summary>
+        /// mark the unit is master unit
+        /// </summary>
         bool IsMaster { get; set; }
         /// <summary>
         /// Port

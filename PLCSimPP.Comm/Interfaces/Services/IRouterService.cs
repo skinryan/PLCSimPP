@@ -6,15 +6,31 @@ using BCI.PLCSimPP.Comm.Models;
 
 namespace BCI.PLCSimPP.Comm.Interfaces.Services
 {
+    /// <summary>
+    /// Router Service 
+    /// </summary>
     public interface IRouterService
     {
-        //ObservableCollection<UnitBase> GetLayout();
-        public void SetSiteMap(ObservableCollection<IUnit> unitColleciton);
+        /// <summary>
+        /// Set loaded units setting to router service
+        /// </summary>
+        /// <param name="unitCollection">unit settings</param>
+        void SetSiteMap(ObservableCollection<IUnit> unitCollection);
 
-        public List<IUnit> FindTargetUnit(string targetAddr);
+        /// <summary>
+        /// Find target unit by address
+        /// </summary>
+        /// <param name="targetAddr">target address</param>
+        /// <returns>matching units</returns>
+        List<IUnit> FindTargetUnit(string targetAddr);
 
-        public IUnit FindNextDestination(IUnit current);
+        /// <summary>
+        /// Find sample next destination
+        /// </summary>
+        /// <param name="current">current unit</param>
+        /// <returns>next unit</returns>
+        IUnit FindNextDestination(IUnit current);
 
-       // public IUnit FindNextPort(IUnit current);
+        
     }
 }

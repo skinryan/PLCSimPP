@@ -225,7 +225,7 @@ namespace BCI.PLCSimPP.Communication.Support
         {
         }
 
-        public SmartListenerException(string message, Exception inner)
+        public SmartListenerException(string message, System.Exception inner)
             : base(message, inner)
         {
         }

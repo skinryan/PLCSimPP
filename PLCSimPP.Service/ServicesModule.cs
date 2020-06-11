@@ -5,7 +5,6 @@ using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
 using BCI.PLCSimPP.Service.Analyzer;
 using BCI.PLCSimPP.Service.Config;
-using BCI.PLCSimPP.Service.Console;
 using BCI.PLCSimPP.Service.Log;
 using BCI.PLCSimPP.Service.Msg;
 using BCI.PLCSimPP.Service.Router;
@@ -29,11 +28,10 @@ namespace BCI.PLCSimPP.Service
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<IConsoleService, ConsoleService>();
             containerRegistry.RegisterSingleton<ILogService, LogService>();
             containerRegistry.RegisterSingleton<IConfigService, ConifgService>();
             containerRegistry.RegisterSingleton<IRouterService, RouterService>();
-            containerRegistry.RegisterSingleton<IRecvMsgBeheavior, MsgReceiver>();
+            containerRegistry.RegisterSingleton<IRecvMsgBehavior, MsgReceiver>();
             containerRegistry.RegisterSingleton<IPortService, PortService>();
             containerRegistry.RegisterSingleton<ISendMsgBehavior, MsgSender>();
             containerRegistry.RegisterSingleton<IAutomation, AutomationService>();

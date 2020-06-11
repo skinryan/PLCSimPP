@@ -5,7 +5,7 @@ using System.Text;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
 using BCI.PLCSimPP.Comm.Models;
-using BCI.PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Service.Devices;
 using BCI.PLCSimPP.Service.Config;
 using System.Linq;
 

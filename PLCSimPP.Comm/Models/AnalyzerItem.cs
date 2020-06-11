@@ -28,7 +28,7 @@ namespace BCI.PLCSimPP.Comm.Models
         private DcAnalyzerType mDcType;
 
         /// <summary>
-        /// instrumetn type 
+        /// instrument type 
         /// </summary>
         public DcAnalyzerType DcType
         {
@@ -39,7 +39,7 @@ namespace BCI.PLCSimPP.Comm.Models
         private DxCAnalyzerType mDxCType;
 
         /// <summary>
-        /// instrumetn type 
+        /// instrument type 
         /// </summary>
         public DxCAnalyzerType DxCType
         {

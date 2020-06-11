@@ -9,9 +9,9 @@ using BCI.PLCSimPP.Comm;
 using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Models;
-using BCI.PLCSimPP.Service.Devicies.StandardResponds;
+using BCI.PLCSimPP.Service.Devices.StandardResponds;
 
-namespace BCI.PLCSimPP.Service.Devicies
+namespace BCI.PLCSimPP.Service.Devices
 {
     [Serializable]
     public class Centrifuge : UnitBase
@@ -22,9 +22,9 @@ namespace BCI.PLCSimPP.Service.Devicies
         private int mSecCount;// time count
         private bool mSpinning;// centrifuge working flag
         private readonly Timer mSpinningTimer;
-        private object mlocker;
+        private object mLocker;
 
-        private List<ISample> StoredSamples { get; set; }
+        public List<ISample> StoredSamples { get; set; }
 
         protected override int GetPendingCount()
         {
@@ -55,7 +55,7 @@ namespace BCI.PLCSimPP.Service.Devicies
 
             if (cmd == LcCmds._0001)
             {
-                //simu 1017               
+                //simulate 1017               
                 var msg101A = new MsgCmd()
                 {
                     Port = this.Port,
@@ -83,6 +83,10 @@ namespace BCI.PLCSimPP.Service.Devicies
             }
         }
 
+
+        /// <summary>
+        /// after spinning process
+        /// </summary>
         private void MoveCentrifugedSampleToOutQueue()
         {
             foreach (var sample in StoredSamples)
@@ -173,9 +177,12 @@ namespace BCI.PLCSimPP.Service.Devicies
             }
         }
 
+        /// <summary>
+        /// Spinning process
+        /// </summary>
         private void DoSpin()
         {
-            lock (mlocker)
+            lock (mLocker)
             {
                 mSpinning = true;
 
@@ -208,16 +215,16 @@ namespace BCI.PLCSimPP.Service.Devicies
                     UnitAddr = this.Address
                 };
 
-                //mSpinning = false;
                 base.mSendBehavior.PushMsg(querySorting);
             }
         }
 
         public Centrifuge() : base()
         {
-            mlocker = new object();
+            mLocker = new object();
             StoredSamples = new List<ISample>();
             mSpinningTimer = new Timer(ProcessSpinning, null, 1000, 1000);
+
         }
     }
 

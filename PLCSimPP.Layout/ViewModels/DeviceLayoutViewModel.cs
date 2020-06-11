@@ -15,7 +15,7 @@ using BCI.PLCSimPP.Comm.Models;
 using BCI.PLCSimPP.Layout.Model;
 using BCI.PLCSimPP.Service.Analyzer;
 using BCI.PLCSimPP.Service.Config;
-using BCI.PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Service.Devices;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;

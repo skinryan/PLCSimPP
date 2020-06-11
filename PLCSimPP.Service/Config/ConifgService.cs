@@ -26,8 +26,8 @@ namespace BCI.PLCSimPP.Service.Config
         {
             try
             {
-                var mSitemapPath = AppConfig.Configuration["SiteMapPath"];
-                using (FileStream fs = new FileStream(mSitemapPath, FileMode.Open))
+                var siteMapPath = AppConfig.Configuration["SiteMapPath"];
+                using (FileStream fs = new FileStream(siteMapPath, FileMode.Open))
                 {
                     using (StreamReader sr = new StreamReader(fs))
                     {
@@ -48,7 +48,7 @@ namespace BCI.PLCSimPP.Service.Config
         {
             try
             {
-                var path = AppDomain.CurrentDomain.BaseDirectory + "\\appsettings.json";
+                var path = AppDomain.CurrentDomain.BaseDirectory + "\\"+ AppConfig.SETTING_FILE_NAME;
                 string josnString = File.ReadAllText(path, Encoding.Default);
                 SystemInfo sys = JsonConvert.DeserializeObject<SystemInfo>(josnString);
 
@@ -70,7 +70,7 @@ namespace BCI.PLCSimPP.Service.Config
             //AppConfig.Configuration["System:ReceiveInterval"] = info.MsgReceiveInterval.ToString();
             //AppConfig.Configuration["System:SiteMapPath"] = info.SiteMapPath;
 
-            var path = AppDomain.CurrentDomain.BaseDirectory + "\\appsettings.json";
+            var path = AppDomain.CurrentDomain.BaseDirectory + "\\" + AppConfig.SETTING_FILE_NAME;
             string josnString = File.ReadAllText(path, Encoding.Default);
 
             SystemInfo sys = JsonConvert.DeserializeObject<SystemInfo>(josnString);

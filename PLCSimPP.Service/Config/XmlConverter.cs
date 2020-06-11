@@ -7,9 +7,10 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using BCI.PLCSimPP.Comm;
+using BCI.PLCSimPP.Comm.Enums;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Models;
-using BCI.PLCSimPP.Service.Devicies;
+using BCI.PLCSimPP.Service.Devices;
 
 namespace BCI.PLCSimPP.Service.Config
 {
@@ -141,7 +142,7 @@ namespace BCI.PLCSimPP.Service.Config
                     device = new Stocker();
                     break;
                 default:
-                    device = new Devicies.GC();
+                    device = new Devices.GC();
                     break;
             }
 

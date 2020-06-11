@@ -7,10 +7,10 @@ using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Events;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Models;
-using BCI.PLCSimPP.Service.Devicies.StandardResponds;
+using BCI.PLCSimPP.Service.Devices.StandardResponds;
 using Prism.Events;
 
-namespace BCI.PLCSimPP.Service.Devicies
+namespace BCI.PLCSimPP.Service.Devices
 {
     [Serializable]
     public class Outlet : UnitBase
@@ -49,7 +49,7 @@ namespace BCI.PLCSimPP.Service.Devicies
                 string rack = content.Substring(17, 1);
                 string position = content.Substring(18, 3);
 
-                var msg = SendMsg.GetMsg_1015(this, content);
+                var msg = SendMsg.GetMsg1015(this, content);
                 mSendBehavior.PushMsg(msg);
 
                 StoreSample(floor, rack, position, CurrentSample);
@@ -62,7 +62,7 @@ namespace BCI.PLCSimPP.Service.Devicies
             {
                 string floor = content.Substring(0, 1);
                 string rack = content.Substring(1, 1);
-                var msg = SendMsg.GetMsg_1016(this, floor, rack);
+                var msg = SendMsg.GetMsg1016(this, floor, rack);
                 mSendBehavior.PushMsg(msg);
 
                 EmptyTargetRack(floor, rack);

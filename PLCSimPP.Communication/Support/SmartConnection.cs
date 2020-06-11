@@ -112,7 +112,7 @@ namespace BCI.PLCSimPP.Communication.Support
                 // Asynchronous background read process.
                 mClientStream.BeginRead(mClientBuffer, 0, mClient.ReceiveBufferSize - 1, new System.AsyncCallback(OnReceive), null);
             }
-            catch (Exception)
+            catch (System.Exception)
             {
                 OnConnectionClosed();
             }
@@ -128,7 +128,7 @@ namespace BCI.PLCSimPP.Communication.Support
                     // Data received.
                     count = mClient.GetStream().EndRead(ar);
                 }
-                catch (Exception wx)
+                catch (System.Exception wx)
                 {
                     // Server closed ungracefully.
                     count = 0;
@@ -151,7 +151,7 @@ namespace BCI.PLCSimPP.Communication.Support
                     OnConnectionClosed();
                 }
             }
-            catch (Exception)
+            catch (System.Exception)
             {
                 OnConnectionClosed();
             }

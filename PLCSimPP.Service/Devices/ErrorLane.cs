@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BCI.PLCSimPP.Comm.Constants;
 
-namespace BCI.PLCSimPP.Service.Devicies
+namespace BCI.PLCSimPP.Service.Devices
 {
     [Serializable]
     public class ErrorLane : UnitBase
@@ -20,7 +20,7 @@ namespace BCI.PLCSimPP.Service.Devicies
             }
         }
 
-        public ErrorLane()
+        public ErrorLane() : base()
         {
 
         }

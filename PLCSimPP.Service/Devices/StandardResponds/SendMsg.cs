@@ -4,29 +4,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BCI.PLCSimPP.Comm.Constants;
+using BCI.PLCSimPP.Comm.Enums;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Service.Devices;
 
-namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
+namespace BCI.PLCSimPP.Service.Devices.StandardResponds
 {
+    /// <summary>
+    /// Build send message helper
+    /// </summary>
     public class SendMsg
     {
         /// <summary>
         /// Key Pad Operation
         /// </summary>
-        /// <param name="unit"></param>
+        /// <param name="unit">unit</param>
+        /// <param name="activePanel">panel number</param>
+        /// <param name="operation"></param>
+        /// <param name="sid"></param>
         /// <returns></returns>
-        public static IMessage GetMsg_1002(IUnit unit, string activePanel, string operation, string sid)
+        public static IMessage GetMsg1002(IUnit unit, string activePanel, string operation, string sid)
         {
-            MsgCmd msg = new MsgCmd();
-            msg.Command = UnitCmds._1002;
-            msg.Port = unit.Port;
-            msg.UnitAddr = unit.Address;
-            msg.Param = activePanel + operation + sid.PadRight(15);
-            return msg;
+            return new MsgCmd
+            {
+                Command = UnitCmds._1002,
+                Port = unit.Port,
+                UnitAddr = unit.Address,
+                Param = activePanel + operation + sid.PadRight(15)
+            };
         }
 
-        public static IMessage GetMsg_1011(IUnit unit, string bcr)
+        /// <summary>
+        /// sample arrived notification
+        /// </summary>
+        /// <param name="unit">unit</param>
+        /// <param name="bcr">bar code reader No</param>
+        /// <returns></returns>
+        public static IMessage GetMsg1011(IUnit unit, string bcr)
         {
             string param = bcr + unit.CurrentSample.SampleID.PadRight(15);
             return new MsgCmd()
@@ -41,16 +56,19 @@ namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
         /// <summary>
         /// Error Notification
         /// </summary>
-        /// <param name="unit"></param>
+        /// <param name="unit">unit</param>
+        /// <param name="errType">error type</param>
+        /// <param name="errMsg">error message</param>
         /// <returns></returns>
-        public static IMessage GetMsg_10E0(IUnit unit, string errType, string errMsg)
+        public static IMessage GetMsg10E0(IUnit unit, string errType, string errMsg)
         {
-            MsgCmd msg = new MsgCmd();
-            msg.Command = UnitCmds._10E0;
-            msg.Port = unit.Port;
-            msg.UnitAddr = unit.Address;
-            msg.Param = errType + errMsg.PadRight(8);
-            return msg;
+            return new MsgCmd
+            {
+                Command = UnitCmds._10E0,
+                Port = unit.Port,
+                UnitAddr = unit.Address,
+                Param = errType + errMsg.PadRight(8)
+            };
         }
 
         /// <summary>
@@ -59,14 +77,15 @@ namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
         /// <param name="unit"></param>
         /// <param name="condition">'0': Holder Shortage cleared, '1': Holder Shortage occurred</param>
         /// <returns></returns>
-        public static IMessage GetMsg_1026(IUnit unit, string condition)
+        public static IMessage GetMsg1026(IUnit unit, string condition)
         {
-            MsgCmd msg = new MsgCmd();
-            msg.Command = UnitCmds._1026;
-            msg.Port = unit.Port;
-            msg.UnitAddr = unit.Address;
-            msg.Param = condition;
-            return msg;
+            return new MsgCmd
+            {
+                Command = UnitCmds._1026,
+                Port = unit.Port,
+                UnitAddr = unit.Address,
+                Param = condition
+            };
         }
 
         /// <summary>
@@ -74,47 +93,35 @@ namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
-        public static IMessage GetMsg_1024(IUnit unit)
+        public static IMessage GetMsg1024(IUnit unit)
         {
-            MsgCmd msg = new MsgCmd();
-            msg.Command = UnitCmds._1024;
-            msg.Port = unit.Port;
-            msg.UnitAddr = unit.Address;
-            string rack = unit.CurrentSample.Rack == Comm.RackType.Unrecognized ? "  " : ((int)unit.CurrentSample.Rack).ToString();
-            msg.Param = ParamConst.BCR_1 + unit.CurrentSample.SampleID.PadRight(15) + rack;
-            return msg;
-        }
+            string rack = unit.CurrentSample.Rack == RackType.Unrecognized ? "  " : ((int)unit.CurrentSample.Rack).ToString();
 
-        /// <summary>
-        /// Request for holders
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <param name="request">'0': Holder Shortage cleared, '1': Holder Shortage occurred</param>
-        /// <returns></returns>
-        public static IMessage GetMsg_1026(IUnit unit, bool request)
-        {
-            MsgCmd msg = new MsgCmd();
-            msg.Command = UnitCmds._1026;
-            msg.Port = unit.Port;
-            msg.UnitAddr = unit.Address;
-            msg.Param = request ? "1" : "0";
-            return msg;
+            return new MsgCmd
+            {
+                Command = UnitCmds._1024,
+                Port = unit.Port,
+                UnitAddr = unit.Address,
+                Param = ParamConst.BCR_1 + unit.CurrentSample.SampleID.PadRight(15) + rack
+            };
         }
 
         /// <summary>
         /// rack exchange
         /// </summary>
-        /// <param name="unit"></param>
-        /// <param name="request"></param>
+        /// <param name="unit">unit</param>
+        /// <param name="floor">floor</param>
+        /// <param name="rack">rack</param>
         /// <returns></returns>
-        public static IMessage GetMsg_1016(IUnit unit, string floor, string rack)
+        public static IMessage GetMsg1016(IUnit unit, string floor, string rack)
         {
-            MsgCmd msg = new MsgCmd();
-            msg.Command = UnitCmds._1016;
-            msg.Port = unit.Port;
-            msg.UnitAddr = unit.Address;
-            msg.Param = "01" + floor + rack;
-            return msg;
+            return new MsgCmd
+            {
+                Command = UnitCmds._1016,
+                Port = unit.Port,
+                UnitAddr = unit.Address,
+                Param = "01" + floor + rack
+            };
         }
 
         /// <summary>
@@ -123,13 +130,13 @@ namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
         /// <param name="unit"></param>
         /// <param name="recvParamFrom0017"></param>
         /// <returns></returns>
-        public static IMessage GetMsg_1015(IUnit unit, string recvParamFrom0017)
+        public static IMessage GetMsg1015(IUnit unit, string recvParamFrom0017)
         {
             string sid = recvParamFrom0017.Substring(1, 15).Trim();
             string floor = recvParamFrom0017.Substring(16, 1);
             string rack = recvParamFrom0017.Substring(17, 1);
             string position = recvParamFrom0017.Substring(18, 3);
-            string rackType = recvParamFrom0017.Substring(21, 2);
+            //string rackType = recvParamFrom0017.Substring(21, 2);
             string cassette = recvParamFrom0017.Substring(23, 1);
 
             string param = sid.PadRight(15) + floor + rack + position + (int)Flag.Normal + cassette;
@@ -147,7 +154,7 @@ namespace BCI.PLCSimPP.Service.Devicies.StandardResponds
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
-        public static IMessage GetMsg_1015(IUnit unit)
+        public static IMessage GetMsg1015(IUnit unit)
         {
             //Fixed value when the instrument use the message
             var floor = "0";

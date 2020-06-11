@@ -1,5 +1,8 @@
 ﻿namespace BCI.PLCSimPP.Comm.Interfaces
 {
+    /// <summary>
+    /// communication message interface
+    /// </summary>
     public interface IMessage
     {
         /// <summary>
@@ -23,7 +26,7 @@
         int Port { get; set; }
 
         /// <summary>
-        /// Build messagelog
+        /// Build message log
         /// </summary>
         /// <returns></returns>
         string ToString();

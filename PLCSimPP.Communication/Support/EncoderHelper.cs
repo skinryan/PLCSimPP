@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Models;
-using BCI.PLCSimPP.Communication.Execption;
+using BCI.PLCSimPP.Communication.Exceptions;
 using BCI.PLCSimPP.Communication.Models;
 
 namespace BCI.PLCSimPP.Communication.Support
@@ -307,7 +307,7 @@ namespace BCI.PLCSimPP.Communication.Support
                 result.Command = ToHexStringWithoutSpace(cmdBuffer);
                 result.Param = Encoding.ASCII.GetString(paramBuffer);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }

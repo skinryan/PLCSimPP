@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BCI.PLCSimPP.Communication.Execption
+namespace BCI.PLCSimPP.Communication.Exceptions
 {
-    public class InvalidCommandExecption : Exception
+    public class InvalidCommandException : System.Exception
     {
         public string InvalidCommand { get; private set; }
 
-        public InvalidCommandExecption(string cmd)
+        public InvalidCommandException(string cmd)
         {
             InvalidCommand = cmd;
         }
     }
 
-    public class InvalidDataLengthExecption : Exception
+    public class InvalidDataLengthException : System.Exception
     {
         public int ExpectLength { get; private set; }
 
         public int ActualLength { get; private set; }
 
-        public InvalidDataLengthExecption(int expect, int actual)
+        public InvalidDataLengthException(int expect, int actual)
         {
             ExpectLength = expect;
             ActualLength = actual;
