@@ -31,11 +31,13 @@ namespace BCI.PLCSimPP.Test.TestTool.Templates
                 {
                     //print order
                     var sampleId = msg.Param.Substring(1, 15);
-                    MsgCmd printCmd = new MsgCmd();
-                    printCmd.Command = LcCmds._0016;
-                    printCmd.Port = msg.Port;
-                    printCmd.UnitAddr = "0000000020";
-                    printCmd.Param = sampleId + "1".PadRight(15) + (sampleId + "," + "Glucose").PadRight(64);
+                    MsgCmd printCmd = new MsgCmd
+                    {
+                        Command = LcCmds._0016,
+                        Port = msg.Port,
+                        UnitAddr = "0000000020",
+                        Param = sampleId + "1".PadRight(15) + (sampleId + "," + "Glucose").PadRight(64)
+                    };
 
                     var units = mRouterService.FindTargetUnit(printCmd.UnitAddr);
                     foreach (var unit in units)
@@ -43,14 +45,16 @@ namespace BCI.PLCSimPP.Test.TestTool.Templates
                         unit.OnReceivedMsg(printCmd.Command, printCmd.Param);
                     }
 
-                    MsgCmd reply = new MsgCmd();
-                    reply.Command = LcCmds._0011;
-                    reply.Port = msg.Port;
-                    reply.UnitAddr = msg.UnitAddr;
-                    reply.Param = bcr + sampleId + "1";
+                    MsgCmd reply = new MsgCmd
+                    {
+                        Command = LcCmds._0011,
+                        Port = msg.Port,
+                        UnitAddr = msg.UnitAddr,
+                        Param = bcr + sampleId + "1"
+                    };
 
-                    var units_ali = mRouterService.FindTargetUnit(reply.UnitAddr);
-                    foreach (var unit in units_ali)
+                    var unitAli = mRouterService.FindTargetUnit(reply.UnitAddr);
+                    foreach (var unit in unitAli)
                     {
                         unit.OnReceivedMsg(reply.Command, reply.Param);
                     }
@@ -95,14 +99,15 @@ namespace BCI.PLCSimPP.Test.TestTool.Templates
 
             if (msg.Command == UnitCmds._1013)
             {
-                MsgCmd reply = new MsgCmd();
-                reply.Command = LcCmds._0014;
-                reply.Port = msg.Port;
-                reply.UnitAddr = msg.UnitAddr;
-
                 var sampleId = msg.Param.Substring(1, 15);
 
-                reply.Param =  sampleId + "0004";
+                MsgCmd reply = new MsgCmd
+                {
+                    Command = LcCmds._0014,
+                    Port = msg.Port,
+                    UnitAddr = msg.UnitAddr,
+                    Param = sampleId + "0004"
+                };
 
                 var units = mRouterService.FindTargetUnit(reply.UnitAddr);
                 foreach (var unit in units)
@@ -116,15 +121,16 @@ namespace BCI.PLCSimPP.Test.TestTool.Templates
         {
             if (msg.Command == UnitCmds._1011)
             {
-                MsgCmd reply = new MsgCmd();
-                reply.Command = LcCmds._0011;
-                reply.Port = msg.Port;
-                reply.UnitAddr = msg.UnitAddr;
-
                 var bcr = msg.Param.Substring(0, 1);
                 var sampleId = msg.Param.Substring(1, 15);
 
-                reply.Param = bcr + sampleId + "1";
+                MsgCmd reply = new MsgCmd
+                {
+                    Command = LcCmds._0011,
+                    Port = msg.Port,
+                    UnitAddr = msg.UnitAddr,
+                    Param = bcr + sampleId + "1"
+                };
 
                 var units = mRouterService.FindTargetUnit(reply.UnitAddr);
                 foreach (var unit in units)

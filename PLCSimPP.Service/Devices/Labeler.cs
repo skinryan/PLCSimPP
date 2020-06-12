@@ -30,9 +30,9 @@ namespace BCI.PLCSimPP.Service.Devices
             }
             if (cmd == LcCmds._0016)
             {
-                var tubeid = content.Substring(0, 15);
-                var secTubeid = content.Substring(15, 15);
-                mEventAggr.GetEvent<PrintLabelEvent>().Publish(tubeid + secTubeid);
+                var tubeId = content.Substring(0, 15);
+                var secTubeId = content.Substring(15, 15);
+                mEventAggr.GetEvent<PrintLabelEvent>().Publish(tubeId + secTubeId);
             }
         }
 

@@ -17,7 +17,7 @@ namespace BCI.PLCSimPP.Service.Devices
         private List<ISample> mClotedSamples;
         private Timer mClotTimer;
         private int mClotTime;
-        private object mlocker;
+        private object mLocker;
 
         protected override int GetPendingCount()
         {
@@ -36,7 +36,7 @@ namespace BCI.PLCSimPP.Service.Devices
 
                 if (mClotedSamples.Count == 5)
                 {
-                    Reply_1012();
+                    Reply1012();
                     mClotTime = 0;
                 }
             }
@@ -47,9 +47,9 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
-        private void Reply_1012()
+        private void Reply1012()
         {
-            lock (mlocker)
+            lock (mLocker)
             {
                 if (mClotedSamples.Count > 0)
                 {
@@ -65,7 +65,7 @@ namespace BCI.PLCSimPP.Service.Devices
 
                     mSendBehavior.PushMsg(msg);
 
-                    MoveDetectedSample();
+                    MoveDetectedSample();//movie all sample
 
                     mClotedSamples.Clear();
 
@@ -93,7 +93,7 @@ namespace BCI.PLCSimPP.Service.Devices
 
             if (mClotTime >= CLOT_TIME_OUT)
             {
-                Reply_1012();
+                Reply1012();
                 mClotTime = 0;
             }
 
@@ -102,7 +102,7 @@ namespace BCI.PLCSimPP.Service.Devices
 
         public LevelDetector() : base()
         {
-            mlocker = new object();
+            mLocker = new object();
             mClotedSamples = new List<ISample>();
             mClotTimer = new Timer(ProcessClot, null, 1000, 1000);
 

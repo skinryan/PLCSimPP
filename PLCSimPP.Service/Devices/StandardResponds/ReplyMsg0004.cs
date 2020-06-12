@@ -18,7 +18,7 @@ namespace BCI.PLCSimPP.Service.Devices.StandardResponds
         {
             List<IMessage> result = new List<IMessage>();
 
-            IMessage cmd = new MsgCmd()
+            IMessage cmd1001 = new MsgCmd()
             {
                 Command = UnitCmds._1001,
                 Param = "A",//'A': under AUTO Operation
@@ -26,7 +26,16 @@ namespace BCI.PLCSimPP.Service.Devices.StandardResponds
                 Port = unit.Port
             };
 
-            result.Add(cmd);
+            IMessage cmd1025 = new MsgCmd()
+            {
+                Command = UnitCmds._1025,
+                Param = "1",//status '0': Stop, '1': Run
+                UnitAddr = unit.Address,
+                Port = unit.Port
+            };
+
+            result.Add(cmd1001);
+            result.Add(cmd1025);
             return result;
         }
     }

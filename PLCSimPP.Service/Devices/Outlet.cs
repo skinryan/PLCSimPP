@@ -34,6 +34,7 @@ namespace BCI.PLCSimPP.Service.Devices
                 return result;
             }
         }
+
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
@@ -53,9 +54,7 @@ namespace BCI.PLCSimPP.Service.Devices
                 mSendBehavior.PushMsg(msg);
 
                 StoreSample(floor, rack, position, CurrentSample);
-
                 CurrentSample = null;
-                
             }
 
             if (cmd == LcCmds._0018)
@@ -68,6 +67,7 @@ namespace BCI.PLCSimPP.Service.Devices
                 EmptyTargetRack(floor, rack);
             }
         }
+
         private void EmptyTargetRack(string floor, string rack)
         {
             if (mShelfList.ContainsKey(floor))
@@ -99,7 +99,9 @@ namespace BCI.PLCSimPP.Service.Devices
             mEvent.GetEvent<NotifyOnlineSampleEvent>().Publish(-1);
         }
 
-
+        /// <summary>
+        /// constructor
+        /// </summary>
         public Outlet() : base()
         {
             if (ServiceLocator.IsLocationProviderSet)

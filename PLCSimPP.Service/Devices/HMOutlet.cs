@@ -18,6 +18,9 @@ namespace BCI.PLCSimPP.Service.Devices
         private IEventAggregator mEvent;
         private Dictionary<string, Shelf> mShelfList = new Dictionary<string, Shelf>();
 
+        /// <summary>
+        /// stored sample count
+        /// </summary>
         public int StoredCount
         {
             get
