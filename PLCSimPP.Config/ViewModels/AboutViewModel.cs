@@ -44,7 +44,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
             if (entry != null)
             {
                 var versionInfo = FileVersionInfo.GetVersionInfo(entry.Location);
-                mVersion = $"PLC Simulator {versionInfo.ProductVersion}";
+                mVersion = $"PLC Simulator {versionInfo.ProductVersion}X";
                 mCopyRight = versionInfo.LegalCopyright;
             }
         }
