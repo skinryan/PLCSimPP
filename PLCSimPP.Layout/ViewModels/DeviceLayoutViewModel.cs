@@ -30,6 +30,22 @@ namespace BCI.PLCSimPP.Layout.ViewModels
 
         #region properties
 
+        private bool mEndNumberChecked = true;
+
+        public bool EndNumberChecked
+        {
+            get { return mEndNumberChecked; }
+            set { SetProperty(ref mEndNumberChecked, value); }
+        }
+
+        private bool mQuantityChecked;
+
+        public bool QuantityChecked
+        {
+            get { return mQuantityChecked; }
+            set { SetProperty(ref mQuantityChecked, value); }
+        }
+
         private bool mConnectedButtonEnable = true;
         public bool ConnectedButtonEnable
         {
@@ -204,7 +220,7 @@ namespace BCI.PLCSimPP.Layout.ViewModels
                 {
                     using (StreamWriter sw = new StreamWriter(fs))
                     {
-                        var str = XmlConverter.SerializeISample(SampleCollection);
+                        var str = XmlConverter.SerializeISample(BuildSampleList());
 
                         sw.Write(str);
                         sw.Flush();
@@ -225,26 +241,31 @@ namespace BCI.PLCSimPP.Layout.ViewModels
                 Filter = "XML File(*.xml)|*.xml",
                 CheckPathExists = true,
                 DefaultExt = "xml",
-                RestoreDirectory = true
+                RestoreDirectory = true,
+                Multiselect = true
             };
 
             ofd.ShowDialog();
             //check selected file is not null
-            if (string.IsNullOrEmpty(ofd.FileName))
+            if (ofd.FileNames.Length < 1)
             {
                 return;
             }
 
-            using (FileStream fs = new FileStream(ofd.FileName, FileMode.Open))
+            SampleCollection.Clear();
+
+            foreach (var filename in ofd.FileNames)
             {
-                using (StreamReader sr = new StreamReader(fs))
+                using (FileStream fs = new FileStream(filename, FileMode.Open))
                 {
-                    string fileContent = sr.ReadToEnd();
+                    using (StreamReader sr = new StreamReader(fs))
+                    {
+                        string fileContent = sr.ReadToEnd();
 
-                    var list = XmlConverter.DeserializeISample(fileContent);
+                        var list = XmlConverter.DeserializeISample(fileContent);
 
-                    SampleCollection.Clear();
-                    SampleCollection = new ObservableCollection<ISample>(list);
+                        SampleCollection.AddRange(new ObservableCollection<ISample>(list));
+                    }
                 }
             }
         }
@@ -286,13 +307,32 @@ namespace BCI.PLCSimPP.Layout.ViewModels
 
         private void DoAddSample()
         {
-            int length = 0;
+            var sampleList = BuildSampleList();
 
-            if (SampleRangeInfo.StopNum >= SampleRangeInfo.StartNum)
+            foreach (var sample in sampleList)
+            {
+                //Check for duplications
+                if (SampleCollection.Count(t => t.SampleID == sample.SampleID) > 0)
+                {
+                    continue;
+                }
+
+                SampleCollection.Add(sample);
+            }
+        }
+
+
+        private IEnumerable<ISample> BuildSampleList()
+        {
+            int length = 0;
+            var result = new List<ISample>();
+
+            if (EndNumberChecked)
             {
                 length = SampleRangeInfo.StopNum - SampleRangeInfo.StartNum + 1;
             }
-            else
+
+            if (QuantityChecked)
             {
                 length = SampleRangeInfo.Quantity;
             }
@@ -301,22 +341,19 @@ namespace BCI.PLCSimPP.Layout.ViewModels
             {
                 Sample sample = new Sample
                 {
-                    SampleID = SampleRangeInfo.Characters + (SampleRangeInfo.StartNum + i).ToString().PadLeft(SampleRangeInfo.Append, '0')
+                    SampleID = SampleRangeInfo.Characters +
+                               (SampleRangeInfo.StartNum + i).ToString().PadLeft(SampleRangeInfo.Append, '0')
                 };
-
-                //Check for duplications
-                if (SampleCollection.Count(t => t.SampleID == sample.SampleID) > 0)
-                {
-                    continue;
-                }
 
                 sample.Rack = SampleRangeInfo.RackType;
                 sample.DcToken = string.IsNullOrEmpty(SampleRangeInfo.DcToken) ? "AAA" : SampleRangeInfo.DcToken;
-                sample.DxCToken = string.IsNullOrEmpty(SampleRangeInfo.DxCToken) ? "AAA" : SampleRangeInfo.DxCToken; ;
+                sample.DxCToken = string.IsNullOrEmpty(SampleRangeInfo.DxCToken) ? "AAA" : SampleRangeInfo.DxCToken;
                 sample.IsLoaded = false;
 
-                SampleCollection.Add(sample);
+                result.Add(sample);
             }
+
+            return result;
         }
     }
 }

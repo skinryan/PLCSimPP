@@ -4,12 +4,12 @@
              xmlns:buttonControl="clr-namespace:BCI.PLCSimPP.Layout.Controls"
              xmlns:cvt="clr-namespace:BCI.PLCSimPP.Layout.Converter"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:libBinding="clr-namespace:BCI.PLCSimPP.Layout.Model"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:prism="http://prismlibrary.com/"
-             xmlns:libBinding="clr-namespace:BCI.PLCSimPP.Layout.Model"
+             Name="uc"
              d:DesignHeight="450"
              d:DesignWidth="1000"
-             Name="uc"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d">
     <UserControl.Resources>
@@ -144,9 +144,9 @@
                                                         Orientation="Horizontal">
                                                 <StackPanel.ContextMenu>
                                                     <ContextMenu>
-                                                        <MenuItem Header="Clear Current Sample"
-                                                                  Command="{Binding Data.ClearJammedCommand, Source={StaticResource BindingProxy}}"
-                                                                  CommandParameter="{Binding .}" />
+                                                        <MenuItem Command="{Binding Data.ClearJammedCommand, Source={StaticResource BindingProxy}}"
+                                                                  CommandParameter="{Binding .}"
+                                                                  Header="Clear Current Sample" />
                                                     </ContextMenu>
                                                 </StackPanel.ContextMenu>
                                                 <Border Background="SkyBlue"
@@ -197,7 +197,7 @@
 
             <Style x:Key="TextStyle" TargetType="{x:Type TextBlock}">
                 <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
             </Style>
             <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
                 <Setter Property="Margin" Value="3" />
@@ -292,44 +292,45 @@
                                      TextAlignment="Right"
                                      TextChanged="TextBox_TextChanged" />
 
-                            <TextBlock Grid.Row="1"
-                                       Grid.Column="2"
-                                       Style="{StaticResource TextStyle}"
-                                       Text="Stop Number:" />
+                            <RadioButton x:Name="rb_stop"
+                                         Grid.Row="1"
+                                         Grid.Column="2"
+                                         VerticalAlignment="Center"
+                                         Content="Stop Number:"
+                                         GroupName="RangeType"
+                                         IsChecked="{Binding EndNumberChecked}" />
                             <TextBox x:Name="tb_endNum"
                                      Grid.Row="1"
                                      Grid.Column="3"
                                      GotFocus="TextBox_GotFocus"
-                                     IsEnabled="{Binding SampleRangeInfo.EndNumEnable}"
-                                     PreviewMouseDown="TextBox_PreviewMouseDown"
+                                     IsEnabled="{Binding EndNumberChecked}"
                                      Style="{StaticResource TextBoxStyle}"
                                      Text="{Binding SampleRangeInfo.StopNum}"
                                      TextAlignment="Right"
-                                     TextChanged="TextBox_TextChanged"
-                                     LostFocus="tb_endNum_LostFocus" />
+                                     TextChanged="TextBox_TextChanged" />
 
-                            <TextBlock Grid.Row="2"
-                                       Grid.Column="0"
-                                       Style="{StaticResource TextStyle}"
-                                       Text="Quantity:" />
+                            <RadioButton x:Name="rb_quantity"
+                                         Grid.Row="2"
+                                         Grid.Column="2"
+                                         VerticalAlignment="Center"
+                                         Content="Quantity:"
+                                         GroupName="RangeType"
+                                         IsChecked="{Binding QuantityChecked}" />
                             <TextBox x:Name="tb_quantity"
                                      Grid.Row="2"
-                                     Grid.Column="1"
+                                     Grid.Column="3"
                                      GotFocus="TextBox_GotFocus"
-                                     IsEnabled="{Binding SampleRangeInfo.QuantityEnable}"
-                                     PreviewMouseDown="TextBox_PreviewMouseDown"
+                                     IsEnabled="{Binding QuantityChecked}"
                                      Style="{StaticResource TextBoxStyle}"
                                      Text="{Binding SampleRangeInfo.Quantity}"
                                      TextAlignment="Right"
-                                     TextChanged="TextBox_TextChanged"
-                                     LostFocus="tb_endNum_LostFocus" />
+                                     TextChanged="TextBox_TextChanged" />
 
                             <TextBlock Grid.Row="2"
-                                       Grid.Column="2"
                                        Style="{StaticResource TextStyle}"
                                        Text="RackType:" />
                             <ComboBox Grid.Row="2"
-                                      Grid.Column="3"
+                                      Grid.Column="1"
                                       Margin="3"
                                       HorizontalAlignment="Stretch"
                                       VerticalAlignment="Center"
@@ -345,8 +346,8 @@
                             <TextBox x:Name="tb_ss"
                                      Grid.Row="3"
                                      Grid.Column="1"
-                                     Style="{StaticResource TextBoxStyle}"
                                      CharacterCasing="Upper"
+                                     Style="{StaticResource TextBoxStyle}"
                                      Text="{Binding SampleRangeInfo.DcToken}"
                                      TextAlignment="Left" />
 
@@ -357,8 +358,8 @@
                             <TextBox Grid.Row="3"
                                      Grid.Column="3"
                                      Margin="3"
-                                     Style="{StaticResource TextBoxStyle}"
                                      CharacterCasing="Upper"
+                                     Style="{StaticResource TextBoxStyle}"
                                      Text="{Binding SampleRangeInfo.DxCToken}"
                                      TextAlignment="Left" />
 

@@ -1,21 +1,16 @@
-﻿using System.Windows.Input;
-using BCI.PLCSimPP.Comm.Models;
-using Prism.Mvvm;
-using Prism.Commands;
-using System.Windows.Forms;
-using BCI.PLCSimPP.Config.Controllers;
-using BCI.PLCSimPP.PresentationControls;
-using Prism.Regions;
+﻿using System;
 using BCI.PLCSimPP.Comm.Constants;
-using Prism.Events;
 using BCI.PLCSimPP.Comm.Events;
-using System;
-using BCI.PLCSimPP.Config.ViewDatas;
-using CommonServiceLocator;
-using BCI.PLCSimPP.Comm.Interfaces.Services;
-using System.Threading;
 using BCI.PLCSimPP.Comm.Interfaces;
-using DcSimCom;
+using BCI.PLCSimPP.Config.Controllers;
+using BCI.PLCSimPP.Config.ViewDatas;
+using BCI.PLCSimPP.PresentationControls;
+using Prism.Commands;
+using Prism.Events;
+using System.Threading;
+using System.Windows;
+using System.Windows.Input;
+using Microsoft.Win32;
 
 namespace BCI.PLCSimPP.Config.ViewModels
 {
@@ -108,8 +103,13 @@ namespace BCI.PLCSimPP.Config.ViewModels
                                  //RestoreDirectory = true //Gets or sets a value indicating whether the dialog box restores the current directory before closing.
             };
 
-            var path = dialog.ShowDialog() == DialogResult.OK ? dialog.FileName.Trim() : string.Empty;
-            return path;
+            var diaResult = dialog.ShowDialog();
+            if (diaResult.HasValue && diaResult.Value)
+            {
+                return dialog.FileName.Trim();
+            }
+
+            return string.Empty;
         }
 
         private void DoCancel()
@@ -124,8 +124,8 @@ namespace BCI.PLCSimPP.Config.ViewModels
         {
             if (ConfigurationController.Data.IsValueChanged)
             {
-                var result = MessageBox.Show("Do you need to save the changed Settings?", "Warning", MessageBoxButtons.YesNoCancel);
-                if (result == DialogResult.Yes)
+                var result = MessageBox.Show("Do you need to save the changed Settings?", "Warning", MessageBoxButton.YesNoCancel);
+                if (result == MessageBoxResult.Yes)
                 {
                     if (mAutomation.IsConnected)
                     {
@@ -136,7 +136,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
                     ConfigurationController.Save();
                     return true;
                 }
-                else if (result == DialogResult.No)
+                else if (result == MessageBoxResult.No)
                 {
                     ConfigurationController.LoadViewDatas();
                     return true;

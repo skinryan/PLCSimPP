@@ -136,7 +136,6 @@ namespace BCI.PLCSimPP.Config.ViewDatas
                     var temp = mDxCAnalyzerItems;
                     mDxCAnalyzerItems = value;
                     NotifyPropertyChanged(this, "DxCAnalyzerItems", temp, value);
-
                 }
             }
         }

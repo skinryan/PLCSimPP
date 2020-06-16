@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<root>
+  <DynamicInlet>
+    <Port>1</Port>
+    <Address>0000000002</Address>
+    <DisplayName>DynamicInlet</DisplayName>
+    <Children>
+      <HMOutlet>	  
+        <Port>1</Port>
+        <Address>0000000001</Address>
+        <DisplayName>HMOutlet</DisplayName>
+      </HMOutlet>
+      <Centrifuge>
+        <Port>1</Port>
+        <Address>0000000004</Address>
+        <DisplayName>Centrifuge#1</DisplayName>
+      </Centrifuge>
+      <Centrifuge>
+        <Port>1</Port>
+        <Address>0000000008</Address>
+        <DisplayName>Centrifuge#2</DisplayName>
+      </Centrifuge>
+      <LevelDetector>
+        <Port>1</Port>
+        <Address>0000000010</Address>
+        <DisplayName>SerumLevel</DisplayName>
+      </LevelDetector>
+      <Labeler>
+        <Port>1</Port>
+        <Address>0000000020</Address>
+        <DisplayName>Labeler</DisplayName>
+      </Labeler>
+      <Aliquoter>
+        <Port>1</Port>
+        <Address>0000000040</Address>
+        <DisplayName>Aliquoter</DisplayName>
+      </Aliquoter>
+    </Children>  
+  </DynamicInlet>
+  <HLane>
+    <Port>2</Port>
+    <Address>0000000080</Address>
+    <DisplayName>HLane</DisplayName>
+    <Children>
+      <GC>	  
+        <Port>2</Port>
+        <Address>0000000100</Address>
+        <DisplayName>Generic #1</DisplayName>
+      </GC>
+	  <DxC>
+        <Port>2</Port>
+        <Address>0000000400</Address>
+        <DisplayName>DxC#1</DisplayName>
+      </DxC>
+      <GC>
+        <Port>2</Port>
+        <Address>0000000200</Address>
+        <DisplayName>Generic #2</DisplayName>
+      </GC>
+     
+      <Stocker>
+        <Port>2</Port>
+        <Address>0000000800</Address>
+        <DisplayName>Stockyard#1</DisplayName>
+      </Stocker>
+      <Stocker>
+        <Port>2</Port>
+        <Address>0000001000</Address>
+        <DisplayName>Stockyard#2</DisplayName>
+      </Stocker>
+	  <Outlet>
+        <Port>2</Port>
+        <Address>0000002000</Address>
+        <DisplayName>Outlet#1</DisplayName>
+      </Outlet>
+    </Children>
+  </HLane>
+  
+</root>

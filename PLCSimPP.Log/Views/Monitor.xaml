@@ -30,7 +30,7 @@
                   CanUserAddRows="False"
                   FontFamily="Courier New"
                   IsReadOnly="True"
-                  ItemsSource="{Binding LogCollection,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}">
+                  ItemsSource="{Binding LogCollection, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Time, Converter={StaticResource DateTimeToStringConverter}}" Header="Date/Time" />
                 <DataGridTextColumn Binding="{Binding Direction}" Header="Direction" />
@@ -47,7 +47,6 @@
                           Margin="10,0"
                           Content="{Binding FreezeScreen, Converter={StaticResource ContentConverter}}"
                           IsChecked="{Binding FreezeScreen}" />
-            <!--  IsEnabled="{Binding FreezeScreen, Converter={StaticResource BoolReverseConverter}}"  -->
 
             <Button Command="{Binding CancelCommand}"
                     Content="Cancel"

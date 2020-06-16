@@ -13,11 +13,12 @@ using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
 using BCI.PLCSimPP.Config.ViewDatas;
 using BCI.PLCSimPP.Service.Devices;
-using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+
 using GC = BCI.PLCSimPP.Service.Devices.GC;
+using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 namespace BCI.PLCSimPP.Config.ViewModels
 {
@@ -25,6 +26,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
     {
         private readonly IEventAggregator mEventAggregator;
         private readonly IConfigService mConfigService;
+
 
         #region properites
 
@@ -141,7 +143,6 @@ namespace BCI.PLCSimPP.Config.ViewModels
         {
             var units = mConfigService.ReadSiteMap();
 
-
             foreach (var item in units)
             {
                 if (item.Port == 1)
@@ -158,6 +159,21 @@ namespace BCI.PLCSimPP.Config.ViewModels
                 }
             }
         }
+
+        private void InitUnitType()
+        {
+            PortList = new List<int> { 1, 2, 3 };
+            Port = 1;
+
+            UnitTypeList = new List<UnitTypeInfo>();
+            var array = Enum.GetValues(typeof(UnitType));
+            foreach (UnitType value in array)
+            {
+                UnitTypeList.Add(new UnitTypeInfo { Name = EnumHelper.GetEnumDescription(value), Value = value });
+            }
+        }
+
+        #region Unit control
 
         private void SetPortCollection(IUnit item, ObservableCollection<IUnit> portCollection)
         {
@@ -242,98 +258,16 @@ namespace BCI.PLCSimPP.Config.ViewModels
             Type = GetUnitType(SelectedUnit.GetType());
             Address = SelectedUnit.Address;
             Name = SelectedUnit.DisplayName;
+            IsMaster = SelectedUnit.IsMaster;
         }
 
-        private UnitType GetUnitType(Type type)
-        {
-            if (type == typeof(Aliquoter))
-                return UnitType.Aliquoter;
-            if (type == typeof(Centrifuge))
-                return UnitType.Centrifuge;
-            if (type == typeof(DxC))
-                return UnitType.DxC;
-            if (type == typeof(DynamicInlet))
-                return UnitType.DynamicInlet;
-            if (type == typeof(GC))
-                return UnitType.GC;
-            if (type == typeof(HLane))
-                return UnitType.HLane;
-            if (type == typeof(HMOutlet))
-                return UnitType.HMOutlet;
-            if (type == typeof(ILane))
-                return UnitType.ILane;
-            if (type == typeof(Labeler))
-                return UnitType.Labeler;
-            if (type == typeof(LevelDetector))
-                return UnitType.LevelDetector;
-            if (type == typeof(Outlet))
-                return UnitType.Outlet;
-            if (type == typeof(ErrorLane))
-                return UnitType.ErrorLane;
-            return UnitType.Stocker;
-        }
-
+        /// <summary>
+        /// cancel right panel edit status
+        /// </summary>
         private void DoCancelEdit()
         {
             IsInEdit = false;
             SelectedUnit = null;
-        }
-
-        private void DoCancel()
-        {
-            mEventAggregator.GetEvent<NavigateEvent>().Publish(ViewName.CONFIGURATION);
-        }
-
-        private void DoSave()
-        {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Title = "Select the save path";
-            sfd.Filter = "XML file (*.xml)|*.xml";
-            sfd.CheckPathExists = true;
-            sfd.DefaultExt = "xml";
-            sfd.RestoreDirectory = true;
-            sfd.ShowDialog();
-
-            if (string.IsNullOrEmpty(sfd.FileName))
-            {
-                return;
-            }
-
-            List<IUnit> units = new List<IUnit>();
-            if (Port1.Count > 0)
-            {
-                var master1 = Port1.First();
-                master1.Children.Clear();
-                for (int i = 1; i < Port1.Count; i++)
-                {
-                    master1.Children.Add(Port1[i]);
-                }
-                units.Add(master1);
-            }
-
-            if (Port2.Count > 0)
-            {
-                var master2 = Port2.First();
-                master2.Children.Clear();
-                for (int i = 1; i < Port2.Count; i++)
-                {
-                    master2.Children.Add(Port2[i]);
-                }
-                units.Add(master2);
-            }
-
-            if (Port3.Count > 0)
-            {
-                var master3 = Port3.First();
-                master3.Children.Clear();
-                for (int i = 1; i < Port3.Count; i++)
-                {
-                    master3.Children.Add(Port3[i]);
-                }
-                units.Add(master3);
-            }
-            
-            mConfigService.SaveSiteMap(sfd.FileName, units);
         }
 
         private void DoClearAll()
@@ -350,53 +284,11 @@ namespace BCI.PLCSimPP.Config.ViewModels
             Port3.Clear();
         }
 
-        private void InitUnitType()
-        {
-            PortList = new List<int> { 1, 2, 3 };
-            Port = 1;
-
-            UnitTypeList = new List<UnitTypeInfo>();
-            var array = Enum.GetValues(typeof(UnitType));
-            foreach (UnitType value in array)
-            {
-                UnitTypeList.Add(new UnitTypeInfo { Name = EnumHelper.GetEnumDescription(value), Value = value });
-            }
-        }
-
-        /// <summary>
-        /// CheckPortDuplication
-        /// </summary>
-        /// <param name="address"></param>
-        /// <returns>return true if is duplicate</returns>
-        private bool CheckDuplication(string address)
-        {
-            return CheckPortDuplication(address, Port1)
-                || CheckPortDuplication(address, Port2)
-                || CheckPortDuplication(address, Port3);
-        }
-
-        /// <summary>
-        /// CheckPortDuplication
-        /// </summary>
-        /// <param name="address"></param>
-        /// <param name="port"></param>
-        /// <returns>return true if is duplicate</returns>
-        private bool CheckPortDuplication(string address, ObservableCollection<IUnit> port)
-        {
-            return port.Any(u => u.Address == address);
-        }
-
         private void DoAdd()
         {
             if (Address.Length < 10)
             {
                 Address = Address.PadLeft(10, '0');
-            }
-
-            if (CheckDuplication(Address))
-            {
-                MessageBox.Show("The unit address cannot be repeated");
-                return;
             }
 
             if (IsInEdit)
@@ -405,6 +297,12 @@ namespace BCI.PLCSimPP.Config.ViewModels
                 SelectedUnit.DisplayName = Name;
                 IsInEdit = false;
                 SelectedUnit = null;
+                return;
+            }
+
+            if (CheckDuplication(Address))
+            {
+                System.Windows.MessageBox.Show("The unit address cannot be repeated");
                 return;
             }
 
@@ -451,40 +349,6 @@ namespace BCI.PLCSimPP.Config.ViewModels
             }
         }
 
-        private IUnit GetUnitByType(UnitType type)
-        {
-            switch (type)
-            {
-                case UnitType.Aliquoter:
-                    return new Aliquoter();
-                case UnitType.Centrifuge:
-                    return new Centrifuge();
-                case UnitType.DxC:
-                    return new DxC();
-                case UnitType.DynamicInlet:
-                    return new DynamicInlet();
-                case UnitType.GC:
-                    return new GC();
-                case UnitType.HLane:
-                    return new HLane();
-                case UnitType.HMOutlet:
-                    return new HMOutlet();
-                case UnitType.ILane:
-                    return new ILane();
-                case UnitType.Labeler:
-                    return new Labeler();
-                case UnitType.LevelDetector:
-                    return new LevelDetector();
-                case UnitType.Outlet:
-                    return new Outlet();
-                case UnitType.Stocker:
-                    return new Stocker();
-                case UnitType.ErrorLane:
-                    return new ErrorLane();
-                default:
-                    return new GC();
-            }
-        }
 
         /// <summary>
         /// remove unit
@@ -523,8 +387,275 @@ namespace BCI.PLCSimPP.Config.ViewModels
                 }
 
                 port.Clear();
+                IsInEdit = false;
+                SelectedUnit = null;
             }
-            port.Remove(unit);
+            else
+            {
+                if (SelectedUnit == unit)
+                {
+                    IsInEdit = false;
+                    SelectedUnit = null;
+                }
+                port.Remove(unit);
+            }
         }
+
+        #endregion
+
+        #region page control
+
+        /// <summary>
+        /// cancel edit site map, go back to configuration
+        /// </summary>
+        public void DoCancel()
+        {
+            if (Leaving())
+            {
+                mEventAggregator.GetEvent<NavigateEvent>().Publish(ViewName.CONFIGURATION);
+            }
+        }
+
+        /// <summary>
+        /// Leaving check
+        /// </summary>
+        /// <returns></returns>
+        public bool Leaving()
+        {
+            if (!IsChanged())
+            {
+                return true;
+            }
+
+            var result = MessageBox.Show("Do you need to save the changed Settings?", "Warning", MessageBoxButton.YesNoCancel);
+            if (result == MessageBoxResult.Yes)
+            {
+                DoSave();
+                return true;
+            }
+            else if (result == MessageBoxResult.No)
+            {
+                OnLoad(string.Empty);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// save site map to file
+        /// </summary>
+        private void DoSave()
+        {
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Title = "Select the save path",
+                Filter = "XML file (*.xml)|*.xml",
+                CheckPathExists = true,
+                DefaultExt = "xml",
+                RestoreDirectory = true
+            };
+            sfd.ShowDialog();
+
+            if (string.IsNullOrEmpty(sfd.FileName))
+            {
+                return;
+            }
+
+            var units = BuildSaveList();
+
+            mConfigService.SaveSiteMap(sfd.FileName, units);
+        }
+
+        #endregion
+
+        #region tool method
+        private UnitType GetUnitType(Type type)
+        {
+            if (type == typeof(Aliquoter))
+                return UnitType.Aliquoter;
+            if (type == typeof(Centrifuge))
+                return UnitType.Centrifuge;
+            if (type == typeof(DxC))
+                return UnitType.DxC;
+            if (type == typeof(DynamicInlet))
+                return UnitType.DynamicInlet;
+            if (type == typeof(GC))
+                return UnitType.GC;
+            if (type == typeof(HLane))
+                return UnitType.HLane;
+            if (type == typeof(HMOutlet))
+                return UnitType.HMOutlet;
+            if (type == typeof(ILane))
+                return UnitType.ILane;
+            if (type == typeof(Labeler))
+                return UnitType.Labeler;
+            if (type == typeof(LevelDetector))
+                return UnitType.LevelDetector;
+            if (type == typeof(Outlet))
+                return UnitType.Outlet;
+            if (type == typeof(ErrorLane))
+                return UnitType.ErrorLane;
+            return UnitType.Stocker;
+        }
+
+        /// <summary>
+        /// build save list by port1/2/3
+        /// </summary>
+        /// <returns></returns>
+        private List<IUnit> BuildSaveList()
+        {
+            List<IUnit> units = new List<IUnit>();
+            if (Port1.Count > 0)
+            {
+                var master1 = Port1.First();
+                master1.Children.Clear();
+                for (int i = 1; i < Port1.Count; i++)
+                {
+                    master1.Children.Add(Port1[i]);
+                }
+
+                units.Add(master1);
+            }
+
+            if (Port2.Count > 0)
+            {
+                var master2 = Port2.First();
+                master2.Children.Clear();
+                for (int i = 1; i < Port2.Count; i++)
+                {
+                    master2.Children.Add(Port2[i]);
+                }
+
+                units.Add(master2);
+            }
+
+            if (Port3.Count > 0)
+            {
+                var master3 = Port3.First();
+                master3.Children.Clear();
+                for (int i = 1; i < Port3.Count; i++)
+                {
+                    master3.Children.Add(Port3[i]);
+                }
+
+                units.Add(master3);
+            }
+
+            return units;
+        }
+
+        /// <summary>
+        /// CheckPortDuplication
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns>return true if is duplicate</returns>
+        private bool CheckDuplication(string address)
+        {
+            return CheckPortDuplication(address, Port1)
+                || CheckPortDuplication(address, Port2)
+                || CheckPortDuplication(address, Port3);
+        }
+
+        /// <summary>
+        /// CheckPortDuplication
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="port"></param>
+        /// <returns>return true if is duplicate</returns>
+        private bool CheckPortDuplication(string address, ObservableCollection<IUnit> port)
+        {
+            return port.Any(u => u.Address == address);
+        }
+        private IUnit GetUnitByType(UnitType type)
+        {
+            switch (type)
+            {
+                case UnitType.Aliquoter:
+                    return new Aliquoter();
+                case UnitType.Centrifuge:
+                    return new Centrifuge();
+                case UnitType.DxC:
+                    return new DxC();
+                case UnitType.DynamicInlet:
+                    return new DynamicInlet();
+                case UnitType.GC:
+                    return new GC();
+                case UnitType.HLane:
+                    return new HLane();
+                case UnitType.HMOutlet:
+                    return new HMOutlet();
+                case UnitType.ILane:
+                    return new ILane();
+                case UnitType.Labeler:
+                    return new Labeler();
+                case UnitType.LevelDetector:
+                    return new LevelDetector();
+                case UnitType.Outlet:
+                    return new Outlet();
+                case UnitType.Stocker:
+                    return new Stocker();
+                case UnitType.ErrorLane:
+                    return new ErrorLane();
+                default:
+                    return new GC();
+            }
+        }
+
+        #endregion
+
+        #region Check unit is changed
+
+        /// <summary>
+        /// Check original Setting has changed
+        /// </summary>
+        /// <returns>true-changed; false- no change</returns>
+        private bool IsChanged()
+        {
+            var originalList = mConfigService.ReadSiteMap().ToList();
+            var targetList = BuildSaveList();
+
+            if (originalList.Count != targetList.Count)
+                return false;
+
+            for (var i = 0; i < originalList.Count; i++)
+            {
+                if (!IsSame(originalList[i], targetList[i]))
+                {
+                    return false;
+                }
+
+                if (originalList[i].HasChild)//check children same
+                {
+                    if (!targetList[i].HasChild)
+                    {
+                        return false;
+                    }
+
+                    for (var j = 0; j < originalList[i].Children.Count; j++)
+                    {
+                        if (!IsSame(originalList[i].Children[j], targetList[i].Children[j]))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private bool IsSame(IUnit original, IUnit target)
+        {
+            return original.Address == target.Address &&
+                original.DisplayName == target.DisplayName &&
+                original.IsMaster == target.IsMaster &&
+                original.GetType() == target.GetType() &&
+                original.Port == target.Port;
+        }
+
+        #endregion
     }
 }

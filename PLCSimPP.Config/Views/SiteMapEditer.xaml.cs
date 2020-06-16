@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using CommonServiceLocator;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Config.ViewModels;
+using Unity;
 
 namespace BCI.PLCSimPP.Config.Views
 {
@@ -28,6 +29,18 @@ namespace BCI.PLCSimPP.Config.Views
             InitializeComponent();
         }
 
+        [Dependency]
+        public SiteMapEditerViewModel ViewModel
+        {
+            get { return DataContext as SiteMapEditerViewModel; }
+            set { DataContext = value; }
+        }
+
+        /// <summary>
+        /// input must be number
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var textBox = sender as TextBox;
@@ -45,6 +58,11 @@ namespace BCI.PLCSimPP.Config.Views
             }
         }
 
+        /// <summary>
+        /// selection changed event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 0)
@@ -61,6 +79,11 @@ namespace BCI.PLCSimPP.Config.Views
             ls_port3.SelectedItem = null;
         }
 
+        /// <summary>
+        /// selection changed event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListBox_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 0)
@@ -75,6 +98,11 @@ namespace BCI.PLCSimPP.Config.Views
             ls_port3.SelectedItem = null;
         }
 
+        /// <summary>
+        /// selection changed event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListBox_SelectionChanged_3(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 0)
@@ -91,11 +119,15 @@ namespace BCI.PLCSimPP.Config.Views
             viewModel.SelectUnitCommand.Execute(unit);
         }
 
+        /// <summary>
+        /// add button event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = (SiteMapEditerViewModel)this.DataContext;
-            viewModel.AddCommand.Execute(e);
-            if (viewModel.SelectedUnit == null)
+            ViewModel.AddCommand.Execute(e);
+            if (ViewModel.SelectedUnit == null)
             {
                 ls_port2.SelectedItem = null;
                 ls_port1.SelectedItem = null;
@@ -103,6 +135,11 @@ namespace BCI.PLCSimPP.Config.Views
             }
         }
 
+        /// <summary>
+        /// cancel button event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             ls_port2.SelectedItem = null;

@@ -109,11 +109,13 @@ namespace BCI.PLCSimPP.Service.Devices
                 string rack = content.Substring(16, 1);
                 string position = content.Substring(17, 3);
 
-                MsgCmd msg = new MsgCmd();
-                msg.Command = UnitCmds._1019;
-                msg.Port = this.Port;
-                msg.UnitAddr = this.Address;
-                msg.Param = $"{sid.PadRight(15)}{floor}{rack}{position}0"; //last number '0': Normal, '1': Error
+                MsgCmd msg = new MsgCmd
+                {
+                    Command = UnitCmds._1019,
+                    Port = this.Port,
+                    UnitAddr = this.Address,
+                    Param = $"{sid.PadRight(15)}{floor}{rack}{position}0" //last number '0': Normal, '1': Error
+                };
                 mSendBehavior.PushMsg(msg);
 
                 string param = ParamConst.BCR_2 + sid;
@@ -222,7 +224,7 @@ namespace BCI.PLCSimPP.Service.Devices
         {
             if (CurrentSample.SampleID.StartsWith("ERR"))
             {
-                //do error trigger
+                //trigger error sequence
                 string param = ParamConst.BCR_1 + "***************";
                 var msg = new MsgCmd()
                 {

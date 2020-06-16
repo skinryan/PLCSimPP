@@ -57,10 +57,9 @@ namespace BCI.PLCSimPP.Service.Devices
             set { this.SetProperty(ref mAddress, value); }
         }
 
-        private ObservableCollection<IUnit> mChildren;
         public ObservableCollection<IUnit> Children
         {
-            get { return mChildren; }
+            get;
         }
 
         public int PendingCount
@@ -142,11 +141,7 @@ namespace BCI.PLCSimPP.Service.Devices
             RaisePropertyChanged("PendingCount");
 
             var eventAggr = ServiceLocator.Current.GetInstance<IEventAggregator>();
-            if (eventAggr != null)
-            {
-                eventAggr.GetEvent<NotifyOnlineSampleEvent>().Publish(0);
-            }
-
+            eventAggr.GetEvent<NotifyOnlineSampleEvent>().Publish(-1);
         }
 
         protected virtual bool TryDequeueSample(out ISample sample)
@@ -193,9 +188,9 @@ namespace BCI.PLCSimPP.Service.Devices
             this.mSendBehavior.PushMsg(msg);
         }
 
-        public UnitBase()
+        protected UnitBase()
         {
-            mChildren = new ObservableCollection<IUnit>();
+            Children = new ObservableCollection<IUnit>();
             mPendingQueue = new ConcurrentQueue<ISample>();
 
             if (ServiceLocator.IsLocationProviderSet)

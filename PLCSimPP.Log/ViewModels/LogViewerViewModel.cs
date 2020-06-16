@@ -60,9 +60,7 @@ namespace BCI.PLCSimPP.Log.ViewModels
             get { return mSearchIndex; }
             set { SetProperty(ref mSearchIndex, value); }
         }
-
-
-
+        
         private PageData<LogContent> mCurrentPage;
 
         /// <summary>
@@ -85,7 +83,6 @@ namespace BCI.PLCSimPP.Log.ViewModels
             set { SetProperty(ref mAddress, value); }
         }
 
-
         private string mParam;
 
         /// <summary>
@@ -98,6 +95,7 @@ namespace BCI.PLCSimPP.Log.ViewModels
         }
 
         private DateTime mSearchFromDatetime = DateTime.Now.AddDays(-1);
+
         /// <summary>
         ///     Gets or sets search begin datetime
         /// </summary>
@@ -111,7 +109,7 @@ namespace BCI.PLCSimPP.Log.ViewModels
             }
         }
 
-        private DateTime mSearchToDatetime = DateTime.Now;
+        private DateTime mSearchToDatetime = DateTime.Now.AddDays(1);
         /// <summary>
         ///     Gets or sets search end datetime
         /// </summary>
@@ -125,8 +123,8 @@ namespace BCI.PLCSimPP.Log.ViewModels
             }
         }
 
-
         #endregion
+
         private ICommand mSearchCmd;
         /// <summary>
         /// Search result command

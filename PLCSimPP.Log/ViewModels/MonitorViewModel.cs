@@ -48,21 +48,32 @@ namespace BCI.PLCSimPP.Log.ViewModels
 
             CancelCommand = new DelegateCommand<string>(viewName =>
             {
-                mEventAggr.GetEvent<NavigateEvent>().Publish(ViewName.DEVICE_LAYOUT);
+                //mEventAggr.GetEvent<NavigateEvent>().Publish(ViewName.DEVICE_LAYOUT);
+
+                for (int i = 0; i < 30; i++)
+                {
+                    AddToMonitor(new MsgLog() { Address = i.ToString().PadLeft(10), Details = "11" });
+                }
             });
         }
 
         private void AddToMonitor(MsgLog msgLog)
         {
+            if (LogCollection.Count > 10000)
+            {
+                LogCollection.RemoveAt(0);
+            }
+
+            LogCollection.Add(msgLog);
+
             if (!FreezeScreen)
             {
-                if (LogCollection.Count > 10000)
-                {
-                    LogCollection.RemoveAt(0);
-                }
-
-                LogCollection.Add(msgLog);
+                mEventAggr.GetEvent<RollingEvent>().Publish(msgLog);
             }
         }
     }
+
+    
+
+
 }

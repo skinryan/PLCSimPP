@@ -81,6 +81,13 @@ namespace BCI.PLCSimPP.Service.Devices
             RaisePropertyChanged("StoredCount");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="shelf"></param>
+        /// <param name="rack"></param>
+        /// <param name="position"></param>
+        /// <param name="sample"></param>
         private void StoreSample(string shelf, string rack, string position, ISample sample)
         {
             if (!mShelfList.ContainsKey(shelf))

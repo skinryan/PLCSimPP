@@ -10,6 +10,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BCI.PLCSimPP.Comm.Events;
+using BCI.PLCSimPP.Comm.Models;
+using BCI.PLCSimPP.Log.ViewModels;
+using CommonServiceLocator;
+using Prism.Events;
 
 namespace BCI.PLCSimPP.Log.Views
 {
@@ -21,6 +26,14 @@ namespace BCI.PLCSimPP.Log.Views
         public Monitor()
         {
             InitializeComponent();
+
+            var eventAggr = ServiceLocator.Current.GetInstance<IEventAggregator>();
+            eventAggr.GetEvent<RollingEvent>().Subscribe(OnRolling);
+        }
+
+        private void OnRolling(MsgLog msgLog)
+        {
+            dg.ScrollIntoView(msgLog);
         }
     }
 }

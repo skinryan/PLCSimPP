@@ -167,6 +167,16 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
                         return;
                     }
                 }
+
+                if(view is SiteMapEditer)
+                {
+                    var sitemapVm = ((SiteMapEditer)view).ViewModel;
+                    var ret = sitemapVm.Leaving();
+                    if (!ret)
+                    {
+                        return;
+                    }
+                }
             }
 
             mRegionManager.RequestNavigate(RegionName.LAYOUT_REGION, viewName);

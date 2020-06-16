@@ -8,8 +8,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              d:DesignHeight="450"
              d:DesignWidth="800"
              prism:ViewModelLocator.AutoWireViewModel="True"
@@ -25,9 +25,7 @@
                 <Setter Property="Height" Value="30" />
                 <Setter Property="Margin" Value="10,0" />
             </Style>
-            <CollectionViewSource x:Key="cvsLogs" Source="{Binding CurrentPage.Items}">
-               
-            </CollectionViewSource>
+            <CollectionViewSource x:Key="cvsLogs" Source="{Binding CurrentPage.Items}" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Margin="10">
@@ -115,14 +113,14 @@
                   CanUserAddRows="False"
                   FontFamily="Courier New"
                   IsReadOnly="True"
-                  Sorting="dg_Sorting"
-                  ItemsSource="{Binding Source={StaticResource cvsLogs}}">
+                  ItemsSource="{Binding Source={StaticResource cvsLogs}}"
+                  Sorting="dg_Sorting">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Time, Converter={StaticResource DateTimeToStringConverter}}" Header="Date/Time" />
                 <DataGridTextColumn Binding="{Binding Direction}" Header="Direction" />
                 <DataGridTextColumn Binding="{Binding Address}" Header="Address" />
                 <DataGridTextColumn Binding="{Binding Command}" Header="Command" />
-                <DataGridTextColumn Binding="{Binding Parameter}" Header="Parameter" />
+                <DataGridTextColumn Binding="{Binding Details}" Header="Parameter" />
             </DataGrid.Columns>
 
         </DataGrid>
@@ -136,7 +134,6 @@
                                         TotalRowCount="{Binding CurrentPage.TotalNum}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PageChangingEvent">
-                    <!--<i:InvokeCommandAction Command="{Binding PageChangingCommand}" />-->
                     <cmd:EventToCommand Command="{Binding PageChangingCommand}" PassEventArgsToCommand="OnlyOriginalArgs" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>

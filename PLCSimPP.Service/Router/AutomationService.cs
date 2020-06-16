@@ -194,10 +194,10 @@ namespace BCI.PLCSimPP.Service.Router
                 {
                     OnlineSampleCount += 1;
                 }
-                else
-                {
-                    OnlineSampleCount = 0;
-                }
+                //else
+                //{
+                //    OnlineSampleCount = 0;
+                //}
             }
         }
 
