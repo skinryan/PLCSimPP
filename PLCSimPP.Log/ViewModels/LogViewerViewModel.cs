@@ -95,7 +95,7 @@ namespace BCI.PLCSimPP.Log.ViewModels
             set { SetProperty(ref mParam, value); }
         }
 
-        private DateTime mSearchFromDatetime = DateTime.Now.AddDays(-1);
+        private DateTime mSearchFromDatetime = DateTime.Now;
 
         /// <summary>
         ///     Gets or sets search begin datetime

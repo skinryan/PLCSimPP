@@ -282,6 +282,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
             Port1.Clear();
             Port2.Clear();
             Port3.Clear();
+            DoCancelEdit();
         }
 
         private void DoAdd()
@@ -618,33 +619,33 @@ namespace BCI.PLCSimPP.Config.ViewModels
             var targetList = BuildSaveList();
 
             if (originalList.Count != targetList.Count)
-                return false;
+                return true;
 
             for (var i = 0; i < originalList.Count; i++)
             {
                 if (!IsSame(originalList[i], targetList[i]))
                 {
-                    return false;
+                    return true;
                 }
 
                 if (originalList[i].HasChild)//check children same
                 {
                     if (!targetList[i].HasChild)
                     {
-                        return false;
+                        return true;
                     }
 
                     for (var j = 0; j < originalList[i].Children.Count; j++)
                     {
                         if (!IsSame(originalList[i].Children[j], targetList[i].Children[j]))
                         {
-                            return false;
+                            return true;
                         }
                     }
                 }
             }
 
-            return true;
+            return false;
         }
 
         private bool IsSame(IUnit original, IUnit target)

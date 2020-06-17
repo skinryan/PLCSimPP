@@ -256,7 +256,7 @@ namespace BCI.PLCSimPP.Layout.ViewModels
                 return;
             }
 
-            SampleCollection.Clear();
+            //SampleCollection.Clear();
 
             foreach (var filename in ofd.FileNames)
             {
