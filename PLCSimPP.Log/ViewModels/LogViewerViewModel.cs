@@ -217,7 +217,7 @@ namespace BCI.PLCSimPP.Log.ViewModels
             GetAddresses();
             PageSize = DbConst.PAGE_DEFAULT_VALUE_PAGESIZE;
 
-            CurrentPage = GetPage(1, PageSize, mSearchFromDatetime, mSearchToDatetime);
+            //CurrentPage = GetPage(1, PageSize, mSearchFromDatetime, mSearchToDatetime);
             mEventAggr = eventAggr;
 
             SaveCommand = new DelegateCommand(DoSave);

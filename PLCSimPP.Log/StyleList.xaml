@@ -1,11 +1,10 @@
-﻿
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:BCI.PLCSimPP.Log.CustomControl">
-    <Geometry x:Key="Geometry_First">M416 672A32 32 0 0 1 384 640V384a32 32 0 0 1 64 0v256a32 32 0 0 1-32 32zM640 672a31.808 31.808 0 0 1-22.464-9.216l-128-126.208a31.872 31.872 0 0 1-0.32-45.184l128-129.792a32 32 0 0 1 45.632 44.864L557.312 513.472l105.216 103.68A32.128 32.128 0 0 1 640 672z M512 896c-211.776 0-384-172.224-384-384s172.224-384 384-384 384 172.224 384 384-172.224 384-384 384zM512 192C335.552 192 192 335.552 192 512s143.552 320 320 320 320-143.552 320-320-143.552-320-320-320z</Geometry>
-    <Geometry x:Key="Geometry_Preview">M 512 896 c -211.776 0 -384 -172.224 -384 -384 s 172.224 -384 384 -384 s 384 172.224 384 384 s -172.224 384 -384 384 Z M 512 192 C 335.552 192 192 335.552 192 512 s 143.552 320 320 320 s 320 -143.552 320 -320 s -143.552 -320 -320 -320 Z M 510.208 608 a 32 32 0 0 1 -22.784 -9.536 l -126.208 -128 a 32 32 0 1 1 45.568 -44.928 l 103.744 105.216 L 617.6 425.216 a 31.872 31.872 0 1 1 44.8 45.568 l -129.792 128 a 31.872 31.872 0 0 1 -22.4 9.216 Z</Geometry>
-    <Geometry x:Key="Geometry_Next">M 512 896 c -211.776 0 -384 -172.224 -384 -384 s 172.224 -384 384 -384 s 384 172.224 384 384 s -172.224 384 -384 384 Z M 512 192 C 335.552 192 192 335.552 192 512 s 143.552 320 320 320 s 320 -143.552 320 -320 s -143.552 -320 -320 -320 Z M 384 608 a 32 32 0 0 1 -22.784 -54.464 l 126.208 -128 a 32 32 0 0 1 45.248 -0.32 l 129.792 128 a 32 32 0 1 1 -44.928 45.568 L 510.464 493.248 L 406.72 598.464 A 31.744 31.744 0 0 1 384 608 Z</Geometry>
-    <Geometry x:Key="Geometry_Last">M 608 672 A 32 32 0 0 1 576 640 V 384 a 32 32 0 0 1 64 0 v 256 a 32 32 0 0 1 -32 32 Z M 384 672 a 32 32 0 0 1 -22.464 -54.784 l 105.216 -103.68 l -105.536 -107.008 a 32 32 0 0 1 45.568 -44.992 l 128 129.792 a 32 32 0 0 1 -0.32 45.312 l -128 126.208 A 32.128 32.128 0 0 1 384 672 Z M 512 896 c -211.776 0 -384 -172.224 -384 -384 s 172.224 -384 384 -384 s 384 172.224 384 384 s -172.224 384 -384 384 Z M 512 192 C 335.552 192 192 335.552 192 512 s 143.552 320 320 320 s 320 -143.552 320 -320 s -143.552 -320 -320 -320 Z</Geometry>
+    <Geometry x:Key="Geometry_First">M768 278.624l-45.248-45.248L444.128 512l278.624 278.624L768 745.376 534.624 512zM288 832h64V192H288z</Geometry>
+    <Geometry x:Key="Geometry_Preview">M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z</Geometry>
+    <Geometry x:Key="Geometry_Next">M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z</Geometry>
+    <Geometry  x:Key="Geometry_Last">M256 278.624L489.376 512 256 745.376l45.248 45.248L579.872 512 301.248 233.376zM672 832h64V192h-64z</Geometry>
 
     <SolidColorBrush x:Key="Brush_Hover" Color="#3399FF" />
     <SolidColorBrush x:Key="Brush_Pressed" Color="#3366FF" />
@@ -92,22 +91,34 @@
                             </TextBlock>
                             <Button x:Name="Btn_First"
                                     Margin="10,0"
-                                    VerticalAlignment="Center"
-                                    Content="First"
-                                    ToolTip="FirstPage" />
+                                    VerticalAlignment="Center"                                    
+                                    ToolTip="FirstPage" >
+                                <Button.Content>
+                                    <Path Margin="5,2" Width="13" Stretch="Uniform" Height="13" Fill="Black" Data="{StaticResource Geometry_First}"/>
+                                </Button.Content>
+                            </Button>
                             <Button x:Name="Btn_Previous"
-                                    VerticalAlignment="Center"
-                                    Content="Previous"
-                                    ToolTip="PreviewPage" />
+                                    VerticalAlignment="Center"                                    
+                                    ToolTip="PreviewPage" >
+                                <Button.Content>
+                                    <Path  Margin="5,2" Width="13" Stretch="Uniform" Height="13" Fill="Black" Data="{StaticResource Geometry_Preview}"/>
+                                </Button.Content>
+                            </Button>
                             <Button x:Name="Btn_Next"
                                     Margin="10,0"
-                                    VerticalAlignment="Center"
-                                    Content="Next"
-                                    ToolTip="PreviewPage" />
+                                    VerticalAlignment="Center"                                    
+                                    ToolTip="Next Page" >
+                                <Button.Content>
+                                    <Path  Margin="5,2" Width="13" Stretch="Uniform" Height="13" Fill="Black" Data="{StaticResource Geometry_Next}"/>
+                                </Button.Content>
+                            </Button>
                             <Button x:Name="Btn_Last"
-                                    VerticalAlignment="Center"
-                                    Content="Last"
-                                    ToolTip="FirstPage" />
+                                    VerticalAlignment="Center"                                    
+                                    ToolTip="Last Page" >
+                                <Button.Content>
+                                    <Path  Margin="5,2" Width="13" Stretch="Uniform" Height="13" Fill="Black" Data="{StaticResource Geometry_Last}"/>
+                                </Button.Content>
+                            </Button>
 
                             <TextBox x:Name="Text_Index"
                                      Width="40"
@@ -118,7 +129,7 @@
 
                             <Button Name="Btn_Go"
                                     VerticalAlignment="Center"
-                                    Content="GO" />
+                                    Content="GO" Margin="5,0" />
                         </StackPanel>
                     </Grid>
                 </ControlTemplate>

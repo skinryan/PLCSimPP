@@ -630,10 +630,11 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
                 if (originalList[i].HasChild)//check children same
                 {
-                    if (!targetList[i].HasChild)
-                    {
+                    if (!targetList[i].HasChild)                    
+                        return true;                    
+
+                    if (originalList[i].Children.Count != targetList[i].Children.Count)
                         return true;
-                    }
 
                     for (var j = 0; j < originalList[i].Children.Count; j++)
                     {
@@ -651,8 +652,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
         private bool IsSame(IUnit original, IUnit target)
         {
             return original.Address == target.Address &&
-                original.DisplayName == target.DisplayName &&
-                original.IsMaster == target.IsMaster &&
+                original.DisplayName == target.DisplayName &&                
                 original.GetType() == target.GetType() &&
                 original.Port == target.Port;
         }
