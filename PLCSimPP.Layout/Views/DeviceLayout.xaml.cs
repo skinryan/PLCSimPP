@@ -1,3 +1,6 @@
+using BCI.PLCSimPP.Layout.ViewModels;
+using CommonServiceLocator;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Unity;
 
 namespace BCI.PLCSimPP.Layout.Views
 {
@@ -20,9 +24,22 @@ namespace BCI.PLCSimPP.Layout.Views
     /// </summary>
     public partial class DeviceLayout : UserControl
     {
+        [Dependency]
+        public DeviceLayoutViewModel ViewModel
+        {
+            get { return DataContext as DeviceLayoutViewModel; }
+            set { DataContext = value; }
+        }
+
         public DeviceLayout()
         {
             InitializeComponent();
+            this.Loaded += DeviceLayout_Loaded;
+        }
+
+        private void DeviceLayout_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SampleGrid = dg_sample;
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -55,6 +72,6 @@ namespace BCI.PLCSimPP.Layout.Views
             textBox.SelectAll();
         }
 
-        
+
     }
 }

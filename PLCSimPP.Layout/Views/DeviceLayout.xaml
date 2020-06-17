@@ -408,7 +408,7 @@
                             <TextBlock Text="Online Sample Count : " />
                             <TextBlock Text="{Binding AutomationService.OnlineSampleCount}" />
                         </StackPanel>
-                        <DataGrid Margin="2"
+                        <DataGrid Margin="2" x:Name="dg_sample"
                                   HorizontalAlignment="Stretch"
                                   AutoGenerateColumns="False"
                                   CanUserAddRows="False"

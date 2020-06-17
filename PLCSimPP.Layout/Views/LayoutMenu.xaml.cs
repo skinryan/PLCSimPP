@@ -21,6 +21,7 @@ namespace BCI.PLCSimPP.Layout.Views
         public LayoutMenu()
         {
             InitializeComponent();
+
         }
     }
 }

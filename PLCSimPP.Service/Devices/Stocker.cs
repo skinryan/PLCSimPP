@@ -209,14 +209,7 @@ namespace BCI.PLCSimPP.Service.Devices
         {
             if (rep.Address == this.Address)
             {
-                if (mShelfList.ContainsKey(rep.Shelf))
-                {
-                    if (mShelfList[rep.Shelf].RackList.ContainsKey(rep.Rack))
-                    {
-                        mShelfList[rep.Shelf].RackList[rep.Rack].SampleList.Clear();
-                        RaisePropertyChanged("StoredCount");
-                    }
-                }
+                EmptyTargetRack(rep.Shelf, rep.Rack);
             }
         }
 

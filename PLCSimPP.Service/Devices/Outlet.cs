@@ -106,6 +106,14 @@ namespace BCI.PLCSimPP.Service.Devices
             mEvent.GetEvent<NotifyOnlineSampleEvent>().Publish(-1);
         }
 
+        private void OnRackExchange(RackExchangeParam rep)
+        {
+            if (rep.Address == this.Address)
+            {
+                EmptyTargetRack(rep.Shelf, rep.Rack);
+            }
+        }
+
         /// <summary>
         /// constructor
         /// </summary>
@@ -114,6 +122,7 @@ namespace BCI.PLCSimPP.Service.Devices
             if (ServiceLocator.IsLocationProviderSet)
             {
                 mEvent = ServiceLocator.Current.GetInstance<IEventAggregator>();
+                mEvent.GetEvent<NotifyRackExchangeEvent>().Subscribe(OnRackExchange);
             }
         }
     }

@@ -81,7 +81,7 @@
                                     Orientation="Horizontal">
                             <TextBlock VerticalAlignment="Center" Style="{StaticResource PagerText}">
                                 <TextBlock.Text>
-                                    <MultiBinding StringFormat="Total count: {0}，Page size: {1}，Page {2}/{3} ">
+                                    <MultiBinding StringFormat="Total count: {0}，Page size: {1}，Current Page {2}/{3} ">
                                         <Binding Path="TotalRowCount" RelativeSource="{RelativeSource AncestorType={x:Type local:DataPagerControl}, Mode=FindAncestor}" />
                                         <Binding Path="PageSize" RelativeSource="{RelativeSource AncestorType={x:Type local:DataPagerControl}, Mode=FindAncestor}" />
                                         <Binding Path="CurrentIndex" RelativeSource="{RelativeSource AncestorType={x:Type local:DataPagerControl}, Mode=FindAncestor}" />

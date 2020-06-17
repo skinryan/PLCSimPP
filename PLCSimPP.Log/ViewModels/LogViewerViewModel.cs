@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Forms;
+using System.Windows;
 using System.Windows.Input;
 using BCI.PLCSimPP.Comm.Constants;
 using BCI.PLCSimPP.Comm.Events;
@@ -9,6 +9,7 @@ using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Log.CustomControl;
 using BCI.PLCSimPP.Service.DB;
 using BCI.PLCSimPP.Service.Log;
+using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -228,30 +229,36 @@ namespace BCI.PLCSimPP.Log.ViewModels
 
         private void DoSave()
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Title = "Select the save path for the current query result";
-            sfd.Filter = "Text File(*.txt)|*.txt";
-            sfd.CheckPathExists = true;
-            sfd.DefaultExt = "txt";
-            sfd.RestoreDirectory = true;
-            sfd.ShowDialog();
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Title = "Select the save path for the current query result",
+                Filter = "Text File(*.txt)|*.txt",
+                CheckPathExists = true,
+                DefaultExt = "txt",
+                RestoreDirectory = true
+            };
+
+           var diaResult= sfd.ShowDialog();
 
             try
             {
-                using (FileStream fs = new FileStream(sfd.FileName, FileMode.OpenOrCreate))
+                if (diaResult.HasValue && diaResult.Value)
                 {
-                    using (StreamWriter sw = new StreamWriter(fs))
+                    using (FileStream fs = new FileStream(sfd.FileName, FileMode.OpenOrCreate))
                     {
-                        var result = DBService.Current.QueryLogContents(SearchFromDatetime, SearchToDatetime, Address, Param);
-
-                        foreach (var log in result)
+                        using (StreamWriter sw = new StreamWriter(fs))
                         {
-                            sw.WriteLine($"[{log.Time}] [{log.Direction}] [{log.Address}] [{log.Command}] [{log.Details}]");
-                        }
+                            var result = DBService.Current.QueryLogContents(SearchFromDatetime, SearchToDatetime, Address, Param);
 
-                        sw.Flush();
+                            foreach (var log in result)
+                            {
+                                sw.WriteLine($"[{log.Time}] [{log.Direction}] [{log.Address}] [{log.Command}] [{log.Details}]");
+                            }
+
+                            sw.Flush();
+                        }
                     }
-                }
+                }                
             }
             catch (Exception ex)
             {

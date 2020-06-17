@@ -19,6 +19,7 @@ using BCI.PLCSimPP.Service.Devices;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using System.Windows.Controls;
 
 namespace BCI.PLCSimPP.Layout.ViewModels
 {
@@ -28,7 +29,10 @@ namespace BCI.PLCSimPP.Layout.ViewModels
         private readonly DCSimService mDCSimService;
         private readonly DxCSimService mDxCSimService;
 
+
         #region properties
+
+        public DataGrid SampleGrid { get; set; }
 
         private bool mEndNumberChecked = true;
 
@@ -268,6 +272,11 @@ namespace BCI.PLCSimPP.Layout.ViewModels
                     }
                 }
             }
+
+            if (SampleCollection.Count > 0)
+            {
+                SampleGrid.ScrollIntoView(SampleCollection.Last());
+            }
         }
 
         /// <summary>
@@ -318,6 +327,11 @@ namespace BCI.PLCSimPP.Layout.ViewModels
                 }
 
                 SampleCollection.Add(sample);
+            }
+
+            if (SampleCollection.Count > 0)
+            {
+                SampleGrid.ScrollIntoView(SampleCollection.Last());
             }
         }
 
