@@ -27,7 +27,6 @@ namespace BCI.PLCSimPP.Config.ViewModels
         private readonly IEventAggregator mEventAggregator;
         private readonly IConfigService mConfigService;
 
-
         #region properites
 
 
@@ -138,6 +137,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
             mEventAggregator.GetEvent<LoadDataEvent>().Subscribe(OnLoad);
         }
+
 
         private void OnLoad(string param)
         {
@@ -309,7 +309,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
             IUnit unit = GetUnitByType(Type);
             unit.Address = Address;
-            unit.DisplayName = Name;
+            unit.DisplayName = string.IsNullOrEmpty(Name) ? EnumHelper.GetEnumDescription(Type) : Name;
             unit.Port = Port;
             unit.IsMaster = IsMaster;
 
@@ -445,34 +445,24 @@ namespace BCI.PLCSimPP.Config.ViewModels
             }
         }
 
-        /// <summary>
-        /// save site map to file
-        /// </summary>
         private void DoSave()
         {
-            SaveFileDialog sfd = new SaveFileDialog
-            {
-                Title = "Select the save path",
-                Filter = "XML file (*.xml)|*.xml",
-                CheckPathExists = true,
-                DefaultExt = "xml",
-                RestoreDirectory = true
-            };
-            sfd.ShowDialog();
-
-            if (string.IsNullOrEmpty(sfd.FileName))
-            {
-                return;
-            }
-
             var units = BuildSaveList();
+            var cfgInfo = mConfigService.ReadSysConfig();
 
-            mConfigService.SaveSiteMap(sfd.FileName, units);
+            mConfigService.SaveSiteMap(cfgInfo.SiteMapPath, units);
+
+            mEventAggregator.GetEvent<ReLoadSiteMapEvent>().Publish(true);
+            MessageBox.Show("Save Success.");
+
+            //mEventAggregator.GetEvent<NavigateEvent>().Publish(ViewName.CONFIGURATION);
         }
+
 
         #endregion
 
         #region tool method
+
         private UnitType GetUnitType(Type type)
         {
             if (type == typeof(Aliquoter))
@@ -630,8 +620,8 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
                 if (originalList[i].HasChild)//check children same
                 {
-                    if (!targetList[i].HasChild)                    
-                        return true;                    
+                    if (!targetList[i].HasChild)
+                        return true;
 
                     if (originalList[i].Children.Count != targetList[i].Children.Count)
                         return true;
@@ -652,7 +642,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
         private bool IsSame(IUnit original, IUnit target)
         {
             return original.Address == target.Address &&
-                original.DisplayName == target.DisplayName &&                
+                original.DisplayName == target.DisplayName &&
                 original.GetType() == target.GetType() &&
                 original.Port == target.Port;
         }

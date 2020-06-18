@@ -87,19 +87,20 @@ namespace BCI.PLCSimPP.Service.Config
 
         public void SaveSiteMap(string path, IEnumerable<IUnit> unitCollection)
         {
-            var dir = path.Substring(0, path.LastIndexOf('\\'));
+            var myPath= Path.GetFullPath(path);
+            var dir = myPath.Substring(0, myPath.LastIndexOf('\\'));
 
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
             }
 
-            if (File.Exists(path))
+            if (File.Exists(myPath))
             {
-                File.Delete(path);
+                File.Delete(myPath);
             }
 
-            FileInfo myFile = new FileInfo(path);
+            FileInfo myFile = new FileInfo(myPath);
 
             using (StreamWriter sw = myFile.CreateText())
             {

@@ -48,15 +48,6 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
             set { SetProperty(ref mPort1Status, value); }
         }
 
-        private string mPort1StatusString;
-
-        public string Port1StatusString
-        {
-            get { return mPort1StatusString; }
-            set { SetProperty(ref mPort1StatusString, value); }
-        }
-
-
         private bool mPort2Status;
 
         public bool Port2Status
@@ -65,28 +56,12 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
             set { SetProperty(ref mPort2Status, value); }
         }
 
-        private string mPort2StatusString;
-
-        public string Port2StatusString
-        {
-            get { return mPort2StatusString; }
-            set { SetProperty(ref mPort2StatusString, value); }
-        }
-
         private bool mPort3Status;
 
         public bool Port3Status
         {
             get { return mPort3Status; }
             set { SetProperty(ref mPort3Status, value); }
-        }
-
-        private string mPort3StatusString;
-
-        public string Port3StatusString
-        {
-            get { return mPort3StatusString; }
-            set { SetProperty(ref mPort3StatusString, value); }
         }
 
         private bool mPort3Enabled;
@@ -131,15 +106,12 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
             {
                 case 1:
                     Port1Status = connInfo.IsConnected;
-                    Port1StatusString = "Port 1 " + (Port1Status ? "connected" : "disconnected");
                     break;
                 case 2:
                     Port2Status = connInfo.IsConnected;
-                    Port2StatusString = "Port 2 " + (Port2Status ? "connected" : "disconnected");
                     break;
                 case 3:
                     Port3Status = connInfo.IsConnected;
-                    Port3StatusString = "Port 3 " + (Port3Status ? "connected" : "disconnected");
                     break;
                 default:
                     return;
@@ -196,7 +168,7 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
                     }
                 }
 
-                if (view is SiteMapEditer)
+                if(view is SiteMapEditer)
                 {
                     var sitemapVm = ((SiteMapEditer)view).ViewModel;
                     var ret = sitemapVm.Leaving();
