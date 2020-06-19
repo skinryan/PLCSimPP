@@ -19,17 +19,27 @@ using GC = BCI.PLCSimPP.Service.Devices.GC;
 
 namespace BCI.PLCSimPP.Service.Router
 {
+
     public class AutomationService : BindableBase, IAutomation
     {
         public const int MAX_ONLINE_COUNT = 200;
         private readonly ILogService mLogger;
         private readonly IEventAggregator mEventAggr;
         private Thread mSampleLoadingTask;
-        private ConcurrentQueue<ISample> mSampleOnlineQueue;//inlet queue
-        private IUnit inlet = null;
-        private object mCountLocker = new object();
+        private readonly ConcurrentQueue<ISample> mSampleOnlineQueue;//inlet queue
+        private IUnit mInlet = null;
+        private readonly object mCountLocker = new object();
 
-
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="msgService">message service</param>
+        /// <param name="router">router service</param>
+        /// <param name="config">configuration service</param>
+        /// <param name="eventAggregator">event aggregator</param>
+        /// <param name="logger">logger service</param>
+        /// <param name="sender">message send service</param>
+        /// <param name="receiver">message receive service</param>
         public AutomationService(IPortService msgService, IRouterService router, IConfigService config, IEventAggregator eventAggregator,
                                ILogService logger, ISendMsgBehavior sender, IRecvMsgBehavior receiver)
         {
@@ -47,23 +57,42 @@ namespace BCI.PLCSimPP.Service.Router
             mEventAggr.GetEvent<NotifyOnlineSampleEvent>().Subscribe(OnSampleCountChanged);
         }
 
+        /// <summary>
+        /// system connection flag
+        /// </summary>
         public bool IsConnected { get; set; }
 
-
-
+        /// <summary>
+        /// port service
+        /// </summary>
         public IPortService PortService { get; set; }
 
+        /// <summary>
+        /// message send behavior
+        /// </summary>
         public ISendMsgBehavior MsgSender { get; set; }
 
+        /// <summary>
+        /// message receive behavior
+        /// </summary>
         public IRecvMsgBehavior MsgReceiver { get; set; }
 
+        /// <summary>
+        /// router service
+        /// </summary>
         public IRouterService RouterService { get; set; }
 
+        /// <summary>
+        /// configruration service
+        /// </summary>
         public IConfigService ConfigService { get; set; }
 
         #region Bindable properties
 
         private ObservableCollection<IUnit> mUnitCollection;
+        /// <summary>
+        /// system layout units
+        /// </summary>
         public ObservableCollection<IUnit> UnitCollection
         {
             get { return mUnitCollection; }
@@ -71,6 +100,9 @@ namespace BCI.PLCSimPP.Service.Router
         }
 
         private int mOnlineSampleCount;
+        /// <summary>
+        /// sample online count
+        /// </summary>
         public int OnlineSampleCount
         {
             get { return mOnlineSampleCount; }
@@ -79,12 +111,12 @@ namespace BCI.PLCSimPP.Service.Router
 
         #endregion
 
-
-
+        /// <summary>
+        /// Start port server and init units and active send/receive task
+        /// </summary>
         public void Connect()
         {
             RouterService.SetSiteMap(UnitCollection);
-            //MsgReceiver.SetUnitCollection(UnitCollection);
             PortService.Connect();
             MsgReceiver.ActiveRecvTask("");
             MsgSender.ActiveSendTask("");
@@ -95,7 +127,7 @@ namespace BCI.PLCSimPP.Service.Router
             {
                 if (port.GetType() == typeof(DynamicInlet))
                 {
-                    inlet = port;
+                    mInlet = port;
                 }
 
                 port.InitUnit();
@@ -110,12 +142,19 @@ namespace BCI.PLCSimPP.Service.Router
             }
         }
 
+        /// <summary>
+        /// stop port server
+        /// </summary>
         public void Disconnect()
         {
             PortService.Disconnect();
             IsConnected = false;
         }
 
+        /// <summary>
+        /// load sample online
+        /// </summary>
+        /// <param name="samples">sample set</param>
         public void LoadSample(List<ISample> samples)
         {
             foreach (var sample in samples)
@@ -129,6 +168,9 @@ namespace BCI.PLCSimPP.Service.Router
             ActiveLoadingTask();
         }
 
+        /// <summary>
+        /// active loading sample task
+        /// </summary>
         private void ActiveLoadingTask()
         {
             if (mSampleLoadingTask == null)
@@ -145,6 +187,9 @@ namespace BCI.PLCSimPP.Service.Router
             }
         }
 
+        /// <summary>
+        /// load sample action
+        /// </summary>
         private void LoadingSample()
         {
             while (mSampleOnlineQueue.Count > 0)
@@ -154,7 +199,7 @@ namespace BCI.PLCSimPP.Service.Router
                     bool deqflag = mSampleOnlineQueue.TryDequeue(out var sample);
                     if (deqflag)
                     {
-                        inlet.EnqueueSample(sample);
+                        mInlet.EnqueueSample(sample);
                         sample.IsLoaded = true;
 
                         mEventAggr.GetEvent<NotifyOnlineSampleEvent>().Publish(1);
@@ -165,13 +210,19 @@ namespace BCI.PLCSimPP.Service.Router
             }
         }
 
-        public void RackExchange(IUnit storckyard, string shelf, string rack)
+        /// <summary>
+        /// rack exchange
+        /// </summary>
+        /// <param name="stockyard"></param>
+        /// <param name="shelf"></param>
+        /// <param name="rack"></param>
+        public void RackExchange(IUnit stockyard, string shelf, string rack)
         {
-            var msg = SendMsg.GetMsg1016(storckyard, shelf, rack);
+            var msg = SendMsg.GetMsg1016(stockyard, shelf, rack);
 
             this.mEventAggr.GetEvent<NotifyRackExchangeEvent>().Publish(new RackExchangeParam()
             {
-                Address = storckyard.Address,
+                Address = stockyard.Address,
                 Rack = rack,
                 Shelf = shelf
             });
@@ -194,13 +245,12 @@ namespace BCI.PLCSimPP.Service.Router
                 {
                     OnlineSampleCount += 1;
                 }
-                //else
-                //{
-                //    OnlineSampleCount = 0;
-                //}
             }
         }
 
+        /// <summary>
+        /// init units
+        /// </summary>
         public void Init()
         {
             UnitCollection.Clear();
@@ -209,7 +259,7 @@ namespace BCI.PLCSimPP.Service.Router
                 UnitCollection.Add(unit);
             };
 
-            //set instrument unmber
+            //set instrument number
             var dcCount = 1;
             var dxcCount = 1;
             foreach (var unit in UnitCollection)
