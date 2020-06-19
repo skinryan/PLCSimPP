@@ -175,6 +175,12 @@ namespace BCI.PLCSimPP.Layout.ViewModels
         {
             //split rack change param 
             List<object> list = (List<object>)param;
+            if (list.Count < 3)
+            {
+                MessageBox.Show("Please enter the correct shelf and rack numbers.");
+                return;
+            }
+
             string floor = list[0].ToString();
             string rack = list[1].ToString();
             IUnit unit = (IUnit)list[2];

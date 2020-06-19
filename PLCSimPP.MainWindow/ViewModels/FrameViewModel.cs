@@ -32,6 +32,14 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
 
         #region properties
 
+        private bool mMenuBarVisibility = true;
+
+        public bool MenuBarVisibility
+        {
+            get { return mMenuBarVisibility; }
+            set { SetProperty(ref mMenuBarVisibility, value); }
+        }
+
         private string mBackWorkerStatus;
 
         public string BackWorkerStatus
@@ -92,7 +100,6 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
             mEventAggr.GetEvent<ConnectionStatusEvent>().Subscribe(OnConnectionStatusChanged);
             mEventAggr.GetEvent<NotifyPortCountEvent>().Subscribe(OnPortCountChanged);
         }
-
 
         private void OnPortCountChanged(int count)
         {
@@ -156,25 +163,35 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
         {
             var views = mRegionManager.Regions[RegionName.LAYOUT_REGION].ActiveViews;
 
-            foreach (var view in views)
+            if (viewName != ViewName.SITE_MAP_EDITER)
             {
-                if (view is Configuration)//check config is edited
+                MenuBarVisibility = true;
+                foreach (var view in views)
                 {
-                    var configVm = ((Configuration)view).ViewModel;
-                    var ret = configVm.CheckLeaving();
-                    if (!ret)
+                    if (view is Configuration)//check config is edited
                     {
-                        return;
+                        var configVm = ((Configuration)view).ViewModel;
+                        var ret = configVm.CheckLeaving();
+                        if (!ret)
+                        {
+                            return;
+                        }
                     }
                 }
-
-                if(view is SiteMapEditer)
+            }
+            else
+            {
+                MenuBarVisibility = false;
+                foreach (var view in views)
                 {
-                    var sitemapVm = ((SiteMapEditer)view).ViewModel;
-                    var ret = sitemapVm.Leaving();
-                    if (!ret)
+                    if (view is SiteMapEditer)
                     {
-                        return;
+                        var sitemapVm = ((SiteMapEditer)view).ViewModel;
+                        var ret = sitemapVm.Leaving();
+                        if (!ret)
+                        {
+                            return;
+                        }
                     }
                 }
             }
@@ -188,4 +205,6 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
             }
         }
     }
+
+
 }

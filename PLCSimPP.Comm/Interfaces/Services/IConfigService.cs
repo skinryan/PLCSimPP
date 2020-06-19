@@ -17,6 +17,12 @@ namespace BCI.PLCSimPP.Comm.Interfaces.Services
         IEnumerable<IUnit> ReadSiteMap();
 
         /// <summary>
+        /// read site map setting file
+        /// </summary>
+        /// <returns>return unit collection</returns>
+        IEnumerable<IUnit> ReadSiteMap(string filePath);
+
+        /// <summary>
         /// save site map file 
         /// </summary>
         /// <param name="path">file path</param>

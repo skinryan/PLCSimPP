@@ -24,9 +24,14 @@ namespace BCI.PLCSimPP.Service.Config
 
         public IEnumerable<IUnit> ReadSiteMap()
         {
+            var siteMapPath = AppConfig.Configuration["SiteMapPath"];
+            return ReadSiteMap(siteMapPath);
+        }
+
+        public IEnumerable<IUnit> ReadSiteMap(string siteMapPath)
+        {
             try
             {
-                var siteMapPath = AppConfig.Configuration["SiteMapPath"];
                 using (FileStream fs = new FileStream(siteMapPath, FileMode.Open))
                 {
                     using (StreamReader sr = new StreamReader(fs))
@@ -48,7 +53,7 @@ namespace BCI.PLCSimPP.Service.Config
         {
             try
             {
-                var path = AppDomain.CurrentDomain.BaseDirectory + "\\"+ AppConfig.SETTING_FILE_NAME;
+                var path = AppDomain.CurrentDomain.BaseDirectory + "\\" + AppConfig.SETTING_FILE_NAME;
                 string josnString = File.ReadAllText(path, Encoding.Default);
                 SystemInfo sys = JsonConvert.DeserializeObject<SystemInfo>(josnString);
 
@@ -59,7 +64,7 @@ namespace BCI.PLCSimPP.Service.Config
                 var result = new SystemInfo();
                 result.SendInterval = 100;
 
-                result.SiteMapPath = "./Layout/Setting1.txt";
+                result.SiteMapPath = "./Layout/Setting1.xml";
                 return result;
             }
 
@@ -67,9 +72,6 @@ namespace BCI.PLCSimPP.Service.Config
 
         public void SaveSysConfig(SystemInfo info)
         {
-            //AppConfig.Configuration["System:ReceiveInterval"] = info.MsgReceiveInterval.ToString();
-            //AppConfig.Configuration["System:SiteMapPath"] = info.SiteMapPath;
-
             var path = AppDomain.CurrentDomain.BaseDirectory + "\\" + AppConfig.SETTING_FILE_NAME;
             string josnString = File.ReadAllText(path, Encoding.Default);
 
@@ -87,7 +89,7 @@ namespace BCI.PLCSimPP.Service.Config
 
         public void SaveSiteMap(string path, IEnumerable<IUnit> unitCollection)
         {
-            var myPath= Path.GetFullPath(path);
+            var myPath = Path.GetFullPath(path);
             var dir = myPath.Substring(0, myPath.LastIndexOf('\\'));
 
             if (!Directory.Exists(dir))

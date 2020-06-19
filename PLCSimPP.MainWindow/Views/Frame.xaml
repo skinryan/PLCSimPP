@@ -2,18 +2,18 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:comm="clr-namespace:BCI.PLCSimPP.Comm.Constants;assembly=BCI.PLCSimPP.Comm"
+             xmlns:cvt="clr-namespace:BCI.PLCSimPP.MainWindow.Converter"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:BCI.PLCSimPP.MainWindow.Views"
-             xmlns:cvt="clr-namespace:BCI.PLCSimPP.MainWindow.Converter"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:prism="http://prismlibrary.com/" 
+             xmlns:prism="http://prismlibrary.com/"
              d:DesignHeight="450"
              d:DesignWidth="800"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <cvt:Bool2ColorConverter x:Key="Bool2ColorConverter"/>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <cvt:Bool2ColorConverter x:Key="Bool2ColorConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Style x:Key="MenuItemStyle" TargetType="MenuItem">
             <Setter Property="FontWeight" Value="Normal" />
         </Style>
@@ -26,18 +26,10 @@
         </Grid.RowDefinitions>
         <Menu VerticalContentAlignment="Center"
               prism:RegionManager.RegionName="{x:Static comm:RegionName.MENU_REGION}"
-              ItemContainerStyle="{StaticResource MenuItemStyle}" />
-        <!--<TextBlock FontSize="80" Text="{Binding Title}" />-->
+              ItemContainerStyle="{StaticResource MenuItemStyle}"
+              Visibility="{Binding MenuBarVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static comm:RegionName.LAYOUT_REGION}" />
         <StatusBar Grid.Row="2">
-            <!--<StatusBarItem>
-                
-            </StatusBarItem>
-            <Separator HorizontalAlignment="Right"></Separator>
-            <StatusBarItem  HorizontalAlignment="Right">
-                <Ellipse Width="15" Height="15" Fill="Red"></Ellipse>
-            </StatusBarItem>-->
-
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
@@ -55,18 +47,26 @@
                 <TextBlock Text="{Binding BackWorkerStatus}" />
             </StatusBarItem>
             <Separator Grid.Column="1" />
-            <StatusBarItem Grid.Column="2" HorizontalContentAlignment="Right">
-                <!--<StackPanel Orientation="Horizontal">
-                    <TextBlock Text="SamleOnlineCount:" />
-                    <TextBlock Text="{Binding Count}" />
-                </StackPanel>-->
-            </StatusBarItem>
+            <StatusBarItem Grid.Column="2" HorizontalContentAlignment="Right" />
             <Separator Grid.Column="3" />
-            <StatusBarItem Grid.Column="4" >
-                <StackPanel Orientation="Horizontal" >
-                    <Ellipse Width="12" Height="12" Fill="{Binding Port1Status,Converter={StaticResource Bool2ColorConverter}}"  Margin="8,0,0,0" ToolTip="Port 1 connected status"></Ellipse>
-                    <Ellipse Width="12" Height="12" Fill="{Binding Port2Status,Converter={StaticResource Bool2ColorConverter}}"  Margin="8,0" ToolTip="Port 2 connected status"></Ellipse>
-                    <Ellipse Width="12" Height="12" Fill="{Binding Port3Status,Converter={StaticResource Bool2ColorConverter}}" Visibility="{Binding Port3Enabled,Converter={StaticResource BooleanToVisibilityConverter}}"  Margin="0,0,8,0" ToolTip="Port 3 connected status"></Ellipse>
+            <StatusBarItem Grid.Column="4">
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse Width="12"
+                             Height="12"
+                             Margin="8,0,0,0"
+                             Fill="{Binding Port1Status, Converter={StaticResource Bool2ColorConverter}}"
+                             ToolTip="Port 1 connected status" />
+                    <Ellipse Width="12"
+                             Height="12"
+                             Margin="8,0"
+                             Fill="{Binding Port2Status, Converter={StaticResource Bool2ColorConverter}}"
+                             ToolTip="Port 2 connected status" />
+                    <Ellipse Width="12"
+                             Height="12"
+                             Margin="0,0,8,0"
+                             Fill="{Binding Port3Status, Converter={StaticResource Bool2ColorConverter}}"
+                             ToolTip="Port 3 connected status"
+                             Visibility="{Binding Port3Enabled, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>

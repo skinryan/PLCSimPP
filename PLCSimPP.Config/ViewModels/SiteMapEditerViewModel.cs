@@ -16,7 +16,6 @@ using BCI.PLCSimPP.Service.Devices;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-
 using GC = BCI.PLCSimPP.Service.Devices.GC;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
@@ -28,6 +27,14 @@ namespace BCI.PLCSimPP.Config.ViewModels
         private readonly IConfigService mConfigService;
 
         #region properites
+
+        private string mFilePath;
+
+        public string FilePath
+        {
+            get { return mFilePath; }
+            set { SetProperty(ref mFilePath, value); }
+        }
 
 
         private bool mIsInEdit;
@@ -104,7 +111,6 @@ namespace BCI.PLCSimPP.Config.ViewModels
         public List<int> PortList { get; set; }
 
         #endregion
-
         public ICommand RemoveCommand { get; set; }
         public ICommand AddCommand { get; set; }
         public ICommand SaveCommand { get; set; }
@@ -138,10 +144,14 @@ namespace BCI.PLCSimPP.Config.ViewModels
             mEventAggregator.GetEvent<LoadDataEvent>().Subscribe(OnLoad);
         }
 
-
-        private void OnLoad(string param)
+        private void OnLoad(string filePath)
         {
-            var units = mConfigService.ReadSiteMap();
+            FilePath = filePath;
+            Port1.Clear();
+            Port2.Clear();
+            Port3.Clear();
+
+            var units = mConfigService.ReadSiteMap(FilePath);
 
             foreach (var item in units)
             {
@@ -177,7 +187,6 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
         private void SetPortCollection(IUnit item, ObservableCollection<IUnit> portCollection)
         {
-            portCollection.Clear();
             portCollection.Add(item);
 
             if (item.HasChild)
@@ -448,14 +457,11 @@ namespace BCI.PLCSimPP.Config.ViewModels
         private void DoSave()
         {
             var units = BuildSaveList();
-            var cfgInfo = mConfigService.ReadSysConfig();
 
-            mConfigService.SaveSiteMap(cfgInfo.SiteMapPath, units);
+            mConfigService.SaveSiteMap(FilePath, units);
 
             mEventAggregator.GetEvent<ReLoadSiteMapEvent>().Publish(true);
             MessageBox.Show("Save Success.");
-
-            //mEventAggregator.GetEvent<NavigateEvent>().Publish(ViewName.CONFIGURATION);
         }
 
 
@@ -605,7 +611,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
         /// <returns>true-changed; false- no change</returns>
         private bool IsChanged()
         {
-            var originalList = mConfigService.ReadSiteMap().ToList();
+            var originalList = mConfigService.ReadSiteMap(FilePath).ToList();
             var targetList = BuildSaveList();
 
             if (originalList.Count != targetList.Count)

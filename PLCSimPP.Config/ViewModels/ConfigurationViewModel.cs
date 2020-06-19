@@ -77,7 +77,10 @@ namespace BCI.PLCSimPP.Config.ViewModels
             EditSiteMapCommand = new DelegateCommand<string>((name) =>
             {
                 eventAggr.GetEvent<NavigateEvent>().Publish(name);
-                eventAggr.GetEvent<LoadDataEvent>().Publish(name);
+                if (ConfigurationController.Data is ConfigurationViewData data)
+                {
+                    eventAggr.GetEvent<LoadDataEvent>().Publish(data.SiteMapFilePath);
+                }
             });
         }
 
@@ -134,11 +137,13 @@ namespace BCI.PLCSimPP.Config.ViewModels
                     }
 
                     ConfigurationController.Save();
+                    mEventAggr.GetEvent<LoadDataEvent>().Publish(string.Empty);
                     return true;
                 }
                 else if (result == MessageBoxResult.No)
                 {
                     ConfigurationController.LoadViewDatas();
+                    mEventAggr.GetEvent<LoadDataEvent>().Publish(string.Empty);
                     return true;
                 }
                 else
