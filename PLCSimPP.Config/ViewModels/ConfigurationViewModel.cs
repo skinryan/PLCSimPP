@@ -137,13 +137,13 @@ namespace BCI.PLCSimPP.Config.ViewModels
                     }
 
                     ConfigurationController.Save();
-                    mEventAggr.GetEvent<LoadDataEvent>().Publish(string.Empty);
+                    Thread.Sleep(500);
+                    mEventAggr.GetEvent<ReLoadSiteMapEvent>().Publish(true);
                     return true;
                 }
                 else if (result == MessageBoxResult.No)
                 {
                     ConfigurationController.LoadViewDatas();
-                    mEventAggr.GetEvent<LoadDataEvent>().Publish(string.Empty);
                     return true;
                 }
                 else
@@ -170,7 +170,6 @@ namespace BCI.PLCSimPP.Config.ViewModels
             {
                 Thread.Sleep(500);
                 mEventAggr.GetEvent<ReLoadSiteMapEvent>().Publish(true);
-
                 MessageBox.Show("Save Success.");
             }
         }

@@ -44,7 +44,7 @@ namespace BCI.PLCSimPP.Log.CustomControl
         // Using a DependencyProperty as the backing store for TotalRowCount.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TotalRowCountProperty =
             DependencyProperty.Register("TotalRowCount", typeof(int), typeof(DataPagerControl), new PropertyMetadata(0));
-        
+
         public int SearchIndex
         {
             get { return (int)GetValue(SearchIndexProperty); }
@@ -77,7 +77,7 @@ namespace BCI.PLCSimPP.Log.CustomControl
         public static readonly DependencyProperty PageCountProperty =
             DependencyProperty.Register("PageCount", typeof(int), typeof(DataPagerControl), new PropertyMetadata(0));
 
-     
+
         /// <summary>
         /// Current page index
         /// </summary>
@@ -107,7 +107,7 @@ namespace BCI.PLCSimPP.Log.CustomControl
                 //CurrentIndex = pageIndex;
                 control.RaiseEvent(arg);
             }
-        }        
+        }
 
         #endregion
 
@@ -198,7 +198,14 @@ namespace BCI.PLCSimPP.Log.CustomControl
             catch
             {
                 TextIndex.Text = string.Empty;
-                CurrentIndex = 1;
+                if (PageCount > 0)
+                {
+                    CurrentIndex = 1;
+                }
+                else
+                {
+                    CurrentIndex = 0;
+                }
             }
         }
 
@@ -209,7 +216,14 @@ namespace BCI.PLCSimPP.Log.CustomControl
         /// <param name="e"></param>
         private void BtnFirstClick(object sender, RoutedEventArgs e)
         {
-            CurrentIndex = 1;
+            if (PageCount > 0)
+            {
+                CurrentIndex = 1;
+            }
+            else
+            {
+                CurrentIndex = 0;
+            }
         }
 
         /// <summary>
@@ -259,7 +273,7 @@ namespace BCI.PLCSimPP.Log.CustomControl
         /// <param name="e"></param>
         private void TextIndexKeyUp(object sender, KeyEventArgs e)
         {
-           if (e.Key == Key.Enter && !string.IsNullOrEmpty(TextIndex.Text))
+            if (e.Key == Key.Enter && !string.IsNullOrEmpty(TextIndex.Text))
             {
                 try
                 {
@@ -278,7 +292,14 @@ namespace BCI.PLCSimPP.Log.CustomControl
                 catch
                 {
                     TextIndex.Text = string.Empty;
-                    CurrentIndex = 1;
+                    if (PageCount > 0)
+                    {
+                        CurrentIndex = 1;
+                    }
+                    else
+                    {
+                        CurrentIndex = 0;
+                    }
                 }
             }
         }
