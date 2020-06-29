@@ -155,45 +155,47 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
         {
             mFilePath = exportPath;
             BackWorkerStatus = EXPORTING;
-            //invoked asynchronously
             mBgWorker.RunWorkerAsync();
         }
 
         private void OnNavigate(string viewName)
         {
             var views = mRegionManager.Regions[RegionName.LAYOUT_REGION].ActiveViews;
+            var activeView = views.FirstOrDefault();
 
             if (viewName != ViewName.SITE_MAP_EDITER)
             {
                 MenuBarVisibility = true;
-                foreach (var view in views)
+
+                if (activeView is Configuration configuration)//check config is edited
                 {
-                    if (view is Configuration)//check config is edited
+                    if (viewName == ViewName.CONFIGURATION)
                     {
-                        var configVm = ((Configuration)view).ViewModel;
-                        var ret = configVm.CheckLeaving();
-                        if (!ret)
-                        {
-                            return;
-                        }
+                        return;
+                    }
+
+                    var configVm = configuration.ViewModel;
+                    var ret = configVm.CheckLeaving();
+                    if (!ret)
+                    {
+                        return;
                     }
                 }
             }
             else
             {
                 MenuBarVisibility = false;
-                foreach (var view in views)
+
+                if (activeView is SiteMapEditer editer)
                 {
-                    if (view is SiteMapEditer)
+                    var siteMapVm = editer.ViewModel;
+                    var ret = siteMapVm.Leaving();
+                    if (!ret)
                     {
-                        var sitemapVm = ((SiteMapEditer)view).ViewModel;
-                        var ret = sitemapVm.Leaving();
-                        if (!ret)
-                        {
-                            return;
-                        }
+                        return;
                     }
                 }
+
             }
 
             mRegionManager.RequestNavigate(RegionName.LAYOUT_REGION, viewName);

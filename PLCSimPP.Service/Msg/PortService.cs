@@ -1,25 +1,18 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
-using CommonServiceLocator;
+﻿using System.Collections.Concurrent;
 using BCI.PLCSimPP.Comm.Interfaces;
 using BCI.PLCSimPP.Comm.Interfaces.Services;
-using BCI.PLCSimPP.Comm.Models;
-using BCI.PLCSimPP.Communication.Models;
+using BCI.PLCSimPP.Service.Services;
 using Prism.Events;
 
-namespace BCI.PLCSimPP.Service.Services
+namespace BCI.PLCSimPP.Service.Msg
 {
     public class PortService : IPortService
     {
-        private readonly ILogService mLogger;
-        private readonly IEventAggregator mEventAggr;
         private ConcurrentQueue<IMessage> mReceivedQueue;
 
-        public PortConnection MasterPort_1 { get; set; }
-        public PortConnection MasterPort_2 { get; set; }
-        public PortConnection MasterPort_3 { get; set; }
+        public PortConnection MasterPort1 { get; set; }
+        public PortConnection MasterPort2 { get; set; }
+        public PortConnection MasterPort3 { get; set; }
 
         public PortService()
         {
@@ -28,31 +21,31 @@ namespace BCI.PLCSimPP.Service.Services
 
         public void Connect()
         {
-            MasterPort_1.OpenConnect();
-            MasterPort_2.OpenConnect();
-            MasterPort_3.OpenConnect();
+            MasterPort1.OpenConnect();
+            MasterPort2.OpenConnect();
+            MasterPort3.OpenConnect();
         }
 
         public void Disconnect()
         {
-            MasterPort_1.CloseConnect();
-            MasterPort_2.CloseConnect();
-            MasterPort_3.CloseConnect();
+            MasterPort1.CloseConnect();
+            MasterPort2.CloseConnect();
+            MasterPort3.CloseConnect();
             mReceivedQueue = new ConcurrentQueue<IMessage>();
         }
 
         public PortService(ILogService logger, IEventAggregator aggregator)
         {
-            mLogger = logger;
-            mEventAggr = aggregator;
+            var logger1 = logger;
+            var eventAggr = aggregator;
 
-            MasterPort_1 = new PortConnection(1, mLogger, mEventAggr);
-            MasterPort_2 = new PortConnection(2, mLogger, mEventAggr);
-            MasterPort_3 = new PortConnection(3, mLogger, mEventAggr);
+            MasterPort1 = new PortConnection(1, logger1, eventAggr);
+            MasterPort2 = new PortConnection(2, logger1, eventAggr);
+            MasterPort3 = new PortConnection(3, logger1, eventAggr);
 
-            MasterPort_1.OnMsgReceived += MasterPort_OnMsgReceived;
-            MasterPort_2.OnMsgReceived += MasterPort_OnMsgReceived;
-            MasterPort_3.OnMsgReceived += MasterPort_OnMsgReceived;
+            MasterPort1.OnMsgReceived += MasterPort_OnMsgReceived;
+            MasterPort2.OnMsgReceived += MasterPort_OnMsgReceived;
+            MasterPort3.OnMsgReceived += MasterPort_OnMsgReceived;
         }
 
         private void MasterPort_OnMsgReceived(object sender, Communication.EventArguments.TransportLayerDataReceivedEventArgs e)
@@ -65,15 +58,15 @@ namespace BCI.PLCSimPP.Service.Services
         {
             if (msg.Port == 1)
             {
-                MasterPort_1.SendMsg(msg);
+                MasterPort1.SendMsg(msg);
             }
             else if (msg.Port == 2)
             {
-                MasterPort_2.SendMsg(msg);
+                MasterPort2.SendMsg(msg);
             }
             else if (msg.Port == 3)
             {
-                MasterPort_3.SendMsg(msg);
+                MasterPort3.SendMsg(msg);
             }
         }
 

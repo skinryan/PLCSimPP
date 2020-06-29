@@ -136,10 +136,14 @@ namespace BCI.PLCSimPP.Config.ViewModels
                         return false;
                     }
 
-                    ConfigurationController.Save();
-                    Thread.Sleep(500);
-                    mEventAggr.GetEvent<ReLoadSiteMapEvent>().Publish(true);
-                    return true;
+                    if (ConfigurationController.Save())
+                    {
+                        Thread.Sleep(500);
+                        mEventAggr.GetEvent<ReLoadSiteMapEvent>().Publish(true);
+                        return true;
+                    }
+
+                    return false;
                 }
                 else if (result == MessageBoxResult.No)
                 {

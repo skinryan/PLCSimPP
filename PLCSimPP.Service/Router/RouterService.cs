@@ -53,15 +53,15 @@ namespace BCI.PLCSimPP.Service.Router
         }
 
 
-        public void SetSiteMap(ObservableCollection<IUnit> unitColleciton)
+        public void SetSiteMap(ObservableCollection<IUnit> unitCollection)
         {
-            mUnitCollection = unitColleciton;
+            mUnitCollection = unitCollection;
         }
 
-        public List<IUnit> FindTargetUnit(string targetAddr)
+        public List<IUnit> FindTargetUnit(string targetAddress)
         {
             List<IUnit> result = new List<IUnit>();
-            int targetValue = int.Parse(targetAddr, System.Globalization.NumberStyles.HexNumber);
+            int targetValue = int.Parse(targetAddress, System.Globalization.NumberStyles.HexNumber);
 
             foreach (var unit in mUnitCollection)
             {

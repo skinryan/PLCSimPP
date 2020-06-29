@@ -106,6 +106,10 @@
                     Content="Save"
                     DockPanel.Dock="Right"
                     Style="{StaticResource ControlButtonStyle}" />
+            <Button Command="{Binding SaveAsCommand}"
+                    Content="Save as..."
+                    DockPanel.Dock="Right"
+                    Style="{StaticResource ControlButtonStyle}" />
             <Button Command="{Binding ClearAllCommand}"
                     Content="Clear All"
                     Style="{StaticResource ControlButtonStyle}" />

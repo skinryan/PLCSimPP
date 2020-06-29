@@ -103,20 +103,7 @@ namespace BCI.PLCSimPP.PresentationControls
             var result = true;
             if (Data.IsValueChanged)
             {
-                //var dialogResult = mPromptSaveDiscardCancelDialog.Prompt(Properties.Resources.DataChangedPrompting, Properties.Resources.Save,
-                //    CabernetResourceManager.GetEnglishResources(nameof(Properties.Resources.DataChangedPrompting), typeof(Properties.Resources)),
-                //    CabernetResourceManager.GetEnglishResources(nameof(Properties.Resources.Save), typeof(Properties.Resources)),
-                //    mSetupLog, mSecurity.CurrentUserName);
-
-                //if (dialogResult == PromptYesNoCancelDialogResult.Yes)
-                //    result = Save();
-                //else if (dialogResult == PromptYesNoCancelDialogResult.No)
-                //{
-                //    result = true;
-                //    LoadViewDatas();
-                //}
-                //else if (dialogResult == PromptYesNoCancelDialogResult.Cancel)
-                //    result = false;
+               
             }
             return result;
         }

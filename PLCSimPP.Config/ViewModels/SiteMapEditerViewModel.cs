@@ -114,6 +114,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
         public ICommand RemoveCommand { get; set; }
         public ICommand AddCommand { get; set; }
         public ICommand SaveCommand { get; set; }
+        public ICommand SaveAsCommand { get; set; }
         public ICommand CancelCommand { get; set; }
         public ICommand ClearAllCommand { get; set; }
         public ICommand CancelEditCommand { get; set; }
@@ -137,12 +138,14 @@ namespace BCI.PLCSimPP.Config.ViewModels
             AddCommand = new DelegateCommand(DoAdd);
             ClearAllCommand = new DelegateCommand(DoClearAll);
             SaveCommand = new DelegateCommand(DoSave);
+            SaveAsCommand = new DelegateCommand(DoSaveAs);
             CancelCommand = new DelegateCommand(DoCancel);
             CancelEditCommand = new DelegateCommand(DoCancelEdit);
             SelectUnitCommand = new DelegateCommand(DoSelectUnit);
 
             mEventAggregator.GetEvent<LoadDataEvent>().Subscribe(OnLoad);
         }
+
 
         private void OnLoad(string filePath)
         {
@@ -464,6 +467,28 @@ namespace BCI.PLCSimPP.Config.ViewModels
             MessageBox.Show("Save Success.");
         }
 
+        private void DoSaveAs()
+        {
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Title = "Select the save path",
+                Filter = "XML file (*.xml)|*.xml",
+                CheckPathExists = true,
+                DefaultExt = "xml",
+                RestoreDirectory = true
+            };
+            var result = sfd.ShowDialog();
+
+            if (result.HasValue && result.Value)
+            {
+                var units = BuildSaveList();
+
+                mConfigService.SaveSiteMap(sfd.FileName, units);
+
+                this.FilePath = sfd.FileName;
+                MessageBox.Show("Save Success.");
+            }
+        }
 
         #endregion
 

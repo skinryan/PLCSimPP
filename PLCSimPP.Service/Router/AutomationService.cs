@@ -83,7 +83,7 @@ namespace BCI.PLCSimPP.Service.Router
         public IRouterService RouterService { get; set; }
 
         /// <summary>
-        /// configruration service
+        /// configuration service
         /// </summary>
         public IConfigService ConfigService { get; set; }
 
@@ -151,10 +151,8 @@ namespace BCI.PLCSimPP.Service.Router
             IsConnected = false;
         }
 
-        /// <summary>
-        /// load sample online
-        /// </summary>
-        /// <param name="samples">sample set</param>
+        /// <inheritdoc />
+       
         public void LoadSample(List<ISample> samples)
         {
             foreach (var sample in samples)
@@ -248,9 +246,7 @@ namespace BCI.PLCSimPP.Service.Router
             }
         }
 
-        /// <summary>
-        /// init units
-        /// </summary>
+        /// <inheritdoc />
         public void Init()
         {
             UnitCollection.Clear();
@@ -288,7 +284,6 @@ namespace BCI.PLCSimPP.Service.Router
 
             this.Disconnect();
             mSampleLoadingTask = new Thread(new ThreadStart(LoadingSample));
-
             mEventAggr.GetEvent<NotifyPortCountEvent>().Publish(UnitCollection.Count);
         }
 
