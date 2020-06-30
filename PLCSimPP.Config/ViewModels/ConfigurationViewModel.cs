@@ -117,13 +117,13 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
         private void DoCancel()
         {
-            if (CheckLeaving())
+            if (Leaving())
             {
                 mEventAggr.GetEvent<NavigateEvent>().Publish(ViewName.DEVICE_LAYOUT);
             }
         }
 
-        public bool CheckLeaving()
+        public bool Leaving()
         {
             if (ConfigurationController.Data.IsValueChanged)
             {

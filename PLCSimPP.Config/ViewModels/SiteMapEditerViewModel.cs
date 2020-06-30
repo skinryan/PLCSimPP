@@ -457,7 +457,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
             }
         }
 
-        private void DoSave()
+        public void DoSave()
         {
             var units = BuildSaveList();
 
@@ -634,7 +634,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
         /// Check original Setting has changed
         /// </summary>
         /// <returns>true-changed; false- no change</returns>
-        private bool IsChanged()
+        public bool IsChanged()
         {
             var originalList = mConfigService.ReadSiteMap(FilePath).ToList();
             var targetList = BuildSaveList();

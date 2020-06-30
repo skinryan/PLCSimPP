@@ -54,9 +54,7 @@ namespace BCI.PLCSimPP.Config.Controllers
                 mLogger.LogSys("Exception : ConfigurationController.ConfigurationControllerSaving - " + ex);
             }
         }
-
-
-
+        
         private void ConfigurationControllerViewDataLoading()
         {
             try

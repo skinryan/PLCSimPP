@@ -175,7 +175,7 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
                     }
 
                     var configVm = configuration.ViewModel;
-                    var ret = configVm.CheckLeaving();
+                    var ret = configVm.Leaving();
                     if (!ret)
                     {
                         return;
