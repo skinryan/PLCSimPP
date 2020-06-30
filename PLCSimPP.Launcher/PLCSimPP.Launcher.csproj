@@ -5,15 +5,17 @@
 	  <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
 	  <UseWPF>true</UseWPF>
     <StartupObject>BCI.PLCSimPP.Launcher.App</StartupObject>
-    <ApplicationIcon />
+    <ApplicationIcon>PLCSim.ico</ApplicationIcon>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Copyright>©2020 Beckman Coulter, Inc. All rights reserved.</Copyright>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <FileVersion>1.0.0.0</FileVersion>
     <SignAssembly>false</SignAssembly>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyName>BCI.PLCSimPP.Launcher</AssemblyName>
+    <AssemblyName>PLCSimPP</AssemblyName>
     <RootNamespace>BCI.PLCSimPP.Launcher</RootNamespace>
+    <Authors>BCI</Authors>
+    <Product>PLCSimPP</Product>
   </PropertyGroup>
 
   <ItemGroup>
