@@ -89,6 +89,11 @@ namespace BCI.PLCSimPP.Service.Config
 
         public void SaveSiteMap(string path, IEnumerable<IUnit> unitCollection)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return;
+            }
+
             var myPath = Path.GetFullPath(path);
             var dir = myPath.Substring(0, myPath.LastIndexOf('\\'));
 

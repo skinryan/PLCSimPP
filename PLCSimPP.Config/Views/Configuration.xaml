@@ -34,7 +34,7 @@
                         Orientation="Horizontal">
                 <TextBlock Width="100"
                            VerticalAlignment="Center"
-                           Text="Site map Path"
+                           Text="Site Map Path"
                            TextWrapping="Wrap" />
                 <TextBox Width="300"
                          Height="25"
