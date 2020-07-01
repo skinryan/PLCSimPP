@@ -49,7 +49,7 @@ namespace BCI.PLCSimPP.Service.Devices
                 var bcrNum = content.Substring(0, 1);
                 if (bcrNum == ParamConst.BCR_1)
                 {
-                    SendArrivel();
+                    SendArrival();
                 }
             }
 
@@ -74,7 +74,7 @@ namespace BCI.PLCSimPP.Service.Devices
             if (cmd == LcCmds._0014)
             {
                 //reply 1014
-                var bcr = content.Substring(0, 1);
+                //var bcr = content.Substring(0, 1);
                 var msg = new MsgCmd
                 {
                     Port = this.Port,
@@ -101,7 +101,7 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
-        private void SendArrivel()
+        private void SendArrival()
         {
             var msg = new MsgCmd
             {
@@ -178,6 +178,7 @@ namespace BCI.PLCSimPP.Service.Devices
             };
 
             mSecQueue.Enqueue(subSample);
+            mEventAggr.GetEvent<NotifyOnlineSampleEvent>().Publish(1);
         }
     }
 }

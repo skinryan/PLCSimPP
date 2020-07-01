@@ -230,15 +230,15 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
         private void DoMoveUp(IUnit unit)
         {
-            if (Port == 1)
+            if (unit.Port == 1)
             {
                 MoveUp(Port1, unit);
             }
-            if (Port == 2)
+            if (unit.Port == 2)
             {
                 MoveUp(Port2, unit);
             }
-            if (Port == 3)
+            if (unit.Port == 3)
             {
                 MoveUp(Port3, unit);
             }

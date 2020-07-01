@@ -70,7 +70,7 @@ namespace BCI.PLCSimPP.Service.Devices
                     }
                     else
                     {
-                        RetriveSample(sid.Trim());
+                        RetrieveSample(sid.Trim());
                     }
                 }
             }
@@ -137,25 +137,26 @@ namespace BCI.PLCSimPP.Service.Devices
         }
 
 
-        private void RetriveSample(string sid)//string floor, string rack, string position
+        private void RetrieveSample(string sid)//string floor, string rack, string position
         {
-            bool isfind = false;
+            bool isFind = false;
             foreach (var shelf in mShelfList.Values)
             {
-                if (isfind) break;
+                if (isFind) break;
                 foreach (var rack in shelf.RackList.Values)
                 {
-                    if (isfind) break;
+                    if (isFind) break;
                     foreach (var sample in rack.SampleList)
                     {
                         if (sample.Value.SampleID == sid)
                         {
-                            isfind = true;
+                            isFind = true;
                             //dict = rack.SampleList;
 
                             var dest = mRouterService.FindNextDestination(this);
                             dest.EnqueueSample(sample.Value);
                             rack.SampleList.Remove(sample.Key);
+                            mEventAggr.GetEvent<NotifyOnlineSampleEvent>().Publish(1);
                             break;
                         }
                     }
