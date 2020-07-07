@@ -32,14 +32,6 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
 
         #region properties
 
-        private bool mMenuBarVisibility = true;
-
-        public bool MenuBarVisibility
-        {
-            get { return mMenuBarVisibility; }
-            set { SetProperty(ref mMenuBarVisibility, value); }
-        }
-
         private string mBackWorkerStatus;
 
         public string BackWorkerStatus
@@ -163,10 +155,8 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
             var views = mRegionManager.Regions[RegionName.LAYOUT_REGION].ActiveViews;
             var activeView = views.FirstOrDefault();
 
-            if (viewName != ViewName.SITE_MAP_EDITER)
+            if (viewName != ViewName.CONFIGURATION)
             {
-                MenuBarVisibility = true;
-
                 if (activeView is Configuration configuration)//check config is edited
                 {
                     if (viewName == ViewName.CONFIGURATION)
@@ -182,21 +172,7 @@ namespace BCI.PLCSimPP.MainWindow.ViewModels
                     }
                 }
             }
-            else
-            {
-                MenuBarVisibility = false;
 
-                if (activeView is SiteMapEditer editer)
-                {
-                    var siteMapVm = editer.ViewModel;
-                    var ret = siteMapVm.Leaving();
-                    if (!ret)
-                    {
-                        return;
-                    }
-                }
-
-            }
 
             mRegionManager.RequestNavigate(RegionName.LAYOUT_REGION, viewName);
 

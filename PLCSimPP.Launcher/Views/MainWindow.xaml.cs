@@ -31,7 +31,7 @@ namespace BCI.PLCSimPP.Launcher.Views
             InitializeComponent();
         }
 
-
+        /// <inheritdoc />
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
@@ -48,18 +48,16 @@ namespace BCI.PLCSimPP.Launcher.Views
             var views = regionManager.Regions[RegionName.LAYOUT_REGION].Views;
 
             Configuration configuration = views.FirstOrDefault(t => t.GetType() == typeof(Configuration)) as Configuration;
-            SiteMapEditer siteMap = views.FirstOrDefault(t => t.GetType() == typeof(SiteMapEditer)) as SiteMapEditer;
-
-
-            if (configuration != null && siteMap != null)
+           
+            //Check save before closing
+            if (configuration != null)
             {
-                if (configuration.ViewModel.ConfigurationController.Data.IsValueChanged || siteMap.ViewModel.IsChanged())
+                if (configuration.ViewModel.ConfigurationController.Data.IsValueChanged )
                 {
                     var rst = MessageBox.Show("Do you need to save the changed Settings?", "Warning", MessageBoxButton.YesNoCancel);
                     if (rst == MessageBoxResult.Yes)
                     {
                         configuration.ViewModel.ConfigurationController.Save();
-                        siteMap.ViewModel.DoSave();
                     }
                     if (rst == MessageBoxResult.Cancel)
                     {

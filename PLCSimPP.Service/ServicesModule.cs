@@ -29,7 +29,7 @@ namespace BCI.PLCSimPP.Service
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<ILogService, LogService>();
-            containerRegistry.RegisterSingleton<IConfigService, ConifgService>();
+            containerRegistry.RegisterSingleton<IConfigService, ConfigService>();
             containerRegistry.RegisterSingleton<IRouterService, RouterService>();
             containerRegistry.RegisterSingleton<IRecvMsgBehavior, MsgReceiver>();
             containerRegistry.RegisterSingleton<IPortService, PortService>();

@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:BCI.PLCSimPP.Config.Converters"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:prism="http://prismlibrary.com/"
+             MinHeight="450"
              d:DesignHeight="450"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d">
@@ -91,9 +92,7 @@
 
     </UserControl.Resources>
     <DockPanel LastChildFill="True">
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <TextBlock Margin="5,2" Text="{Binding FilePath}" />
-        </StackPanel>
+
         <DockPanel Margin="0,5"
                    HorizontalAlignment="Stretch"
                    DockPanel.Dock="Bottom"
@@ -218,6 +217,5 @@
                          SelectionMode="Single" />
             </GroupBox>
         </StackPanel>
-
     </DockPanel>
 </UserControl>

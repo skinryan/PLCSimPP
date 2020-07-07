@@ -14,6 +14,9 @@ using Prism.Mvvm;
 
 namespace BCI.PLCSimPP.Launcher.ViewModels
 {
+    /// <summary>
+    /// MainWindowViewModel
+    /// </summary>
     public class MainWindowViewModel : BindableBase
     {
         private const string APP_TITLE = "PLCSim for PP";

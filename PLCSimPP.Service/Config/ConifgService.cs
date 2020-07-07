@@ -13,21 +13,37 @@ using BCI.PLCSimPP.Comm.Models;
 
 namespace BCI.PLCSimPP.Service.Config
 {
-    public class ConifgService : IConfigService
+    /// <summary>
+    /// ConfigService
+    /// </summary>
+    public class ConfigService : IConfigService
     {
         private readonly ILogService mLogger;
 
-        public ConifgService(ILogService logger)
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="logger"></param>
+        public ConfigService(ILogService logger)
         {
             mLogger = logger;
         }
 
+        /// <summary>
+        /// Read SiteMap file 
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<IUnit> ReadSiteMap()
         {
             var siteMapPath = AppConfig.Configuration["SiteMapPath"];
             return ReadSiteMap(siteMapPath);
         }
 
+        /// <summary>
+        ///  Read SiteMap file 
+        /// </summary>
+        /// <param name="siteMapPath">site map path</param>
+        /// <returns></returns>
         public IEnumerable<IUnit> ReadSiteMap(string siteMapPath)
         {
             try
@@ -49,6 +65,10 @@ namespace BCI.PLCSimPP.Service.Config
             }
         }
 
+        /// <summary>
+        /// Read SysConfig
+        /// </summary>
+        /// <returns></returns>
         public SystemInfo ReadSysConfig()
         {
             try
@@ -70,6 +90,10 @@ namespace BCI.PLCSimPP.Service.Config
 
         }
 
+        /// <summary>
+        /// SaveSysConfig
+        /// </summary>
+        /// <param name="info">instance that needs to save</param>
         public void SaveSysConfig(SystemInfo info)
         {
             var path = AppDomain.CurrentDomain.BaseDirectory + "\\" + AppConfig.SETTING_FILE_NAME;
@@ -87,6 +111,11 @@ namespace BCI.PLCSimPP.Service.Config
             File.WriteAllText(path, convertString, Encoding.UTF8);
         }
 
+        /// <summary>
+        /// save site map 
+        /// </summary>
+        /// <param name="path">save path</param>
+        /// <param name="unitCollection">save instance</param>
         public void SaveSiteMap(string path, IEnumerable<IUnit> unitCollection)
         {
             if (string.IsNullOrEmpty(path))

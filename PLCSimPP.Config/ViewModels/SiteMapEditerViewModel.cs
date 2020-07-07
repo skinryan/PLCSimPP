@@ -16,25 +16,26 @@ using BCI.PLCSimPP.Service.Devices;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using GC = BCI.PLCSimPP.Service.Devices.GC;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 namespace BCI.PLCSimPP.Config.ViewModels
 {
-    public class SiteMapEditerViewModel : BindableBase
+    public class SiteMapEditerViewModel : BindableBase, IDialogAware
     {
         private readonly IEventAggregator mEventAggregator;
         private readonly IConfigService mConfigService;
 
         #region properites
 
-        private string mFilePath;
+        //private string mFilePath;
 
-        public string FilePath
-        {
-            get { return mFilePath; }
-            set { SetProperty(ref mFilePath, value); }
-        }
+        //public string FilePath
+        //{
+        //    get { return mFilePath; }
+        //    set { SetProperty(ref mFilePath, value); }
+        //}
 
 
         private bool mIsInEdit;
@@ -143,18 +144,18 @@ namespace BCI.PLCSimPP.Config.ViewModels
             CancelEditCommand = new DelegateCommand(DoCancelEdit);
             SelectUnitCommand = new DelegateCommand(DoSelectUnit);
 
-            mEventAggregator.GetEvent<LoadDataEvent>().Subscribe(OnLoad);
         }
+
 
 
         private void OnLoad(string filePath)
         {
-            FilePath = filePath;
+            Title = filePath;
             Port1.Clear();
             Port2.Clear();
             Port3.Clear();
 
-            var units = mConfigService.ReadSiteMap(FilePath);
+            var units = mConfigService.ReadSiteMap(Title);
 
             foreach (var item in units)
             {
@@ -423,48 +424,21 @@ namespace BCI.PLCSimPP.Config.ViewModels
         /// </summary>
         public void DoCancel()
         {
-            if (Leaving())
+            if (CanCloseDialog())
             {
-                mEventAggregator.GetEvent<NavigateEvent>().Publish(ViewName.CONFIGURATION);
+                RaiseRequestClose(new DialogResult(ButtonResult.Cancel));
             }
         }
 
-        /// <summary>
-        /// Leaving check
-        /// </summary>
-        /// <returns></returns>
-        public bool Leaving()
-        {
-            if (!IsChanged())
-            {
-                return true;
-            }
-
-            var result = MessageBox.Show("Do you need to save the changed Settings?", "Warning", MessageBoxButton.YesNoCancel);
-            if (result == MessageBoxResult.Yes)
-            {
-                DoSave();
-                return true;
-            }
-            else if (result == MessageBoxResult.No)
-            {
-                OnLoad(string.Empty);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
 
         public void DoSave()
         {
             var units = BuildSaveList();
 
-            mConfigService.SaveSiteMap(FilePath, units);
+            mConfigService.SaveSiteMap(Title, units);
 
             mEventAggregator.GetEvent<ReLoadSiteMapEvent>().Publish(true);
-            MessageBox.Show("Save Success.");
+            RaiseRequestClose(new DialogResult(ButtonResult.Cancel));
         }
 
         private void DoSaveAs()
@@ -485,8 +459,8 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
                 mConfigService.SaveSiteMap(sfd.FileName, units);
 
-                this.FilePath = sfd.FileName;
-                MessageBox.Show("Save Success.");
+                this.Title = sfd.FileName;
+                RaiseRequestClose(new DialogResult(ButtonResult.Cancel));
             }
         }
 
@@ -636,7 +610,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
         /// <returns>true-changed; false- no change</returns>
         public bool IsChanged()
         {
-            var originalList = mConfigService.ReadSiteMap(FilePath).ToList();
+            var originalList = mConfigService.ReadSiteMap(Title).ToList();
             var targetList = BuildSaveList();
 
             if (originalList.Count != targetList.Count)
@@ -679,5 +653,58 @@ namespace BCI.PLCSimPP.Config.ViewModels
         }
 
         #endregion
+
+        #region IDialogAware members
+
+        public bool CanCloseDialog()
+        {
+            if (!IsChanged())
+            {
+                return true;
+            }
+
+            var result = MessageBox.Show("Do you need to save the changed Settings?", "Warning", MessageBoxButton.YesNoCancel);
+            if (result == MessageBoxResult.Yes)
+            {
+                DoSave();
+                return true;
+            }
+
+            if (result == MessageBoxResult.No)
+            {
+                OnLoad(string.Empty);
+                return true;
+            }
+
+            return false;
+        }
+
+        public void OnDialogClosed()
+        {
+
+        }
+        public void OnDialogOpened(IDialogParameters parameters)
+        {
+            //throw new NotImplementedException();
+            var filePath = parameters.GetValue<string>("FilePath");
+            OnLoad(filePath);
+        }
+
+        private string mTitle;
+        public string Title
+        {
+            get { return mTitle; }
+            set { SetProperty(ref mTitle, value); }
+        }
+
+        public event Action<IDialogResult> RequestClose;
+
+        public void RaiseRequestClose(IDialogResult dialogResult)
+        {
+            RequestClose?.Invoke(dialogResult);
+        }
+
+        #endregion
+
     }
 }

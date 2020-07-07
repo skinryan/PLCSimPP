@@ -19,13 +19,13 @@ namespace BCI.PLCSimPP.Config
             regionManager.RegisterViewWithRegion(RegionName.MENU_REGION, typeof(ConfigMenu));
             regionManager.RegisterViewWithRegion(RegionName.MENU_REGION, typeof(AboutMenu));
             regionManager.RegisterViewWithRegion(RegionName.LAYOUT_REGION, typeof(Configuration));
-            regionManager.RegisterViewWithRegion(RegionName.LAYOUT_REGION, typeof(SiteMapEditer));
+            //regionManager.RegisterViewWithRegion(RegionName.LAYOUT_REGION, typeof(SiteMapEditer));
             regionManager.RegisterViewWithRegion(RegionName.LAYOUT_REGION, typeof(About));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //containerRegistry.RegisterSingleton<INotifyPropertyChanged, ConfigurationViewModel>("ConfigurationViewModel");
+            containerRegistry.RegisterDialog<SiteMapEditer, SiteMapEditerViewModel>("SiteMapEditer");
         }
     }
 }

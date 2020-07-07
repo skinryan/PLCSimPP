@@ -38,7 +38,7 @@ namespace BCI.PLCSimPP.Test.ServiceTest
             TestContainer.RegisterSingleton<IRouterService, RouterServiceForUT>();
             TestContainer.RegisterSingleton<ISendMsgBehavior, MsgSenderForUT>();
             TestContainer.RegisterSingleton<ILogService, LogService>();
-            TestContainer.RegisterSingleton<IConfigService, ConifgService>();
+            TestContainer.RegisterSingleton<IConfigService, ConfigService>();
             TestContainer.RegisterSingleton<IAnalyzerSimService, AnalyzerSimServiceForUT>("DCSimService");
             TestContainer.RegisterSingleton<IAnalyzerSimService, AnalyzerSimServiceForUT>("DxCSimService");
 

@@ -21,6 +21,11 @@ namespace BCI.PLCSimPP.Service.Analyzer
         private readonly IEventAggregator mEventAggr;
         private SystemInfo mConfig;
 
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="eventAggr"></param>
         public DCSimService(IConfigService config, IEventAggregator eventAggr)
         {
             mConfigService = config;
@@ -29,11 +34,21 @@ namespace BCI.PLCSimPP.Service.Analyzer
             mEventAggr.GetEvent<ReLoadSiteMapEvent>().Subscribe(OnReload);
         }
 
+        /// <summary>
+        /// reload system config
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnReload(bool obj)
         {
             mConfig = mConfigService.ReadSysConfig();
         }
 
+        /// <summary>
+        /// send message to DCSim
+        /// </summary>
+        /// <param name="unitNum"></param>
+        /// <param name="token"></param>
+        /// <param name="sampleId"></param>
         public void SendMsg(int unitNum, string token, string sampleId)
         {
             LoadSampleOnAnalyzerMessage analyzerMsg = new LoadSampleOnAnalyzerMessage()
@@ -45,6 +60,9 @@ namespace BCI.PLCSimPP.Service.Analyzer
             CommServerForDcSim.Instance.Send(analyzerMsg);
         }
 
+        /// <summary>
+        /// Shut down DCSim
+        /// </summary>
         public void ShutDown()
         {
             var dcSimPath = mConfig.DcSimLocation;
@@ -57,6 +75,9 @@ namespace BCI.PLCSimPP.Service.Analyzer
             CommServerForDcSim.Instance.ShutDown();
         }
 
+        /// <summary>
+        /// Startup DCSim with launch parameter
+        /// </summary>
         public void StartUp()
         {
             var dcSimPath = mConfig.DcSimLocation;

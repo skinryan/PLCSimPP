@@ -14,20 +14,20 @@ using BCI.PLCSimPP.Comm.Events;
 
 namespace BCI.PLCSimPP.Service.Analyzer
 {
+    /// <summary>
+    /// DxCSimService
+    /// </summary>
     public class DxCSimService : IAnalyzerSimService
     {
         private readonly IConfigService mConfigService;
         private readonly IEventAggregator mEventAggr;
         private SystemInfo mConfig;
 
-        public bool Connected
-        {
-            get
-            {
-                return CommServerForDxCSim.Instance.HasConnectedClient;
-            }
-        }
-
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="eventAggr"></param>
         public DxCSimService(IConfigService config, IEventAggregator eventAggr)
         {
             mConfigService = config;
@@ -36,11 +36,21 @@ namespace BCI.PLCSimPP.Service.Analyzer
             mEventAggr.GetEvent<ReLoadSiteMapEvent>().Subscribe(OnReload);
         }
 
+        /// <summary>
+        /// reload config
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnReload(bool obj)
         {
             mConfig = mConfigService.ReadSysConfig();
         }
 
+        /// <summary>
+        /// send message to DxCSim
+        /// </summary>
+        /// <param name="unitNum"></param>
+        /// <param name="token"></param>
+        /// <param name="sampleId"></param>
         public void SendMsg(int unitNum, string token, string sampleId)
         {
             LoadSampleOnDxCMessage analyzerMsg = new LoadSampleOnDxCMessage()
@@ -52,6 +62,9 @@ namespace BCI.PLCSimPP.Service.Analyzer
             CommServerForDxCSim.Instance.Send(analyzerMsg);
         }
 
+        /// <summary>
+        /// Shut down DxCSim
+        /// </summary>
         public void ShutDown()
         {
             var dxcSimPath = mConfig.DxCSimLocation;
@@ -63,6 +76,9 @@ namespace BCI.PLCSimPP.Service.Analyzer
             CommServerForDxCSim.Instance.ShutDown();
         }
 
+        /// <summary>
+        /// Startup DxCSim with launch parameter
+        /// </summary>
         public void StartUp()
         {
             var dxcSimPath = mConfig.DxCSimLocation;

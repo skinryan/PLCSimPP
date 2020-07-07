@@ -11,6 +11,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
+using Prism.Services.Dialogs;
 
 namespace BCI.PLCSimPP.Config.ViewModels
 {
@@ -21,6 +22,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
         private const string FILE_TYPE_XML = "xml";
         private readonly IEventAggregator mEventAggr;
         private readonly IAutomation mAutomation;
+        private readonly IDialogService mDialogService;
 
         public ICommand EditSiteMapCommand { get; set; }
         public ICommand SelectFilePathCommand { get; set; }
@@ -37,11 +39,12 @@ namespace BCI.PLCSimPP.Config.ViewModels
             private set;
         }
 
-        public ConfigurationViewModel(ConfigurationController configurationController, IEventAggregator eventAggr, IAutomation automation)
+        public ConfigurationViewModel(ConfigurationController configurationController, IEventAggregator eventAggr, IAutomation automation, IDialogService dialogService)
         {
             mEventAggr = eventAggr;
             ConfigurationController = configurationController;
             mAutomation = automation;
+            mDialogService = dialogService;
 
             CancelCommand = new DelegateCommand(DoCancel);
             SelectFilePathCommand = new DelegateCommand<string>((fileType) =>
@@ -76,10 +79,13 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
             EditSiteMapCommand = new DelegateCommand<string>((name) =>
             {
-                eventAggr.GetEvent<NavigateEvent>().Publish(name);
                 if (ConfigurationController.Data is ConfigurationViewData data)
                 {
-                    eventAggr.GetEvent<LoadDataEvent>().Publish(data.SiteMapFilePath);
+                   var param = new DialogParameters();
+                    param.Add("FilePath", data.SiteMapFilePath);
+                    mDialogService.ShowDialog("SiteMapEditer", param, r =>
+                    {
+                    });
                 }
             });
         }

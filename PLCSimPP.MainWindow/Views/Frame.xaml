@@ -26,8 +26,7 @@
         </Grid.RowDefinitions>
         <Menu VerticalContentAlignment="Center"
               prism:RegionManager.RegionName="{x:Static comm:RegionName.MENU_REGION}"
-              ItemContainerStyle="{StaticResource MenuItemStyle}"
-              Visibility="{Binding MenuBarVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" />
+              ItemContainerStyle="{StaticResource MenuItemStyle}" />
         <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static comm:RegionName.LAYOUT_REGION}" />
         <StatusBar Grid.Row="2">
             <StatusBar.ItemsPanel>
