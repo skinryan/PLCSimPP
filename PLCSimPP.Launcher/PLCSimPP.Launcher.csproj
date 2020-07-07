@@ -8,7 +8,7 @@
     <ApplicationIcon>PLCSim.ico</ApplicationIcon>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Copyright>©2020 Beckman Coulter, Inc. All rights reserved.</Copyright>
-    <Version>1.0.3</Version>
+    <Version>1.0.5</Version>
     <FileVersion>1.0.0.0</FileVersion>
     <SignAssembly>false</SignAssembly>
     <ApplicationManifest>app.manifest</ApplicationManifest>
