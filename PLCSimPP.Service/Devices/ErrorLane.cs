@@ -10,6 +10,7 @@ namespace BCI.PLCSimPP.Service.Devices
     [Serializable]
     public class ErrorLane : UnitBase
     {
+        /// <inheritdoc />
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
@@ -20,6 +21,9 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
         public ErrorLane() : base()
         {
 

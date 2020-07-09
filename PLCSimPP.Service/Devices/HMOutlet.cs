@@ -39,6 +39,7 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <inheritdoc />
         public override void OnReceivedMsg(string cmd, string content)
         {
             mLogger.LogSys(cmd + "|" + content);
@@ -65,6 +66,13 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// store sample 
+        /// </summary>
+        /// <param name="shelf">shelf number</param>
+        /// <param name="rack">rack number</param>
+        /// <param name="position">position</param>
+        /// <param name="sample">sample</param>
         private void StoreSample(string shelf, string rack, string position, ISample sample)
         {
             if (!mShelfList.ContainsKey(shelf))
@@ -84,7 +92,9 @@ namespace BCI.PLCSimPP.Service.Devices
         }
 
         
-
+        /// <summary>
+        /// constructor
+        /// </summary>
         public HMOutlet() : base()
         {
             if (ServiceLocator.IsLocationProviderSet)

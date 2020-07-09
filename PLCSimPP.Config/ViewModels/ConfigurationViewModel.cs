@@ -17,7 +17,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
 {
     public class ConfigurationViewModel : ViewModelBase
     {
-        private const string CANT_SAVE_NOTIFICATION = "The settings cannot be modified while the system is connected.";
+        
         private const string FILE_TYPE_EXE = "exe";
         private const string FILE_TYPE_XML = "xml";
         private readonly IEventAggregator mEventAggr;
@@ -138,7 +138,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
                 {
                     if (mAutomation.IsConnected)
                     {
-                        MessageBox.Show(CANT_SAVE_NOTIFICATION);
+                        MessageBox.Show(ConfigModule.CANT_SAVE_NOTIFICATION);
                         return false;
                     }
 
@@ -172,7 +172,7 @@ namespace BCI.PLCSimPP.Config.ViewModels
         {
             if (mAutomation.IsConnected)
             {
-                MessageBox.Show(CANT_SAVE_NOTIFICATION);
+                MessageBox.Show(ConfigModule.CANT_SAVE_NOTIFICATION);
                 return;
             }
 

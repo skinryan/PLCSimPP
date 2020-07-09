@@ -43,6 +43,9 @@ namespace BCI.PLCSimPP.Service.DB
             mConn = null;
         }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
         private DBService()
         {
             IConfigService configServ = ServiceLocator.Current.GetInstance<IConfigService>();
@@ -50,11 +53,21 @@ namespace BCI.PLCSimPP.Service.DB
             mConn = new SqlConnection(config.ConnectionString);
         }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="connString"></param>
         public DBService(string connString)
         {
             mConn = new SqlConnection(connString);
         }
 
+        /// <summary>
+        /// get data by page
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
         public PageData<T> GetPageData<T>(PageCriteria criteria) where T : BindableBase
         {
             var p = new DynamicParameters();
@@ -79,6 +92,14 @@ namespace BCI.PLCSimPP.Service.DB
             return pageData;
         }
 
+        /// <summary>
+        /// query log content
+        /// </summary>
+        /// <param name="tmStart">start time</param>
+        /// <param name="tmEnd">end time</param>
+        /// <param name="address">unit address</param>
+        /// <param name="param">param</param>
+        /// <returns></returns>
         public IEnumerable<LogContent> QueryLogContents(DateTime tmStart, DateTime tmEnd, string address, string param)
         {
             string querystring = $"SELECT * FROM [{DbConst.MSGLOG_TABLE_NAME}] WHERE [Time] <= '{tmEnd}' and [Time] >= '{tmStart}'";
@@ -100,6 +121,10 @@ namespace BCI.PLCSimPP.Service.DB
             return result;
         }
 
+        /// <summary>
+        /// query log content
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<LogContent> QueryLogContents()
         {
             string querystring = $"SELECT * FROM {DbConst.MSGLOG_TABLE_NAME}";
@@ -109,6 +134,10 @@ namespace BCI.PLCSimPP.Service.DB
             return result;
         }
 
+        /// <summary>
+        /// clear table
+        /// </summary>
+        /// <returns></returns>
         public bool TruncateTable()
         {
             string querystring = $"TRUNCATE TABLE {DbConst.MSGLOG_TABLE_NAME}";
@@ -118,6 +147,11 @@ namespace BCI.PLCSimPP.Service.DB
             return result > 1;
         }
 
+        /// <summary>
+        /// get first log time
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public DateTime GetStartTime(string token)
         {
             string sql = $"SELECT top(1) [{DbConst.MSGLOG_COLUMN_TIME}] FROM [{DbConst.MSGLOG_TABLE_NAME}] WHERE [{DbConst.MSGLOG_COLUMN_TOKEN}]={DbConst.MSGLOG_PARAM_TOKEN} ORDER BY [{DbConst.MSGLOG_COLUMN_TIME}] ASC";
@@ -138,6 +172,11 @@ namespace BCI.PLCSimPP.Service.DB
             }
         }
 
+        /// <summary>
+        /// get last log time
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public DateTime GetEndTime(string token)
         {
             string sql = $"SELECT top(1) [{DbConst.MSGLOG_COLUMN_TIME}] FROM [{DbConst.MSGLOG_TABLE_NAME}] WHERE [{DbConst.MSGLOG_COLUMN_TOKEN}]={DbConst.MSGLOG_PARAM_TOKEN} ORDER BY [{DbConst.MSGLOG_COLUMN_TIME}] DESC";

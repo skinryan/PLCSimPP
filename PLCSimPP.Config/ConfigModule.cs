@@ -13,6 +13,8 @@ namespace BCI.PLCSimPP.Config
 {
     public class ConfigModule : IModule
     {
+        public const string CANT_SAVE_NOTIFICATION = "The settings cannot be modified while the system is connected.";
+
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();

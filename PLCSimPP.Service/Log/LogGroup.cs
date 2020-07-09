@@ -6,7 +6,9 @@ namespace BCI.PLCSimPP.Service.Log
     public class LogGroup : BindableBase
     {
         private string mToken;
-
+        /// <summary>
+        /// Token
+        /// </summary>
         public string Token
         {
             get { return mToken; }
@@ -17,7 +19,9 @@ namespace BCI.PLCSimPP.Service.Log
         }
 
         private int mMsgCount;
-
+        /// <summary>
+        /// MsgCount
+        /// </summary>
         public int MsgCount
         {
             get { return mMsgCount; }
@@ -28,7 +32,9 @@ namespace BCI.PLCSimPP.Service.Log
         }
 
         private DateTime mStartTime;
-
+        /// <summary>
+        /// StartTime
+        /// </summary>
         public DateTime StartTime
         {
             get { return mStartTime; }

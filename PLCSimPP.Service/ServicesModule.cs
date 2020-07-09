@@ -16,15 +16,9 @@ namespace BCI.PLCSimPP.Service
 {
     public class ServicesModule : IModule
     {
-        public ServicesModule()
-        {
+        public ServicesModule() { }
 
-        }
-
-        public void OnInitialized(IContainerProvider containerProvider)
-        {
-
-        }
+        public void OnInitialized(IContainerProvider containerProvider) { }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {

@@ -15,7 +15,7 @@ namespace BCI.PLCSimPP.Service.Devices
     [Serializable]
     public class Labeler : UnitBase
     {
-       
+        /// <inheritdoc />
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
@@ -36,6 +36,7 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <inheritdoc />
         protected override void OnSampleArrived()
         {
             string param = ParamConst.BCR_2 + CurrentSample.SampleID.PadRight(15);

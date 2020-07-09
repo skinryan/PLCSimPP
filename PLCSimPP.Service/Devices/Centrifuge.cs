@@ -26,6 +26,7 @@ namespace BCI.PLCSimPP.Service.Devices
 
         public List<ISample> StoredSamples { get; set; }
 
+        /// <inheritdoc />
         protected override int GetPendingCount()
         {
             return StoredSamples.Count + mPendingQueue.Count;
@@ -49,6 +50,7 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <inheritdoc />
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
@@ -98,12 +100,17 @@ namespace BCI.PLCSimPP.Service.Devices
             RaisePropertyChanged("PendingCount");
         }
 
+        /// <summary>
+        /// move sample to next unit
+        /// </summary>
+        /// <param name="sample"></param>
         private void MoveSampleToNext(ISample sample)
         {
             var dest = mRouterService.FindNextDestination(this);
             dest.EnqueueSample(sample);
         }
 
+        /// <inheritdoc />
         public override void InitUnit()
         {
             base.InitUnit();
@@ -112,6 +119,9 @@ namespace BCI.PLCSimPP.Service.Devices
             mWaitArrivalTask.Start();
         }
 
+        /// <summary>
+        /// take in sample
+        /// </summary>
         private void StoreSample()
         {
             StoredSamples.Add(CurrentSample);
@@ -119,6 +129,9 @@ namespace BCI.PLCSimPP.Service.Devices
             mSecCount = 0;
         }
 
+        /// <summary>
+        /// process sample queue
+        /// </summary>
         private void ProcessInSample()
         {
             try
@@ -145,6 +158,10 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// Spinning 
+        /// </summary>
+        /// <param name="state"></param>
         private void ProcessSpinning(object state)
         {
             if (mSpinning)
@@ -206,6 +223,9 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
         public Centrifuge() : base()
         {
             mLocker = new object();

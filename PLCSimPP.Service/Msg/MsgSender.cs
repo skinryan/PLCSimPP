@@ -29,6 +29,13 @@ namespace BCI.PLCSimPP.Service.Msg
 
         public bool IsPaused { get; set; } = false;
 
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="msgService">message service</param>
+        /// <param name="logger">logger service</param>
+        /// <param name="config">config service</param>
+        /// <param name="eventAggr">event aggregator</param>
         public MsgSender(IPortService msgService, ILogService logger, IConfigService config, IEventAggregator eventAggr)
         {
             mEventAggr = eventAggr;
@@ -42,6 +49,10 @@ namespace BCI.PLCSimPP.Service.Msg
             mCanActive = true;
         }
 
+        /// <summary>
+        /// active send message task
+        /// </summary>
+        /// <param name="token"></param>
         public void ActiveSendTask(string token)
         {
             if (!mCanActive)
@@ -101,11 +112,18 @@ namespace BCI.PLCSimPP.Service.Msg
             }
         }
 
+        /// <summary>
+        /// push message to send queue
+        /// </summary>
+        /// <param name="msg"></param>
         public void PushMsg(IMessage msg)
         {
             mSendQueue.Enqueue(msg);
         }
 
+        /// <summary>
+        /// stop send message task
+        /// </summary>
         public void StopSendTask()
         {
             mWorking = false;

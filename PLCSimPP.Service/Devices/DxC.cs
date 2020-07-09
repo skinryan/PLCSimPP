@@ -15,8 +15,12 @@ namespace BCI.PLCSimPP.Service.Devices
     public class DxC : UnitBase
     {
         private IAnalyzerSimService mDxCSimService;
+        /// <summary>
+        /// Instrument number
+        /// </summary>
         public int InstrumentUnitNum { get; set; }
 
+        /// <inheritdoc />
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
@@ -53,12 +57,17 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
-
+        /// <summary>
+        /// constructor
+        /// </summary>
         public DxC() : base()
         {
             Init();
         }
 
+        /// <summary>
+        /// init unit
+        /// </summary>
         private void Init()
         {
             if (ServiceLocator.IsLocationProviderSet)

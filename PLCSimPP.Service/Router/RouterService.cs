@@ -52,12 +52,20 @@ namespace BCI.PLCSimPP.Service.Router
             return mUnitCollection[1].Children.First();
         }
 
-
+        /// <summary>
+        /// SetSiteMap
+        /// </summary>
+        /// <param name="unitCollection"></param>
         public void SetSiteMap(ObservableCollection<IUnit> unitCollection)
         {
             mUnitCollection = unitCollection;
         }
 
+        /// <summary>
+        /// FindTargetUnit
+        /// </summary>
+        /// <param name="targetAddress"></param>
+        /// <returns></returns>
         public List<IUnit> FindTargetUnit(string targetAddress)
         {
             List<IUnit> result = new List<IUnit>();

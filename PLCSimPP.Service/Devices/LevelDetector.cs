@@ -19,11 +19,16 @@ namespace BCI.PLCSimPP.Service.Devices
         private int mClotTime;
         private object mLocker;
 
+        /// <summary>
+        /// get padding queue count
+        /// </summary>
+        /// <returns></returns>
         protected override int GetPendingCount()
         {
             return mClotedSamples.Count + mPendingQueue.Count;
         }
 
+        /// <inheritdoc />
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
@@ -47,6 +52,9 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// replay 1012 command
+        /// </summary>
         private void Reply1012()
         {
             lock (mLocker)
@@ -74,6 +82,9 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// move sample to next unit
+        /// </summary>
         private void MoveDetectedSample()
         {
             var dest = mRouterService.FindNextDestination(this);
@@ -84,6 +95,10 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// Process Clot operate
+        /// </summary>
+        /// <param name="state"></param>
         private void ProcessClot(object state)
         {
             if (mClotedSamples.Count <= 0)
@@ -100,12 +115,14 @@ namespace BCI.PLCSimPP.Service.Devices
             mClotTime += 1;
         }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
         public LevelDetector() : base()
         {
             mLocker = new object();
             mClotedSamples = new List<ISample>();
             mClotTimer = new Timer(ProcessClot, null, 1000, 1000);
-
         }
     }
 }

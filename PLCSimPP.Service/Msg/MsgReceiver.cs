@@ -22,13 +22,15 @@ namespace BCI.PLCSimPP.Service.Msg
         private bool mCanActive;//can active flag
         private string mToken;//script token
         private Task mRecvTask;//receive msg task  
-        private IRouterService mRouterService;
-
-        //private readonly ConcurrentQueue<IMessage> mReceiveQueue;// receive msg queue
+        private readonly IRouterService mRouterService;
         private readonly ILogService mLogger;
         private readonly IEventAggregator mEventAggr;
         private readonly IPortService mPortService;
 
+        /// <summary>
+        /// Active Receive message Task
+        /// </summary>
+        /// <param name="token"></param>
         public void ActiveRecvTask(string token)
         {
             if (!mCanActive)
@@ -46,10 +48,11 @@ namespace BCI.PLCSimPP.Service.Msg
             mCanActive = false;
         }
 
+        /// <summary>
+        /// Receive message Sequence
+        /// </summary>
         private void RecvSequence()
         {
-            //mMsgService.SetReceiveQueue(mReceiveQueue);
-
             while (true)
             {
                 Thread.Sleep(mReceiveInterval);
@@ -60,9 +63,6 @@ namespace BCI.PLCSimPP.Service.Msg
 
                     if (flag)
                     {
-                        //var success = mMsgService.TryDequeue(out IMessage result);
-
-
                         //log msg
                         mLogger.LogRecvMsg(result.UnitAddr, result.Command, result.Param);
 
@@ -92,6 +92,9 @@ namespace BCI.PLCSimPP.Service.Msg
             }
         }
 
+        /// <summary>
+        /// Stop Receive message Task
+        /// </summary>
         public void StopRecvTask()
         {
             mWorking = false;
@@ -100,19 +103,16 @@ namespace BCI.PLCSimPP.Service.Msg
             {
                 mCanActive = true;
             });
-            //mUnitCollection = null;
         }
 
-        //public void PushReceivedMsg(IMessage msg)
-        //{
-        //    this.mReceiveQueue.Enqueue(msg);
-        //}
 
-        //public void SetUnitCollection(ObservableCollection<IUnit> unitCollection)
-        //{
-        //    this.mUnitCollection = unitCollection;
-        //}
-
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="eventAggr"></param>
+        /// <param name="logger"></param>
+        /// <param name="msgService"></param>
+        /// <param name="router"></param>
         public MsgReceiver(IEventAggregator eventAggr, ILogService logger, IPortService msgService, IRouterService router)
         {
             mEventAggr = eventAggr;

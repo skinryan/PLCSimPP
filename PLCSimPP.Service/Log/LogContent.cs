@@ -5,8 +5,6 @@ namespace BCI.PLCSimPP.Service.Log
 {
     public class LogContent : BindableBase
     {
-
-
         private DateTime mTime;
 
         /// <summary>
@@ -112,7 +110,15 @@ namespace BCI.PLCSimPP.Service.Log
             }
         }
 
-        public LogContent(string direction, string address, string command, string para, string token, int status = 0)
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="direction">direction</param>
+        /// <param name="address">address</param>
+        /// <param name="command">command</param>
+        /// <param name="para">command para </param>
+        /// <param name="token">token no use</param>
+        public LogContent(string direction, string address, string command, string para, string token)
         {
             this.Time = DateTime.Now;
             this.Address = address;
@@ -122,6 +128,9 @@ namespace BCI.PLCSimPP.Service.Log
             this.Token = token;
         }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
         public LogContent()
         {
 

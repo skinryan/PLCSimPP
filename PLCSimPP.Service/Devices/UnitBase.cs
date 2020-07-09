@@ -21,7 +21,9 @@ using Prism.Events;
 
 namespace BCI.PLCSimPP.Service.Devices
 {
-
+    /// <summary>
+    /// UnitBase
+    /// </summary>
     public abstract class UnitBase : BindableBase, IUnit
     {
         protected readonly ISendMsgBehavior mSendBehavior;
@@ -35,7 +37,9 @@ namespace BCI.PLCSimPP.Service.Devices
         #region properties
 
         private string mDisplayName;
-
+        /// <summary>
+        /// DisplayName
+        /// </summary>
         public string DisplayName
         {
             get { return mDisplayName; }
@@ -43,7 +47,9 @@ namespace BCI.PLCSimPP.Service.Devices
         }
 
         private int mPort;
-
+        /// <summary>
+        /// Port No.
+        /// </summary>
         public int Port
         {
             get { return mPort; }
@@ -51,29 +57,43 @@ namespace BCI.PLCSimPP.Service.Devices
         }
 
         private string mAddress;
+        /// <summary>
+        /// Address 
+        /// </summary>
         public string Address
         {
             get { return mAddress; }
             set { this.SetProperty(ref mAddress, value); }
         }
 
+        /// <summary>
+        /// Port children
+        /// </summary>
         public ObservableCollection<IUnit> Children
         {
             get;
         }
 
+        /// <summary>
+        /// The length of the queue to be processed by the unit
+        /// </summary>
         public int PendingCount
         {
             get { return GetPendingCount(); }
         }
 
+        /// <summary>
+        /// Mark the unit has child
+        /// </summary>
         public bool HasChild
         {
             get { return Children.Count > 0; }
         }
 
         private IUnit mParent;
-
+        /// <summary>
+        /// Mark the unit parent
+        /// </summary>
         public IUnit Parent
         {
             get { return mParent; }
@@ -81,6 +101,9 @@ namespace BCI.PLCSimPP.Service.Devices
         }
 
         protected ISample mCurrentSample;
+        /// <summary>
+        /// Sample in the current process
+        /// </summary>
         public ISample CurrentSample
         {
             get { return mCurrentSample; }
@@ -88,6 +111,9 @@ namespace BCI.PLCSimPP.Service.Devices
         }
 
         private bool mIsMaster;
+        /// <summary>
+        /// Mark the unit is master port
+        /// </summary>
         public bool IsMaster
         {
             get { return mIsMaster; }
@@ -95,18 +121,28 @@ namespace BCI.PLCSimPP.Service.Devices
         }
 
         #endregion
-
+        /// <summary>
+        /// Get pending sample count
+        /// </summary>
+        /// <returns></returns>
         protected virtual int GetPendingCount()
         {
             return mPendingQueue.Count;
         }
 
+        /// <summary>
+        /// Enqueue sample from pending queue
+        /// </summary>
+        /// <param name="sample"></param>
         public virtual void EnqueueSample(ISample sample)
         {
             mPendingQueue.Enqueue(sample);
             RaisePropertyChanged("PendingCount");
         }
 
+        /// <summary>
+        /// MoveSample
+        /// </summary>
         protected virtual void MoveSample()
         {
             var dest = mRouterService.FindNextDestination(this);
@@ -116,6 +152,7 @@ namespace BCI.PLCSimPP.Service.Devices
             RaisePropertyChanged("PendingCount");
         }
 
+        /// <inheritdoc />
         public virtual void OnReceivedMsg(string cmd, string content)
         {
             try
@@ -135,6 +172,9 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// skip one sample
+        /// </summary>
         public virtual void ResetQueue()
         {
             this.CurrentSample = null;
@@ -144,11 +184,19 @@ namespace BCI.PLCSimPP.Service.Devices
             eventAggr.GetEvent<NotifyOnlineSampleEvent>().Publish(-1);
         }
 
+        /// <summary>
+        /// get sample from pending queue
+        /// </summary>
+        /// <param name="sample"></param>
+        /// <returns></returns>
         protected virtual bool TryDequeueSample(out ISample sample)
         {
             return mPendingQueue.TryDequeue(out sample);
         }
 
+        /// <summary>
+        /// init
+        /// </summary>
         public virtual void InitUnit()
         {
             //mOwner = owner;
@@ -159,6 +207,9 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// Process Pending Queue
+        /// </summary>
         private void ProcessPendingQueue()
         {
             try
@@ -182,12 +233,18 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// On Sample Arrived
+        /// </summary>
         protected virtual void OnSampleArrived()
         {
             var msg = SendMsg.GetMsg1011(this, ParamConst.BCR_1);
             this.mSendBehavior.PushMsg(msg);
         }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
         protected UnitBase()
         {
             Children = new ObservableCollection<IUnit>();

@@ -16,15 +16,21 @@ namespace BCI.PLCSimPP.Service.Devices
     public class Stocker : UnitBase
     {
         private readonly IEventAggregator mEvent;
-        private Dictionary<string, Shelf> mShelfList = new Dictionary<string, Shelf>();
+        private readonly Dictionary<string, Shelf> mShelfList = new Dictionary<string, Shelf>();
 
         protected ISample mRetrievingSample;
+        /// <summary>
+        /// retrieving sample
+        /// </summary>
         public ISample RetrievingSample
         {
             get { return mRetrievingSample; }
             set { this.SetProperty(ref mRetrievingSample, value); }
         }
 
+        /// <summary>
+        /// stored sample count
+        /// </summary>
         public int StoredCount
         {
             get
@@ -43,6 +49,7 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <inheritdoc />
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
@@ -136,7 +143,10 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
-
+        /// <summary>
+        /// Retrieve Sample by sample id
+        /// </summary>
+        /// <param name="sid">sample id</param>
         private void RetrieveSample(string sid)//string floor, string rack, string position
         {
             bool isFind = false;
@@ -166,6 +176,11 @@ namespace BCI.PLCSimPP.Service.Devices
             RaisePropertyChanged("StoredCount");
         }
 
+        /// <summary>
+        /// clear target rack
+        /// </summary>
+        /// <param name="floor"></param>
+        /// <param name="rack"></param>
         private void EmptyTargetRack(string floor, string rack)
         {
             if (mShelfList.ContainsKey(floor))
@@ -179,6 +194,13 @@ namespace BCI.PLCSimPP.Service.Devices
             RaisePropertyChanged("StoredCount");
         }
 
+        /// <summary>
+        /// Store Sample to target position
+        /// </summary>
+        /// <param name="shelf">shelf id</param>
+        /// <param name="rack">rack id</param>
+        /// <param name="position">position id</param>
+        /// <param name="sample">sample instance</param>
         private void StoreSample(string shelf, string rack, string position, ISample sample)
         {
             if (!mShelfList.ContainsKey(shelf))
@@ -197,6 +219,9 @@ namespace BCI.PLCSimPP.Service.Devices
             mEvent.GetEvent<NotifyOnlineSampleEvent>().Publish(-1);
         }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
         public Stocker() : base()
         {
             if (ServiceLocator.IsLocationProviderSet)
@@ -206,6 +231,10 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// on rack exchange
+        /// </summary>
+        /// <param name="rep"></param>
         private void OnRackExchange(RackExchangeParam rep)
         {
             if (rep.Address == this.Address)
@@ -214,6 +243,9 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// on sample arrived
+        /// </summary>
         protected override void OnSampleArrived()
         {
             if (CurrentSample.SampleID.StartsWith("ERR"))

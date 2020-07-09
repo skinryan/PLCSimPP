@@ -17,6 +17,9 @@ namespace BCI.PLCSimPP.Service.Devices
     {
         private readonly IEventAggregator mEvent;
         private Dictionary<string, Shelf> mShelfList = new Dictionary<string, Shelf>();
+        /// <summary>
+        /// Stored sample Count
+        /// </summary>
         public int StoredCount
         {
             get
@@ -35,6 +38,7 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <inheritdoc />
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
@@ -68,6 +72,11 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// clear target rack
+        /// </summary>
+        /// <param name="floor">floor id</param>
+        /// <param name="rack">rack id</param>
         private void EmptyTargetRack(string floor, string rack)
         {
             if (mShelfList.ContainsKey(floor))
@@ -82,7 +91,7 @@ namespace BCI.PLCSimPP.Service.Devices
         }
 
         /// <summary>
-        /// 
+        /// Store Sample to target position
         /// </summary>
         /// <param name="shelf"></param>
         /// <param name="rack"></param>
@@ -106,6 +115,10 @@ namespace BCI.PLCSimPP.Service.Devices
             mEvent.GetEvent<NotifyOnlineSampleEvent>().Publish(-1);
         }
 
+        /// <summary>
+        /// on rack exchange 
+        /// </summary>
+        /// <param name="rep"></param>
         private void OnRackExchange(RackExchangeParam rep)
         {
             if (rep.Address == this.Address)

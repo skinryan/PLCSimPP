@@ -26,10 +26,11 @@ namespace BCI.PLCSimPP.Service.Log
         private ILog mDbLogger;
         private ILog mRawDataLogger;
 
+        /// <summary>
+        /// LogService
+        /// </summary>
         public LogService()
         {
-            //var connString = AppConfig.Configuration.GetConnectionString("PLCSimPP");
-
             ILoggerRepository repository = LogManager.CreateRepository("NETCoreRepository");
             XmlConfigurator.Configure(repository, new FileInfo("log4net.config"));
 
@@ -56,8 +57,6 @@ namespace BCI.PLCSimPP.Service.Log
         {
             mSysLogger.Debug(content);
         }
-
-     
 
         /// <summary>
         /// Write the message log to database
@@ -126,6 +125,11 @@ namespace BCI.PLCSimPP.Service.Log
 
         }
 
+        /// <summary>
+        /// log communication bytes data
+        /// </summary>
+        /// <param name="addrAndPort">address and port</param>
+        /// <param name="dataContent">raw data</param>
         public void LogRawData(string addrAndPort, byte[] dataContent)
         {
             mRawDataLogger.Debug($"{addrAndPort} {EncoderHelper.ToHexString(dataContent)}");

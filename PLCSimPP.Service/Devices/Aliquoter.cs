@@ -25,6 +25,7 @@ namespace BCI.PLCSimPP.Service.Devices
         private ConcurrentQueue<ISample> mSecQueue;
         private Task mSecTask;
 
+        /// <inheritdoc />
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
@@ -101,6 +102,9 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// send arrival message
+        /// </summary>
         private void SendArrival()
         {
             var msg = new MsgCmd
@@ -114,6 +118,9 @@ namespace BCI.PLCSimPP.Service.Devices
             this.mSendBehavior.PushMsg(msg);
         }
 
+        /// <summary>
+        /// init aliquoter
+        /// </summary>
         public override void InitUnit()
         {
             base.InitUnit();
@@ -158,11 +165,18 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
         public Aliquoter() : base()
         {
             mSecQueue = new ConcurrentQueue<ISample>();
         }
 
+        /// <summary>
+        /// build secondary tube 
+        /// </summary>
+        /// <param name="tubeId"></param>
         private void OnLabelPrinted(string tubeId)
         {
             // create secondary tube 

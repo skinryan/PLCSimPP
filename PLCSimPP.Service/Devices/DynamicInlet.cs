@@ -12,6 +12,7 @@ namespace BCI.PLCSimPP.Service.Devices
     [Serializable]
     public class DynamicInlet : UnitBase
     {
+        /// <inheritdoc />
         public override void OnReceivedMsg(string cmd, string content)
         {
             base.OnReceivedMsg(cmd, content);
@@ -21,13 +22,17 @@ namespace BCI.PLCSimPP.Service.Devices
                 base.MoveSample();
             }
         }
-               
+
+        /// <inheritdoc />
         protected override void OnSampleArrived()
         {
             var msg = SendMsg.GetMsg1024(this);
             this.mSendBehavior.PushMsg(msg);
         }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
         public DynamicInlet() : base()
         {
 

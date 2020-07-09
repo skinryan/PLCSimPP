@@ -26,16 +26,10 @@ namespace BCI.PLCSimPP.Config.ViewModels
     {
         private readonly IEventAggregator mEventAggregator;
         private readonly IConfigService mConfigService;
+        private readonly IAutomation mAutomation;
 
         #region properites
 
-        //private string mFilePath;
-
-        //public string FilePath
-        //{
-        //    get { return mFilePath; }
-        //    set { SetProperty(ref mFilePath, value); }
-        //}
 
 
         private bool mIsInEdit;
@@ -123,10 +117,11 @@ namespace BCI.PLCSimPP.Config.ViewModels
         public ICommand MoveUpCommand { get; set; }
         public ICommand MoveDownCommand { get; set; }
 
-        public SiteMapEditerViewModel(IEventAggregator eventAggr, IConfigService configService)
+        public SiteMapEditerViewModel(IEventAggregator eventAggr, IConfigService configService, IAutomation automation)
         {
             mEventAggregator = eventAggr;
             mConfigService = configService;
+            mAutomation = automation;
 
             Port1 = new ObservableCollection<IUnit>();
             Port2 = new ObservableCollection<IUnit>();
@@ -433,6 +428,12 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
         public void DoSave()
         {
+            if (mAutomation.IsConnected)
+            {
+                MessageBox.Show(ConfigModule.CANT_SAVE_NOTIFICATION);
+                return;
+            }
+
             var units = BuildSaveList();
 
             mConfigService.SaveSiteMap(Title, units);
@@ -443,6 +444,12 @@ namespace BCI.PLCSimPP.Config.ViewModels
 
         private void DoSaveAs()
         {
+            if (mAutomation.IsConnected)
+            {
+                MessageBox.Show(ConfigModule.CANT_SAVE_NOTIFICATION);
+                return;
+            }
+
             SaveFileDialog sfd = new SaveFileDialog
             {
                 Title = "Select the save path",

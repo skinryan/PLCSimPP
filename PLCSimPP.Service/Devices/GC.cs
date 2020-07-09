@@ -63,11 +63,17 @@ namespace BCI.PLCSimPP.Service.Devices
             }
         }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
         public GC() : base()
         {
             Init();
         }
 
+        /// <summary>
+        /// init unit
+        /// </summary>
         private void Init()
         {
             if (ServiceLocator.IsLocationProviderSet)
